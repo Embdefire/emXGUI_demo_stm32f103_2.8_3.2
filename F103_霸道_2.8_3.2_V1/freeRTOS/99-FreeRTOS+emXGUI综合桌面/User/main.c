@@ -80,9 +80,9 @@ int main(void)
    /* 创建AppTaskCreate任务 */
   xReturn = xTaskCreate((TaskFunction_t )GUI_Thread_Entry,  /* 任务入口函数 */
                         (const char*    )"gui",/* 任务名字 */
-                        (uint16_t       )2*1024,  /* 任务栈大小 */
+                        (uint16_t       )512,  /* 任务栈大小 */
                         (void*          )NULL,/* 任务入口函数参数 */
-                        (UBaseType_t    )3, /* 任务的优先级 */
+                        (UBaseType_t    )6, /* 任务的优先级 */
                         (TaskHandle_t*  )NULL);/* 任务控制块指针 */ 
   /* 启动任务调度 */           
   if(pdPASS == xReturn)
@@ -134,6 +134,8 @@ void FSMC_InitLCD(void);
 static void BSP_Init(void)
 {
 	/* 硬件BSP初始化统统放在这里，比如LED，串口，LCD等 */
+  
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_4);
     
 	/* LED 端口初始化 */
 	LED_GPIO_Config();	

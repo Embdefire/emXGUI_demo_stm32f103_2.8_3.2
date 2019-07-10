@@ -9,6 +9,8 @@
 #ifndef	__GUI_APPDEF_H__
 #define	__GUI_APPDEF_H__
 
+#include "emXGUI.h"
+
 /* 启动界面 */
 /* 要加载外部字体的文件数目 */
 #define FONT_NUM          1
@@ -22,7 +24,7 @@ extern HWND Boot_progbar;
 
 #define ID_SLIDE_WINDOW   1200
 
-#define HEAD_INFO_HEIGHT   90
+#define HEAD_INFO_HEIGHT   45
 #define WM_MSG_FRAME_DOWN  (WM_USER+50)
 
 #define COLOR_DESKTOP_BACK_GROUND         215,61,50

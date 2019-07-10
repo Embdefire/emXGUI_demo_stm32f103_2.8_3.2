@@ -15,7 +15,7 @@
   */ 
 
 
-
+#include "GUI_AppDef.h"
 #include "emXGUI.h"
 
 
@@ -80,24 +80,78 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
 		CopyRect(&rc,lprc);
 	}
 
-  /* 恢复默认字体 */
-  SetFont(hdc, defaultFont);
-
-	SetBrushColor(hdc,MapRGB(hdc,32,72,144));
+	SetBrushColor(hdc,MapRGB(hdc,COLOR_DESKTOP_BACK_GROUND));
 	FillRect(hdc,&rc);
   	
-  SetTextColor(hdc,MapRGB(hdc,250,250,250));
-
-#if (GUI_EXTERN_FONT_EN || GUI_INER_CN_FONT_EN)
-  /* 居中显示结果 */
-	DrawText(hdc,L"您好，野火emXGUI!",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER);  
-#else
-  /* 居中显示结果 */
-	DrawText(hdc,L"Hello emXGUI@Embedfire!",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER);
-#endif
+  SetTextColor(hdc,MapRGB(hdc,255,255,255));
   
-	SetTextColor(hdc,MapRGB(hdc,250,250,250));
-	TextOut(hdc,20,20,L"emXGUI@Embedfire",-1);
+//  SetFont(hdc, iconFont_100);
+//	DrawText(hdc,L" A B C D E \r\n F G H I J",-1,&rc,DT_LEFT|DT_VCENTER);
+//  SetFont(hdc, GB2312_32_Font);
+  
+	SetTextColor(hdc,MapRGB(hdc,255,255,255));
+  rc.y +=10;
+  DrawText(hdc,L"emXGUI@Embedfire STM32F103 ",-1,&rc,DT_CENTER);
+    
+  /* 背景 */
+  GetClientRect(hwnd,&rc);
+  SetBrushColor(hdc,MapRGB(hdc,82,85,82));
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT;
+  rc.h = HEAD_INFO_HEIGHT;
+  FillRect(hdc,&rc);
+  
+    /* 首栏 */ 
+  SetFont(hdc, logoFont);
+  /* 显示logo */
+  GetClientRect(hwnd,&rc);
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT-2;
+  rc.h = HEAD_INFO_HEIGHT;
+  
+  SetTextColor(hdc,MapRGB(hdc,255,255,255)); 
+  DrawText(hdc,L"B",-1,&rc,DT_LEFT|DT_VCENTER);
+  
+  
+  GetClientRect(hwnd,&rc);
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT-2;
+  rc.h = HEAD_INFO_HEIGHT;
+
+  /* 恢复默认字体 */
+  SetFont(hdc, defaultFont);
+  rc.x += 15;
+  DrawText(hdc,L"野火@emXGUI",-1,&rc,DT_LEFT|DT_VCENTER);
+
+  GetClientRect(hwnd,&rc);
+  rc.w = 52;
+  rc.x = GUI_XSIZE/2 - rc.w/2;
+  rc.h = 23;
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT + 10;
+  
+  
+  /* 控制图标字体 */
+  SetFont(hdc, controlFont_48);
+
+  /* 向上图标 */
+  SetTextColor(hdc,MapRGB(hdc,255,255,255)); 
+  DrawText(hdc,L"f",-1,&rc,DT_LEFT|DT_VCENTER);
+  
+//  SetPenColor(hdc, MapRGB(hdc, 250, 250, 250));
+//  DrawRoundRect(hdc, &rc, MIN(rc.w, rc.h)>>1);
+//    
+//  
+
+ /* 恢复默认字体 */
+  SetFont(hdc, defaultFont);
+//  OffsetRect(&rc,0,-3);
+//  DrawText(hdc,L"  广告",-1,&rc,DT_CENTER|DT_VCENTER);
+  
+
+//  rc.y -= 20;
+//  DrawText(hdc,L"\r\n\r\n详细",-1,&rc,DT_BOTTOM|DT_CENTER);
+  GetClientRect(hwnd,&rc);
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT-2;
+  rc.h = HEAD_INFO_HEIGHT;
+
+  DrawText(hdc,L"www.embedFire.com",-1,&rc,DT_RIGHT|DT_VCENTER);  
 
 }
 
@@ -137,7 +191,7 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
           
          GUI_Thread_Create(GUI_Boot_Interface_Dialog,  /* 任务入口函数 */
                               "Boot_Interface",/* 任务名字 */
-                              8*1024,  /* 任务栈大小 */
+                              2*1024,  /* 任务栈大小 */
                               NULL, /* 任务入口函数参数 */
                               5,    /* 任务的优先级 */
                               10); /* 任务时间片，部分任务不支持 */
@@ -167,6 +221,29 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
           }
         }
       #endif
+		break;
+        
+    /* 检测是否触摸到“详细”一栏 */    
+    case WM_LBUTTONDOWN:
+		{
+
+			POINT pt;
+			RECT rc;
+
+			pt.x =GET_LPARAM_X(lParam);
+			pt.y =GET_LPARAM_Y(lParam);
+
+			GetClientRect(hwnd,&rc);
+      
+      rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT;
+      rc.h = HEAD_INFO_HEIGHT;          
+
+      /* 若触摸到，则发送消息到slide window */
+			if(PtInRect(&rc,&pt))
+			{
+        PostMessage(GetDlgItem(hwnd,ID_SLIDE_WINDOW), WM_MSG_FRAME_DOWN,0,0);
+			}
+		}
 		break;
 
     /* 客户区背景需要被擦除 */
@@ -219,7 +296,7 @@ void GUI_DesktopStartup(void)
 
 //  GUI_DEBUG("Create desktop");
 	//创建桌面窗口.
-	hwnd = GUI_CreateDesktop(	WS_EX_LOCKPOS,
+	hwnd = GUI_CreateDesktop(	WS_EX_LOCKPOS|WS_EX_FRAMEBUFFER,
                               &wcex,
                               L"DESKTOP",
                               WS_VISIBLE|WS_CLIPCHILDREN,

@@ -22,7 +22,7 @@
 /*============================================================================*/
 
 enum eID
-{
+{ 
     ID_EXIT = 0x1000,
     ID_OK,
     ID_PREV_PAGE,
@@ -119,7 +119,7 @@ static WCHAR* LoadLanguage(WCHAR *buf, const WCHAR *str)
 
 static BOOL is_ver_list(HWND hwnd)
 {
-    if (GetWindowLong(hwnd, GWL_STYLE)&LMS_VER)
+    if (GetWindowLong(hwnd, GWL_STYLE) & LMS_VER)
     {
         return TRUE;
     }
@@ -154,28 +154,29 @@ void CListMenu::draw_icon_obj(HDC hdc, struct __x_obj_item *obj, u32 flag, u32 s
 
     //hdc_ico =CreateMemoryDC(BM_DEVICE,obj->rc.w,obj->rc.h);
     rc = obj->rc;
-
+    rc.y += 5;
     if (flag&OBJ_ACTIVE)
     {
         /* 矩形背景 */
         if (style& LMS_TOUCHSHADOW)
         {
-            rc = obj->rc;
+//            rc = obj->rc;
 
             SetBrushColor(hdc, MapRGB(hdc, 160, 100, 100));
-            InflateRect(&rc, -20, -20);
+//            InflateRect(&rc, -20, -20);
+            
+            InflateRect(&rc, -5, -8);
 
             FillRect(hdc, &rc);
         }
 
         if (style& LMS_ICONFRAME)
         {
-            rc = obj->rc;
-
+//            rc = obj->rc;
             ////
             /* 矩形外框 */
             SetPenColor(hdc, MapRGB(hdc, 105, 105, 105));
-            InflateRect(&rc, -20, -20);
+            InflateRect(&rc, -5, -8);
             DrawRect(hdc, &rc);
 
             SetPenColor(hdc, MapRGB(hdc, 105, 105, 105));
@@ -194,7 +195,7 @@ void CListMenu::draw_icon_obj(HDC hdc, struct __x_obj_item *obj, u32 flag, u32 s
         if (style& LMS_ICONFRAME)
         {
             SetPenColor(hdc, MapRGB(hdc, 255, 255, 255));
-            InflateRect(&rc, -20, -20);
+            InflateRect(&rc, -5, -8);
             DrawRect(hdc, &rc);
 
             SetPenColor(hdc, MapRGB(hdc, 255, 255, 255));
@@ -226,10 +227,10 @@ void CListMenu::draw_icon_obj(HDC hdc, struct __x_obj_item *obj, u32 flag, u32 s
     {
         icon_color = obj_tbl[obj->id].color;
         /* 显示APP对应的字体图标 */
-        SetFont(hdc, logoFont100);
+        SetFont(hdc, iconFont_50);
 
         rc0.w = rc.w;
-        rc0.h = rc.h * 2 / 3;
+        rc0.h = rc.h * 3 / 4; 
         rc0.x = rc.x;
         rc0.y = rc.y;
 
@@ -247,7 +248,7 @@ void CListMenu::draw_icon_obj(HDC hdc, struct __x_obj_item *obj, u32 flag, u32 s
         if (style& LMS_ICONINNERFRAME)
         {
             //矩形内框，图标字体宽度为100*100，所以减去它们的宽度除以2
-            InflateRect(&rc0, -(rc0.w - 100) / 2, -(rc0.h - 100) / 2);
+            InflateRect(&rc0, -(rc0.w - 50) / 2, -(rc0.h - 50) / 2);
             if (flag&OBJ_ACTIVE)
                SetPenColor(hdc, MapRGB(hdc, 105, 105, 105));
             else
@@ -262,9 +263,9 @@ void CListMenu::draw_icon_obj(HDC hdc, struct __x_obj_item *obj, u32 flag, u32 s
     //SetTextColor(hdc,MapRGB(hdc,255,255,255));
 
     rc0.w = rc.w;
-    rc0.h = rc.h * 1 / 3;
+    rc0.h = rc.h / 3;
     rc0.x = rc.x;
-    rc0.y = rc.y + rc.h - rc0.h - 6;
+    rc0.y = rc.y + rc.h - rc0.h + 1;
     DrawText(hdc, obj->pszText, -1, &rc0, DT_VCENTER | DT_CENTER);
 
 }
@@ -563,9 +564,9 @@ extern const char bkgnd_bmp[];
 
 LRESULT CListMenu::DrawFrame(HDC hdc, HWND hwnd)
 {
-    int style;
-//    WCHAR wbuf[128], wstr[64];
-//    RECT rc;
+    int i, a, x, y, style;
+    WCHAR wbuf[128], wstr[64];
+    RECT rc;
     struct __x_obj_item *obj;
     ////////
   
@@ -772,10 +773,11 @@ LRESULT CListMenu::DrawFrame(HDC hdc, HWND hwnd)
         {
             i = MIN(0 - obj->rc.x, page_num*rc_list.w);
 
-            rc.w = 150;
-            rc.h = 20;
+            /* 绘制进度条 */
+            rc.w = 80;
+            rc.h = 10;
             rc.x = (rc_main.w - rc.w) >> 1;
-            rc.y = rc_main.h - rc.h - 15;
+            rc.y = rc_main.h - rc.h - 8;
             MakeProgressRect(m_rc, &rc, page_num*rc_list.w, i, PB_ORG_LEFT);
 
             SetPenColor(hdc, MapRGB(hdc, 250, 220, 220));
@@ -864,7 +866,7 @@ LRESULT CListMenu::OnCreate(HWND hwnd, list_menu_cfg_t *cfg)
 {
     int i, j, page, style;
     RECT rc, *m_rc;
-//    __x_obj_item *obj;
+    __x_obj_item *obj;
     HWND *pextra;
 
     hwndMain = hwnd;
@@ -969,7 +971,7 @@ LRESULT CListMenu::OnCreate(HWND hwnd, list_menu_cfg_t *cfg)
   //	hFontSEG_32 =XFT_CreateFont(SEG_NUM_32);
 
 
-    SetTimer(hwnd, ID_TMR_100, 20, TMR_START, NULL);
+    SetTimer(hwnd, ID_TMR_100, 1, TMR_START, NULL);
     //	SetTimer(hwnd,ID_TMR_500,500,TMR_START,NULL);
     delete m_rc;
 
@@ -1463,7 +1465,7 @@ LRESULT	CListMenu::OnTimer(HWND hwnd, int tmr_id)
             obj = x_obj_get_first(list_item);
             if (obj != NULL)
             {
-                int x, y;
+                int x, y, x_end, y_end;
 
                 ////
 
@@ -1586,7 +1588,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         return pApp->OnCreate(hwnd, cfg);
     }
-//    break;
+
 		case 	MSG_SET_SEL:
 		{
 			int idx =wParam;
@@ -1670,7 +1672,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
         return pApp->OnNotify(hwnd, HIWORD(wParam), HIWORD(wParam));
     }
-    //return DefWindowProc(hwnd, msg, wParam, lParam);
+    return DefWindowProc(hwnd, msg, wParam, lParam);
     ////
 
     case    WM_KEYUP:
@@ -1680,7 +1682,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         key = LOWORD(wParam);
         return pApp->OnKeyUp(hwnd, key);
     }
-    //return DefWindowProc(hwnd, msg, wParam, lParam);
+    return DefWindowProc(hwnd, msg, wParam, lParam);
     ////
     case    WM_KEYDOWN:
     {
@@ -1689,7 +1691,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         key = LOWORD(wParam);
         return pApp->OnKeyDown(hwnd, key);
     }
-    //return DefWindowProc(hwnd, msg, wParam, lParam);
+    return DefWindowProc(hwnd, msg, wParam, lParam);
     ////
 
     case    WM_LBUTTONDOWN:
@@ -1700,7 +1702,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         y = HIWORD(lParam);
         return pApp->OnLButtonDown(hwnd, x, y);
     }
-    //return DefWindowProc(hwnd, msg, wParam, lParam);
+    return DefWindowProc(hwnd, msg, wParam, lParam);
     ////
 
   //		case WM_MOUSELEAVE:
@@ -1733,7 +1735,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         tmr_id = wParam;
         return pApp->OnTimer(hwnd, tmr_id);
     }
-//    break;
+    break;
     /////
 
 

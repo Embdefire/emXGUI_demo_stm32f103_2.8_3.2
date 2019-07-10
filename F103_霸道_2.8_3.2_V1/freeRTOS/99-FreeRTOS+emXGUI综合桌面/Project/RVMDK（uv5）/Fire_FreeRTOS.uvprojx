@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,X_GUI_USE_FREERTOS,USE_STDPERIPH_DRIVER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\pic_viewer;..\..\User\OwnerDraw;..\..\User\App\GUI_Demo</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -612,6 +612,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\bsp\fsmc\bsp_fsmc.c</FilePath>
             </File>
+            <File>
+              <FileName>DMA_LCD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\bsp\LCD\DMA_LCD.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -800,61 +805,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>emxgui/drv</GroupName>
-          <Files>
-            <File>
-              <FileName>gui_lcd_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_startup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_startup.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_drv_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\User\gui_drv_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>gui_input_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_input_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_touch_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_touch_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_font_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_font_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_mem_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_log_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_log_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_resource_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_resource_port.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_fs_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_fs_port.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>emxgui/inc</GroupName>
           <Files>
             <File>
@@ -917,6 +867,71 @@
               <FileType>4</FileType>
               <FilePath>..\..\..\..\..\emXGUI_Lib\libs\libpng_MDK_CM3.lib</FilePath>
             </File>
+            <File>
+              <FileName>x_obj.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\libs\x_obj.cpp</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>emxgui/drv</GroupName>
+          <Files>
+            <File>
+              <FileName>gui_lcd_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_startup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_startup.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_drv_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\gui_drv_cfg.h</FilePath>
+            </File>
+            <File>
+              <FileName>gui_input_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_input_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_touch_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_touch_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_font_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_font_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_mem_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_log_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_log_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_resource_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_resource_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_fs_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_fs_port.c</FilePath>
+            </File>
+            <File>
+              <FileName>gui_picture_port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_picture_port.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -946,6 +961,53 @@
         </Group>
         <Group>
           <GroupName>gui_app</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_DEMO_SlideWindow.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_SlideWindow.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Board_App_Desktop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\GUI_Board_App_Desktop.c</FilePath>
+            </File>
+            <File>
+              <FileName>CListMenu.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\CListMenu.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_PicViwer_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\pic_viewer\GUI_PicViwer_Dialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>Widget.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\OwnerDraw\Widget.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_App_Desktop.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_App_Desktop.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Graphics_Accelerator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Graphics_Accelerator.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>board_app</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_DEMO_ShowWave.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>app_res</GroupName>

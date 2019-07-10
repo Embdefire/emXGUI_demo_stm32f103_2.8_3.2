@@ -1,4 +1,5 @@
 ..\..\output\gui_desktop.o: ..\..\..\..\..\emXGUI_Lib\app\base\gui_desktop.c
+..\..\output\gui_desktop.o: ..\..\..\..\..\emXGUI_Lib\app\base\GUI_AppDef.h
 ..\..\output\gui_desktop.o: ..\..\..\..\..\emXGUI_Lib\inc\emXGUI.h
 ..\..\output\gui_desktop.o: ..\..\..\..\..\emXGUI_Lib\inc\def.h
 ..\..\output\gui_desktop.o: ..\..\..\..\..\emXGUI_Lib\arch\Inc\gui_os_port.h
