@@ -80,8 +80,8 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
 		CopyRect(&rc,lprc);
 	}
 
-//	SetBrushColor(hdc,MapRGB(hdc,COLOR_DESKTOP_BACK_GROUND));
-  SetBrushColor(hdc,MapRGB(hdc,0,0,0));
+	SetBrushColor(hdc,MapRGB(hdc,COLOR_DESKTOP_BACK_GROUND));
+//  SetBrushColor(hdc,MapRGB(hdc,0,0,0));
 	FillRect(hdc,&rc);
   	
   SetTextColor(hdc,MapRGB(hdc,255,255,255));
