@@ -63,6 +63,7 @@ HFONT iconFont_200 =NULL;
 HFONT iconFont_252 =NULL;
 /* ¿ØÖÆÍ¼±ê×ÖÌå */
 HFONT controlFont_12 =NULL;
+HFONT controlFont_24 =NULL;
 HFONT controlFont_48 =NULL;
 HFONT controlFont_32 =NULL;
 HFONT controlFont_16 =NULL;
@@ -253,6 +254,7 @@ HFONT GUI_Init_Extern_Font(void)
     defaultFont = GUI_Init_Extern_Font_Stream(GUI_DEFAULT_EXTERN_FONT); 
     logoFont = GUI_Init_Extern_Font_Stream(GUI_LOGO_FONT);  
     controlFont_48 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_48);  
+    controlFont_24 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_24); 
     controlFont_32 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_32);
     controlFont_16 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_16);
     iconFont_50 = GUI_Init_Extern_Font_Stream(GUI_ICON_FONT_50);  

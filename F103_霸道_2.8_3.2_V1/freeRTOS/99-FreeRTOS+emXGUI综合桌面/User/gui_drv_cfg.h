@@ -44,7 +44,7 @@
 #define	DMA2D_EN                   0
 
 /* 是否使用缓冲型控件，使用的话会增加一层液晶像素数据的消耗，显示效果减少闪烁*/
-#define  FRAME_BUFFER_EN            1
+#define  FRAME_BUFFER_EN            0
 
 /*==========输入设备配置===gui_input_port.c==================================================*/
 /* 是否使用输入设备 */
@@ -159,6 +159,7 @@
   #define   GUI_CONTROL_FONT_100     "CONTROL_ICON_100_100_4BPP.xft"
   #define   GUI_CONTROL_FONT_48      "CONTROL_ICON_48_4BPP.xft"
   #define   GUI_CONTROL_FONT_16      "CONTROL_ICON_16_4BPP.xft"
+  #define   GUI_CONTROL_FONT_24      "CONTROL_ICON_24_4BPP.xft"
 #endif
 
 /*===========日志输出设备配置===gui_log_port.c===============================================*/

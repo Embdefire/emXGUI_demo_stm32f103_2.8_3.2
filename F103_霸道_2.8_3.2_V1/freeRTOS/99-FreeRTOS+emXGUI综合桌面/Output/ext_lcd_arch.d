@@ -55,6 +55,7 @@
 ..\..\output\ext_lcd_arch.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\ext_lcd_arch.o: ..\..\User\bsp\board.h
 ..\..\output\ext_lcd_arch.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\ext_lcd_arch.o: ..\..\User\bsp\./KEY/bsp_key.h
 ..\..\output\ext_lcd_arch.o: ..\..\User\gui_drv_cfg.h
 ..\..\output\ext_lcd_arch.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h
 ..\..\output\ext_lcd_arch.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h

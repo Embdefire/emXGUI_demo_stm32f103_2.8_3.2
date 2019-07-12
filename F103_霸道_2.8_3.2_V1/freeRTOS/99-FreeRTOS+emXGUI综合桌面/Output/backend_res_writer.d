@@ -57,6 +57,7 @@
 ..\..\output\backend_res_writer.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\backend_res_writer.o: ..\..\User\bsp\board.h
 ..\..\output\backend_res_writer.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\backend_res_writer.o: ..\..\User\bsp\./KEY/bsp_key.h
 ..\..\output\backend_res_writer.o: ..\..\User\gui_drv_cfg.h
 ..\..\output\backend_res_writer.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h
 ..\..\output\backend_res_writer.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h

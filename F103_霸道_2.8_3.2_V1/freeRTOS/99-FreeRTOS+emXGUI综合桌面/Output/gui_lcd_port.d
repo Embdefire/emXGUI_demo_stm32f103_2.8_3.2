@@ -66,3 +66,4 @@
 ..\..\output\gui_lcd_port.o: ..\..\User\bsp\./spi_flash/bsp_flash_spi.h
 ..\..\output\gui_lcd_port.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\gui_lcd_port.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\gui_lcd_port.o: ..\..\User\bsp\./KEY/bsp_key.h

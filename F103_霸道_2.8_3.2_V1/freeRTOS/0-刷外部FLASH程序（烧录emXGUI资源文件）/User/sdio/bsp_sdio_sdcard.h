@@ -209,7 +209,7 @@ typedef struct
   * @brief  SDIO Data Transfer Frequency (25MHz max) 
   */
 /*!< SDIOCLK = HCLK, SDIO_CK = HCLK/(2 + SDIO_TRANSFER_CLK_DIV) */
-#define SDIO_TRANSFER_CLK_DIV            ((uint8_t)0x01) 
+#define SDIO_TRANSFER_CLK_DIV            ((uint8_t)0x04) 
 
 	  
 /** 

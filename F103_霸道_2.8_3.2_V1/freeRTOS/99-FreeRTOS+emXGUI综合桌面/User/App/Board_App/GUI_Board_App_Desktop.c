@@ -483,8 +483,16 @@ void	GUI_Board_App_Desktop(void *p)
     //开始窗口消息循环(窗口关闭并销毁时,GetMessage将返回FALSE,退出本消息循环)。
     while (GetMessage(&msg, hwnd))
     {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+      if (Key_Scan(KEY1_GPIO_PORT, KEY1_GPIO_PIN) == KEY_ON)
+      {
+        ShowWindow(hwnd,SW_HIDE);
+      }
+      if (Key_Scan(KEY2_GPIO_PORT, KEY2_GPIO_PIN) == KEY_ON)
+      {
+        ShowWindow(hwnd,SW_SHOW);
+      }
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
     }
 }
 

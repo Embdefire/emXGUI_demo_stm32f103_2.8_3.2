@@ -57,6 +57,7 @@
 ..\..\output\ads7843.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\ads7843.o: ..\..\User\bsp\board.h
 ..\..\output\ads7843.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\ads7843.o: ..\..\User\bsp\./KEY/bsp_key.h
 ..\..\output\ads7843.o: ..\..\User\gui_drv_cfg.h
 ..\..\output\ads7843.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h
 ..\..\output\ads7843.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h

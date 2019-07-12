@@ -186,13 +186,13 @@ static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 	}
 
 	  /* 使用控制图标字体 */
-	SetFont(hdc, controlFont_32);
+	SetFont(hdc, controlFont_24);
 	//  SetTextColor(hdc,MapRGB(hdc,255,255,255));
 
 	GetWindowText(hwnd, wbuf, 128); //获得按钮控件的文字
 
-   rc.y = -6;//-5;//
-   rc.x = 8;//10;//
+   rc.y = -4;//-5;//
+   rc.x = 6;//10;//
 	DrawText(hdc, wbuf, -1, &rc, NULL);//绘制文字(居中对齐方式)
 
 
@@ -452,8 +452,8 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 //      hdc =BeginPaint(hwnd,&ps);
 
       /* Home按钮 */    
-			wnd=CreateWindow(BUTTON,L"O",	WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,285,0,35,35,hwnd,ID_EXIT,NULL,NULL); //创建一个按钮.
-			SetWindowFont(wnd,controlFont_32); //设置控件窗口字体.
+			wnd=CreateWindow(BUTTON,L"O",	WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,292,0,28,28,hwnd,ID_EXIT,NULL,NULL); //创建一个按钮.
+			SetWindowFont(wnd,controlFont_24); //设置控件窗口字体.
 
 //      SetFont(hdc, defaultFont);
 //      SetTextColor(hdc,MapRGB(hdc,255,255,255)); 

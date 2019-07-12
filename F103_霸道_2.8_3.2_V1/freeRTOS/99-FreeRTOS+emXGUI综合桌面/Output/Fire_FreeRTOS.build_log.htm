@@ -17,7 +17,7 @@ Library Manager: ArmAr.exe V5.06 update 6 (build 750)
 Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
 CPU DLL:         SARMCM3.DLL V5.27.0.0
 Dialog DLL:      DCM.DLL V1.17.2.0
-Target DLL:      Segger\JL2CM3.dll V2.99.34.0
+Target DLL:      CMSIS_AGDI.dll V1.31.9.0
 Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
@@ -29,32 +29,35 @@ Project File Date:  07/10/2019
 *** Warning: You are compiling one or more files of source type C++ and have selected 'use MicroLIB'. MicroLIB does not support C++!
   
 Build target 'Fire_FreeRTOS'
+compiling gui_desktop.c...
 compiling GUI_DEMO_ShowWave.cpp...
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(267): warning:  #550-D: variable "hwnd"  was set but never used
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(271): warning:  #550-D: variable "hwnd"  was set but never used
   	HWND hwnd;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(314): warning:  #550-D: variable "hwnd"  was set but never used
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(318): warning:  #550-D: variable "hwnd"  was set but never used
   	HWND hwnd;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(317): warning:  #177-D: variable "wbuf"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(321): warning:  #177-D: variable "wbuf"  was declared but never referenced
   	WCHAR wbuf[128];
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(1733): warning:  #177-D: function "ADS1120_GetVoltage_mV"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(1691): warning:  #111-D: statement is unreachable
+    break;
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(1727): warning:  #177-D: function "ADS1120_GetVoltage_mV"  was declared but never referenced
   static float ADS1120_GetVoltage_mV(u16 addata)
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(781): warning:  #177-D: variable "x1"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(782): warning:  #177-D: variable "x1"  was declared but never referenced
   static int x1,x2,y1,y2,ysc,xsc;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(781): warning:  #177-D: variable "x2"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(782): warning:  #177-D: variable "x2"  was declared but never referenced
   static int x1,x2,y1,y2,ysc,xsc;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(781): warning:  #177-D: variable "y1"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(782): warning:  #177-D: variable "y1"  was declared but never referenced
   static int x1,x2,y1,y2,ysc,xsc;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(781): warning:  #177-D: variable "y2"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(782): warning:  #177-D: variable "y2"  was declared but never referenced
   static int x1,x2,y1,y2,ysc,xsc;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(781): warning:  #177-D: variable "ysc"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(782): warning:  #177-D: variable "ysc"  was declared but never referenced
   static int x1,x2,y1,y2,ysc,xsc;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(781): warning:  #177-D: variable "xsc"  was declared but never referenced
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp(782): warning:  #177-D: variable "xsc"  was declared but never referenced
   static int x1,x2,y1,y2,ysc,xsc;
-..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp: 10 warnings, 0 errors
+..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp: 11 warnings, 0 errors
 linking...
-Program Size: Code=174184 RO-data=283812 RW-data=2000 ZI-data=1102784  
+Program Size: Code=174420 RO-data=283816 RW-data=2024 ZI-data=1102784  
 FromELF: creating hex file...
-"..\..\Output\Fire_FreeRTOS.axf" - 0 Error(s), 10 Warning(s).
+"..\..\Output\Fire_FreeRTOS.axf" - 0 Error(s), 11 Warning(s).
 
 <h2>Software Packages used:</h2>
 

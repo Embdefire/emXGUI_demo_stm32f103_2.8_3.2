@@ -93,8 +93,8 @@ void	GUI_DEMO_ShowWave(void);
 
 static struct __obj_list menu_list_1[] = {
 
-	L"图形加速器",		NULL, 	L"d", 	RGB_WHITE,			GUI_DEMO_Graphics_Accelerator,//dummy,//GUI_PicViewer_Dialog,//
-		L"波形显示",		NULL,	  L"B", RGB_WHITE,				GUI_DEMO_ShowWave,
+	L"图形加速器",		NULL, 	L"d", 	RGB_WHITE,			GUI_DEMO_Graphics_Accelerator,//GUI_PicViewer_Dialog,//
+		L"波形显示",		NULL,	  L"B", RGB_WHITE,				GUI_DEMO_ShowWave,//dummy,//
 		//  	L"Hello",		NULL,	  L"B", RGB_WHITE,				dummy,
 		//		L"Button",		NULL,	  L"C", RGB_WHITE,				App_GUI_Climate_Cabinet,
 
@@ -359,7 +359,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 ////    SetFont(hdc, GB2312_32_Font);
     SetFont(hdc, defaultFont);
-      
+    GUI_DEBUG("滑动窗口重绘中");
     SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
     FillRect(hdc, &rc);
     SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));
@@ -504,6 +504,14 @@ void	GUI_App_Desktop(void)
 	//开始窗口消息循环(窗口关闭并销毁时,GetMessage将返回FALSE,退出本消息循环)。
 	while (GetMessage(&msg, hwnd))
 	{
+    if (Key_Scan(KEY1_GPIO_PORT, KEY1_GPIO_PIN) == KEY_ON)
+      {
+        ShowWindow(hwnd,SW_HIDE);
+      }
+      if (Key_Scan(KEY2_GPIO_PORT, KEY2_GPIO_PIN) == KEY_ON)
+      {
+        ShowWindow(hwnd,SW_SHOW);
+      }
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}

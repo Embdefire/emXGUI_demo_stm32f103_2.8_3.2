@@ -66,3 +66,4 @@
 ..\..\output\bsp_fsmc.o: ..\..\User\bsp\./spi_flash/bsp_flash_spi.h
 ..\..\output\bsp_fsmc.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\bsp_fsmc.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\bsp_fsmc.o: ..\..\User\bsp\./KEY/bsp_key.h

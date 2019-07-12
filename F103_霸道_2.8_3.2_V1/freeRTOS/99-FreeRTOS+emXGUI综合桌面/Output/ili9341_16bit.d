@@ -56,6 +56,7 @@
 ..\..\output\ili9341_16bit.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\ili9341_16bit.o: ..\..\User\bsp\board.h
 ..\..\output\ili9341_16bit.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\ili9341_16bit.o: ..\..\User\bsp\./KEY/bsp_key.h
 ..\..\output\ili9341_16bit.o: ..\..\User\gui_drv_cfg.h
 ..\..\output\ili9341_16bit.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h
 ..\..\output\ili9341_16bit.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h

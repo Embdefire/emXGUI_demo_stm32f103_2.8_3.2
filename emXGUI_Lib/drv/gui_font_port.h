@@ -40,6 +40,7 @@ extern HFONT iconFont_252;
 extern HFONT controlFont_48;
 extern HFONT controlFont_32;
 extern HFONT controlFont_16;
+extern HFONT controlFont_24;
 extern HFONT controlFont_72;
 extern HFONT controlFont_48;
 extern HFONT controlFont_100;

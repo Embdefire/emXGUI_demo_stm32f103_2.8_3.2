@@ -56,6 +56,7 @@
 ..\..\output\x_gui_freertos.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\x_gui_freertos.o: ..\..\User\bsp\board.h
 ..\..\output\x_gui_freertos.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\x_gui_freertos.o: ..\..\User\bsp\./KEY/bsp_key.h
 ..\..\output\x_gui_freertos.o: ..\..\User\gui_drv_cfg.h
 ..\..\output\x_gui_freertos.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h
 ..\..\output\x_gui_freertos.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h

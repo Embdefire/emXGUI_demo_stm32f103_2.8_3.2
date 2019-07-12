@@ -55,6 +55,7 @@
 ..\..\output\gui_boot_interface_dialog.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\gui_boot_interface_dialog.o: ..\..\User\bsp\board.h
 ..\..\output\gui_boot_interface_dialog.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\gui_boot_interface_dialog.o: ..\..\User\bsp\./KEY/bsp_key.h
 ..\..\output\gui_boot_interface_dialog.o: ..\..\User\gui_drv_cfg.h
 ..\..\output\gui_boot_interface_dialog.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h
 ..\..\output\gui_boot_interface_dialog.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h

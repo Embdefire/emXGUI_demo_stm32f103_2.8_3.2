@@ -769,7 +769,7 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x58953392)
 I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x58953392)
 I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x58953392)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x58953392)
-I (..\..\User\./sdio/bsp_sdio_sdcard.h)(0x5980329A)
+I (..\..\User\./sdio/bsp_sdio_sdcard.h)(0x5D26AE56)
 F (..\..\User\led\bsp_led.c)(0x5B3DDD73)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option-I.\RTE\_fatfs-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\bsp_led.o --omf_browse ..\..\output\bsp_led.crf --depend ..\..\output\bsp_led.d)
 I (..\..\User\./led/bsp_led.h)(0x589536AB)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x58953392)
@@ -832,7 +832,7 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x58953392)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x58953392)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599ECD2C)
 F (..\..\User\sdio\bsp_sdio_sdcard.c)(0x59803298)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option-I.\RTE\_fatfs-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\bsp_sdio_sdcard.o --omf_browse ..\..\output\bsp_sdio_sdcard.crf --depend ..\..\output\bsp_sdio_sdcard.d)
-I (..\..\User\./sdio/bsp_sdio_sdcard.h)(0x5980329A)
+I (..\..\User\./sdio/bsp_sdio_sdcard.h)(0x5D26AE56)
 I (..\..\Libraries\CMSIS\stm32f10x.h)(0x58953392)
 I (..\..\Libraries\CMSIS\core_cm3.h)(0x58953392)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599ECD2E)
@@ -1031,7 +1031,7 @@ I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x58953392)
 I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x58953392)
 I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x58953392)
 I (..\..\Libraries\FWlib\inc\misc.h)(0x58953392)
-I (..\..\User\./sdio/bsp_sdio_sdcard.h)(0x5980329A)
+I (..\..\User\./sdio/bsp_sdio_sdcard.h)(0x5D26AE56)
 F (..\..\User\FATFS\ff.c)(0x589536AB)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\User\FATFS -I ..\..\User\FATFS\option-I.\RTE\_fatfs-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\..\output\ff.o --omf_browse ..\..\output\ff.crf --depend ..\..\output\ff.d)
 I (..\..\User\FATFS\ff.h)(0x589536AB)
 I (..\..\User\FATFS\integer.h)(0x589536AB)

@@ -55,6 +55,7 @@
 ..\..\output\oem_groupbox.o: ..\..\..\..\..\emXGUI_Lib\inc\x_libc.h
 ..\..\output\oem_groupbox.o: ..\..\User\bsp\board.h
 ..\..\output\oem_groupbox.o: ..\..\User\bsp\./led/bsp_led.h
+..\..\output\oem_groupbox.o: ..\..\User\bsp\./KEY/bsp_key.h
 ..\..\output\oem_groupbox.o: ..\..\User\gui_drv_cfg.h
 ..\..\output\oem_groupbox.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h
 ..\..\output\oem_groupbox.o: ..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h

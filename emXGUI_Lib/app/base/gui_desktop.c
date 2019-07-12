@@ -12,7 +12,7 @@
   * 淘宝    :https://fire-stm32.taobao.com
   *
   **********************************************************************
-  */ 
+***/ 
 
 
 #include "GUI_AppDef.h"
@@ -80,7 +80,8 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
 		CopyRect(&rc,lprc);
 	}
 
-	SetBrushColor(hdc,MapRGB(hdc,COLOR_DESKTOP_BACK_GROUND));
+//	SetBrushColor(hdc,MapRGB(hdc,COLOR_DESKTOP_BACK_GROUND));
+  SetBrushColor(hdc,MapRGB(hdc,0,0,0));
 	FillRect(hdc,&rc);
   	
   SetTextColor(hdc,MapRGB(hdc,255,255,255));
@@ -91,7 +92,7 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
   
 	SetTextColor(hdc,MapRGB(hdc,255,255,255));
   rc.y +=10;
-  DrawText(hdc,L"emXGUI@Embedfire STM32F103 ",-1,&rc,DT_CENTER);
+//  DrawText(hdc,L"emXGUI@Embedfire STM32F103 ",-1,&rc,DT_CENTER);
     
   /* 背景 */
   GetClientRect(hwnd,&rc);
@@ -251,7 +252,6 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		{   
       RECT rc = *(RECT*)lParam;
 			HDC hdc =(HDC)wParam; 
-      
         /* 字体资源加载完成后才显示正常界面，刚开始时只显示纯色 */
        if(Load_state == TRUE)
        {
