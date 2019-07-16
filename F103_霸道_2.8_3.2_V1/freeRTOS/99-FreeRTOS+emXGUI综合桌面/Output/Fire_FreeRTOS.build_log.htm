@@ -30,14 +30,15 @@ Project File Date:  07/16/2019
   
 Build target 'Fire_FreeRTOS'
 compiling GUI_Camera_Dialog.c...
-..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c(4): error:  #5: cannot open source input file "./camera/bsp_ov5640.h": No such file or directory
-  #include "./camera/bsp_ov5640.h"
-..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c: 0 warnings, 1 error
-compiling GUI_RGBLED_DIALOG.c...
-..\..\User\App\Board_App\rgb_led\GUI_RGBLED_DIALOG.c(814): warning:  #550-D: variable "hdc"  was set but never used
-  			HDC hdc;
-..\..\User\App\Board_App\rgb_led\GUI_RGBLED_DIALOG.c: 1 warning, 0 errors
-"..\..\Output\Fire_FreeRTOS.axf" - 1 Error(s), 1 Warning(s).
+..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c(135): warning:  #177-D: variable "wbuf"  was declared but never referenced
+        WCHAR wbuf[20];
+..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c(67): warning:  #550-D: variable "old_fps"  was set but never used
+    static int old_fps = 0;
+..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=222560 RO-data=290956 RW-data=2756 ZI-data=1106884  
+FromELF: creating hex file...
+"..\..\Output\Fire_FreeRTOS.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -51,8 +52,7 @@ Package Vendor: Keil
   C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Target not created.
-Build Time Elapsed:  00:00:05
+Build Time Elapsed:  00:00:08
 </pre>
 </body>
 </html>
