@@ -30,24 +30,24 @@ struct leddlg
 
 icon_S GUI_RGBLED_Icon[18] = 
 {
-      {"tuichu",           {730,0,70,70},       FALSE},//退出按键
-      {"biaotilan",        {100,0,600,80},      FALSE},//APP标题栏
-      {"APPHouse",         {425,80,275,275},      FALSE},//APP房子图标
-      {"hongdeng",         {93, 80, 72, 72},  FALSE},//红灯图标
-      {"lvdeng",           {222, 80, 72, 72},  FALSE},//绿灯图标
-      {"landeng",          {350, 80, 72, 72},  FALSE},//蓝灯图标
-      {"hongdengscrollbar",{113, 155, 35, 200},  FALSE},//红色滚动条
-      {"lvdengscrollbar",  {242, 155, 35, 200},  FALSE},//绿色滚动条
-      {"landengscrollbar", {370, 155, 35, 200},  FALSE},//蓝色滚动条 
+      {"tuichu",           {292, 0,   28,  28},  FALSE},    // 退出按键
+      {"biaotilan",        {0,    0,   1,    1},  FALSE},    // APP标题栏
+      {"APPHouse",         {160, 40,  150, 150}, FALSE},    // APP房子图标
+      {"hongdeng",         {38,   0,  20,   20},  FALSE},    // 红灯图标
+      {"lvdeng",           {88,   0,  20,   20},  FALSE},    // 绿灯图标
+      {"landeng",          {138,  0,  20,   20},  FALSE},    // 蓝灯图标
+      {"hongdengscrollbar",{30,  25,  35,  180}, FALSE},    // 红色滚动条
+      {"lvdengscrollbar",  {80,  25,  35,  180}, FALSE},    // 绿色滚动条
+      {"landengscrollbar", {130, 25,  35,  180}, FALSE},    // 蓝色滚动条 
       
-      {"kongzhikaiguan",   {675, 355,160,160},  FALSE},//控制开关
+      {"kongzhikaiguan",   {275, 195, 60,  60},  FALSE},    // 控制开关
       
-      {"hongdengwenzi",    {96, 420, 72, 50}, FALSE},//文字-红灯
-      {"lvdengwenzi",      {226, 420, 72, 50}, FALSE},//文字-绿灯
-      {"landengwenzi",     {356, 420, 72, 50}, FALSE},//文字-蓝灯
-      {"Rshuzhi",          {96, 355, 72, 72}, FALSE},//文字-R数值
-      {"Gshuzhi",          {226, 355, 72, 72}, FALSE},//文字-G数值
-      {"Bshuzhi",          {356, 355, 72, 72}, FALSE},//文字-B数值
+      {"hongdengwenzi",    {31,  223, 35,  20},  FALSE},    // 文字-红灯
+      {"lvdengwenzi",      {82,  223, 35,  20},  FALSE},    // 文字-绿灯
+      {"landengwenzi",     {131, 223, 35,  20},  FALSE},    // 文字-蓝灯
+      {"Rshuzhi",          {31,  206, 35,  20},  FALSE},    // 文字-R数值
+      {"Gshuzhi",          {82,  206, 35,  20},  FALSE},    // 文字-G数值
+      {"Bshuzhi",          {131, 206, 35,  20},  FALSE},    // 文字-B数值
 };
 
 RGBLED_DIALOG_s RGBLED_DIALOG =
@@ -116,11 +116,11 @@ static void GUI_RGBLED_drawscrollbar_V(HWND hwnd, HDC hdc, COLOR_RGB32 back_c, C
 //	rc.x += (rc.w >> 2) >> 1;
 //	rc.w -= rc.w >> 2;
 	/* 边框 */
-	FillCircle(hdc, rc.x + rc.h / 2+1, rc.y + rc.h / 2, rc.h / 2);
+	FillCircle(hdc, rc.x + rc.w / 2, rc.y + rc.h / 2, rc.h / 2);
    InflateRect(&rc, -2, -2);
 
 	SetBrushColor(hdc, MapRGB888(hdc, fore_c));
-	FillCircle(hdc, rc.x + rc.h / 2+1, rc.y + rc.h / 2, rc.h / 2);
+	FillCircle(hdc, rc.x + rc.w / 2, rc.y + rc.h / 2, rc.h / 2);
   EnableAntiAlias(hdc, FALSE);
 }
 /*
@@ -212,10 +212,10 @@ void GUI_RGBLED_HomeOwnerDraw(DRAWITEM_HDR *ds)
 	}
    FillCircle(hdc, rc.x+rc.w, rc.y, rc.w);
    /* 使用控制图标字体 */
-	SetFont(hdc, controlFont_64);
+	SetFont(hdc, controlFont_24);
 	GetWindowText(hwnd, wbuf, 128); //获得按钮控件的文字
-   rc.y = -10;
-   rc.x = 16;
+   rc.y = -4;
+   rc.x = 6;
 	DrawText(hdc, wbuf, -1, &rc, NULL);//绘制文字(居中对齐方式)
 
 
@@ -284,10 +284,10 @@ static void GUI_RGBLED_CheckBoxOwnerDraw(DRAWITEM_HDR *ds)
       }
       EnableAntiAlias(hdc, FALSE);
    }
-   SetFont(hdc, controlFont_32);
+   SetFont(hdc, controlFont_16);
    SetTextColor(hdc, MapRGB(hdc, 255,255,255));      //设置文字色
-   rc_cli.x = 35;
-   rc_cli.y = 55;
+   rc_cli.x = 7;
+   rc_cli.y = 18;
    if(RGBLED_DIALOG.State == TRUE)
    { 
       DrawText(hdc, L"op",-1,&rc_cli,NULL);//绘制文字(居中对齐方式)           
@@ -336,8 +336,6 @@ static void GUI_RGBLEDButton_OwnerDraw(DRAWITEM_HDR *ds)
 }
 static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-   static SURFACE *pSurfTop = NULL;
-   static HDC hdc_bk = NULL;
    
    RECT rc;
 	switch (msg)
@@ -348,8 +346,6 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          GetClientRect(hwnd, &rc);
          //pSurfTop = CreateSurface(SURF_ARGB4444, rc.w, rc.h, NULL, 0);
          
- 
-
           CreateWindow(BUTTON, L"O",WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,
                       GUI_RGBLED_Icon[0].rc.x, GUI_RGBLED_Icon[0].rc.y, 
                       GUI_RGBLED_Icon[0].rc.w, GUI_RGBLED_Icon[0].rc.h, 
@@ -362,20 +358,20 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                       hwnd, ID_TEXTBOX_Title, NULL, NULL);
          SendMessage(GetDlgItem(hwnd, ID_TEXTBOX_Title),TBM_SET_TEXTFLAG,0,
                         DT_SINGLELINE|DT_CENTER|DT_VCENTER); 
-         
+#if    0
          CreateWindow(TEXTBOX, L"c", WS_TRANSPARENT|WS_VISIBLE, 
                       GUI_RGBLED_Icon[2].rc.x, GUI_RGBLED_Icon[2].rc.y, 
                       GUI_RGBLED_Icon[2].rc.w, GUI_RGBLED_Icon[2].rc.h, 
                       hwnd, ID_TEXTBOX_APP, NULL, NULL);
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_APP), iconFont_252);
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_APP), iconFont_50);
          SendMessage(GetDlgItem(hwnd, ID_TEXTBOX_APP),TBM_SET_TEXTFLAG,0,
                         DT_SINGLELINE|DT_CENTER|DT_VCENTER);
-
+#endif
          CreateWindow(TEXTBOX, L"k", WS_TRANSPARENT|WS_VISIBLE, 
                       GUI_RGBLED_Icon[3].rc.x, GUI_RGBLED_Icon[3].rc.y, 
                       GUI_RGBLED_Icon[3].rc.w, GUI_RGBLED_Icon[3].rc.h, 
                       hwnd, ID_TEXTBOX_R_LED, NULL, NULL);
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_R_LED), controlFont_72);
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_R_LED), controlFont_32);
          SendMessage(GetDlgItem(hwnd, ID_TEXTBOX_R_LED),TBM_SET_TEXTFLAG,0,
                         DT_SINGLELINE|DT_CENTER|DT_VCENTER); 
                         
@@ -383,7 +379,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                       GUI_RGBLED_Icon[4].rc.x, GUI_RGBLED_Icon[4].rc.y, 
                       GUI_RGBLED_Icon[4].rc.w, GUI_RGBLED_Icon[4].rc.h, 
                       hwnd, ID_TEXTBOX_G_LED, NULL, NULL);
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_G_LED), controlFont_72);
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_G_LED), controlFont_32);
          SendMessage(GetDlgItem(hwnd, ID_TEXTBOX_G_LED),TBM_SET_TEXTFLAG,0,
                         DT_SINGLELINE|DT_CENTER|DT_VCENTER); 
                         
@@ -391,48 +387,50 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                       GUI_RGBLED_Icon[5].rc.x, GUI_RGBLED_Icon[5].rc.y, 
                       GUI_RGBLED_Icon[5].rc.w, GUI_RGBLED_Icon[5].rc.h, 
                       hwnd, ID_TEXTBOX_B_LED, NULL, NULL);
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_B_LED), controlFont_72);         
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_B_LED), controlFont_32);         
          SendMessage(GetDlgItem(hwnd, ID_TEXTBOX_B_LED),TBM_SET_TEXTFLAG,0,
                         DT_SINGLELINE|DT_CENTER|DT_VCENTER); 
 
 
-
+          /*创建滑动条--R*/
          RGBLED_DIALOG.sif_R.cbSize = sizeof(RGBLED_DIALOG.sif_R);
          RGBLED_DIALOG.sif_R.fMask = SIF_ALL;
          RGBLED_DIALOG.sif_R.nMin = 0;
          RGBLED_DIALOG.sif_R.nMax = 255;
          RGBLED_DIALOG.sif_R.nValue = RGBLED_DIALOG.col_R;
-         RGBLED_DIALOG.sif_R.TrackSize = 35;
+         RGBLED_DIALOG.sif_R.TrackSize = 20;
          RGBLED_DIALOG.sif_R.ArrowSize = 0;
-
-         /*创建滑动条--R*/
+         
          CreateWindow(SCROLLBAR, L"SCROLLBAR_R", SBS_VERT|WS_OWNERDRAW |WS_TRANSPARENT| WS_VISIBLE, 
                       GUI_RGBLED_Icon[6].rc.x, GUI_RGBLED_Icon[6].rc.y, 
                       GUI_RGBLED_Icon[6].rc.w, GUI_RGBLED_Icon[6].rc.h, 
                       hwnd, ID_SCROLLBAR_R, NULL, NULL);
          SendMessage(GetDlgItem(hwnd, ID_SCROLLBAR_R), SBM_SETSCROLLINFO, TRUE, (LPARAM)&RGBLED_DIALOG.sif_R);
-
+         
+         /*创建滑动条--G*/
          RGBLED_DIALOG.sif_G.cbSize = sizeof(RGBLED_DIALOG.sif_G);
          RGBLED_DIALOG.sif_G.fMask = SIF_ALL;
          RGBLED_DIALOG.sif_G.nMin = 0;
          RGBLED_DIALOG.sif_G.nMax = 255;
          RGBLED_DIALOG.sif_G.nValue = RGBLED_DIALOG.col_G;
-         RGBLED_DIALOG.sif_G.TrackSize = 35;
+         RGBLED_DIALOG.sif_G.TrackSize = 20;
          RGBLED_DIALOG.sif_G.ArrowSize = 0;
-         /*创建滑动条--G*/
+         
          CreateWindow(SCROLLBAR, L"SCROLLBAR_G", SBS_VERT|WS_OWNERDRAW |WS_TRANSPARENT| WS_VISIBLE, 
                       GUI_RGBLED_Icon[7].rc.x, GUI_RGBLED_Icon[7].rc.y, 
                       GUI_RGBLED_Icon[7].rc.w, GUI_RGBLED_Icon[7].rc.h, 
                       hwnd, ID_SCROLLBAR_G, NULL, NULL);
          SendMessage(GetDlgItem(hwnd, ID_SCROLLBAR_G), SBM_SETSCROLLINFO, TRUE, (LPARAM)&RGBLED_DIALOG.sif_G);
+         
+         /*创建滑动条--B*/
          RGBLED_DIALOG.sif_B.cbSize = sizeof(RGBLED_DIALOG.sif_B);
          RGBLED_DIALOG.sif_B.fMask = SIF_ALL;
          RGBLED_DIALOG.sif_B.nMin = 0;
          RGBLED_DIALOG.sif_B.nMax = 255;
          RGBLED_DIALOG.sif_B.nValue = RGBLED_DIALOG.col_B;
-         RGBLED_DIALOG.sif_B.TrackSize = 35;
+         RGBLED_DIALOG.sif_B.TrackSize = 20;
          RGBLED_DIALOG.sif_B.ArrowSize = 0;
-         /*创建滑动条--B*/
+         
          CreateWindow(SCROLLBAR, L"SCROLLBAR_B", SBS_VERT|WS_OWNERDRAW | WS_TRANSPARENT|WS_VISIBLE, 
                       GUI_RGBLED_Icon[8].rc.x, GUI_RGBLED_Icon[8].rc.y, 
                       GUI_RGBLED_Icon[8].rc.w, GUI_RGBLED_Icon[8].rc.h,
@@ -450,14 +448,14 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                       hwnd, ID_TEXTBOX_R, NULL, NULL);
          SendMessage(GetDlgItem(hwnd, ID_TEXTBOX_R),TBM_SET_TEXTFLAG,0,
                         DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_BKGND); 
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_R), controlFont_32);                        
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_R), controlFont_16);                        
          //R的分量值 
          x_wsprintf(wbuf, L"%d", leddlg_S.col_R);
          CreateWindow(BUTTON, wbuf, WS_TRANSPARENT|WS_VISIBLE|WS_OWNERDRAW|WS_DISABLED, 
                       GUI_RGBLED_Icon[13].rc.x, GUI_RGBLED_Icon[13].rc.y, 
                       GUI_RGBLED_Icon[13].rc.w, GUI_RGBLED_Icon[13].rc.h,
                       hwnd, ID_TEXTBOX_R_NUM, NULL, NULL); 
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_R_NUM), controlFont_32);               
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_R_NUM), controlFont_16);               
          //G的分量值 
          x_wsprintf(wbuf, L"%d", leddlg_S.col_G);
          CreateWindow(BUTTON, wbuf, WS_TRANSPARENT|WS_VISIBLE|WS_OWNERDRAW|WS_DISABLED, 
@@ -465,7 +463,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                       GUI_RGBLED_Icon[14].rc.w, GUI_RGBLED_Icon[14].rc.h,          
                       hwnd, ID_TEXTBOX_G_NUM, NULL, NULL);
  
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_G_NUM), controlFont_32);                         
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_G_NUM), controlFont_16);                         
          //创建文本框--蓝灯         
          CreateWindow(BUTTON, L"rp", WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE, 
                       GUI_RGBLED_Icon[11].rc.x, GUI_RGBLED_Icon[11].rc.y, 
@@ -473,20 +471,20 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                       hwnd, ID_TEXTBOX_G, NULL, NULL);
          SendMessage(GetDlgItem(hwnd, ID_TEXTBOX_G),TBM_SET_TEXTFLAG,0,
                         DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_BKGND);   
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_G), controlFont_32);  
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_G), controlFont_16);  
          //创建文本框--绿灯
          CreateWindow(BUTTON, L"sp", WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE, 
                       GUI_RGBLED_Icon[12].rc.x, GUI_RGBLED_Icon[12].rc.y, 
                       GUI_RGBLED_Icon[12].rc.w, GUI_RGBLED_Icon[12].rc.h,          
                       hwnd, ID_TEXTBOX_B, NULL, NULL);  
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_B), controlFont_32);
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_B), controlFont_16);
          //B的分量值         
          x_wsprintf(wbuf, L"%d", leddlg_S.col_B);         
          CreateWindow(BUTTON, wbuf, WS_TRANSPARENT|WS_VISIBLE|WS_OWNERDRAW|WS_DISABLED, 
                       GUI_RGBLED_Icon[15].rc.x, GUI_RGBLED_Icon[15].rc.y, 
                       GUI_RGBLED_Icon[15].rc.w, GUI_RGBLED_Icon[15].rc.h,
                       hwnd, ID_TEXTBOX_B_NUM, NULL, NULL);
-         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_B_NUM), controlFont_32);   
+         SetWindowFont(GetDlgItem(hwnd, ID_TEXTBOX_B_NUM), controlFont_16);   
 
          //设置位图结构参数
 //         RGBdesktop_0.Format	= BM_RGB888;     //位图格式
@@ -501,7 +499,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          u32 jpeg_size;
          JPG_DEC *dec;
          res = RES_Load_Content(GUI_RGB_BACKGROUNG_PIC, (char**)&jpeg_buf, &jpeg_size);
-         RGBLED_DIALOG.hdc_mem = CreateMemoryDC(SURF_SCREEN, 800, 480);
+         RGBLED_DIALOG.hdc_mem = CreateMemoryDC(SURF_SCREEN, GUI_XSIZE, GUI_YSIZE);
          if(res)
          {
             /* 根据图片数据创建JPG_DEC句柄 */
@@ -525,14 +523,22 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       case WM_NOTIFY: 
       {
-         NMHDR *nr;
-         WCHAR wbuf[128];
-         u16 ctr_id; 
-         u16 code,  id;
-         id  =LOWORD(wParam);//获取消息的ID码
-         code=HIWORD(wParam);//获取消息的类型
-         ctr_id = LOWORD(wParam); //wParam低16位是发送该消息的控件ID.
-         nr = (NMHDR*)lParam; //lParam参数，是以NMHDR结构体开头.
+        NMHDR *nr;
+        WCHAR wbuf[128];
+        u16 ctr_id; 
+        u16 code,  id;
+        id  =LOWORD(wParam);//获取消息的ID码
+        code=HIWORD(wParam);//获取消息的类型
+        ctr_id = LOWORD(wParam); //wParam低16位是发送该消息的控件ID.
+        nr = (NMHDR*)lParam; //lParam参数，是以NMHDR结构体开头.
+        
+        RECT rc;
+        rc.x = 200;
+        rc.y = 80;
+        rc.h = 80;
+        rc.w = 80;
+        InvalidateRect(hwnd, &rc, TRUE);    /* 不要佩奇 画个圆 */
+        
          if(id == ID_EXIT && code == BN_CLICKED)
          {
             PostCloseMessage(hwnd);
@@ -786,25 +792,46 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       {
          HDC hdc =(HDC)wParam;
          RECT rc =*(RECT*)lParam;
-         
+         GetClientRect(hwnd, &rc);
          if(RGBLED_DIALOG.State!=FALSE)
+         {
             BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, RGBLED_DIALOG.hdc_mem, rc.x, rc.y, SRCCOPY);
+            SetBrushColor(hdc,  MapRGB(hdc, leddlg_S.col_R, leddlg_S.col_G, leddlg_S.col_B));
+            FillCircle(hdc, 240, 120, 40);    /* 不要佩奇 画个圆 */
+         }
          else
          {
             SetBrushColor(hdc, MapRGB(hdc, 0,0,0));
             FillRect(hdc, &rc);             
          }
-    
-
-
+         
          return TRUE;
-
       } 
+      
+      case WM_PAINT: //窗口需要绘制时，会自动产生该消息.
+		{
+			PAINTSTRUCT ps;
+			HDC hdc;
+      
+      GetClientRect(hwnd, &rc);
+      
+			hdc =BeginPaint(hwnd,&ps); //开始绘图
+
+			////用户的绘制内容...
+//      SetBrushColor(hdc,  MapRGB(hdc, leddlg_S.col_R, leddlg_S.col_G, leddlg_S.col_B));
+//      FillCircle(hdc, 240, 120, 40);    /* 不要佩奇 画个圆 */
+      
+//			BitBlt(hdc,0,22,MEMDC_W,MEMDC_H,hdc_mem,0,0,SRCCOPY);
+      
+			EndPaint(hwnd,&ps); //结束绘图
+		}
+		break;
+      
       case WM_DESTROY:
       {        
          Delete_DlALOG();
-         DeleteDC(hdc_bk);
-         DeleteSurface(pSurfTop);
+//         DeleteDC(hdc_bk);
+//         DeleteSurface(pSurfTop);
          return PostQuitMessage(hwnd);	
       }          
       default:

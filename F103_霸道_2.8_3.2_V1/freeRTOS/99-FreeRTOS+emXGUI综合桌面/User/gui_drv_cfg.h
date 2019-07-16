@@ -147,10 +147,10 @@
 #else
   /* LOGO使用的字体 */
   #define  GUI_LOGO_FONT               "logo_icon_24_4BPP.xft"//"LOGO_50_4BPP.xft"
-  #define  GUI_ICON_FONT_200          "logo_icon_200_200_4BPP.xft"
+  #define  GUI_LOGO_FONT_200          "logo_icon_200_200_4BPP.xft"
   /* ICON使用的字体 */
   #define   GUI_ICON_FONT_50         "APP_ICON_50_4BPP.xft"
-  #define   GUI_ICON_FONT_252         "app_icon_252_252_4BPP.xft"
+  #define   GUI_ICON_FONT_150         "APP_ICON_150_150_4BPP.xft"
   /* 控制ICON使用的字体 */
   #define   GUI_CONTROL_FONT_12      "CONTROL_ICON_48_48_4BPP.xft"
   #define   GUI_CONTROL_FONT_32      "CONTROL_ICON_32_32_4BPP.xft"

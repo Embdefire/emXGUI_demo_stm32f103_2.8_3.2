@@ -42,8 +42,8 @@ static void App_FLASH_Writer(void )
    
 	if(thread==0)
 	{ 
-      /* 创建线程运行自己 */
-      GUI_Thread_Create((void(*)(void*))App_FLASH_Writer,  /* 任务入口函数 */
+    /* 创建线程运行自己 */
+    GUI_Thread_Create((void(*)(void*))App_FLASH_Writer,  /* 任务入口函数 */
                             "Flash writer",/* 任务名字 */
                             5*1024,  /* 任务栈大小 */
                             NULL, /* 任务入口函数参数 */
@@ -51,7 +51,7 @@ static void App_FLASH_Writer(void )
                             10); /* 任务时间片，部分任务不支持 */
     thread =1;
 
-      return;
+    return;
 	}
 	while(thread) //线程已创建了
 	{     
@@ -62,11 +62,10 @@ static void App_FLASH_Writer(void )
 
     thread = 0;       
 
-    /* 删除线程自己 */
-    GUI_Thread_Delete(GUI_GetCurThreadHandle());
-
+    
 	}
-  return;
+  /* 删除线程自己 */
+  GUI_Thread_Delete(GUI_GetCurThreadHandle());
 }
 
 /**
@@ -81,18 +80,20 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	//static RECT rc_R, rc_G, rc_B;//RGB分量指示框
   
-  const WCHAR no_res_info[] = L"Some resources not found in the FLASH.\r\n\
+  const WCHAR no_res_info[] = L"   Some resources not found in the \r\nFLASH.\
 Follow the instructions below:\r\n\r\n\
-1.Insert an SD card with [srcdata] resource.\r\n\
+1.Insert an SD card with [srcdata] \r\n\resource.\
 3.Power up again the board.\r\n\
-2.Click the button below to load the resources.";
+2.Click the button below to load \r\n\
+the resources.";
   
-  const WCHAR normal_res_info[] = L"Please [Exit] if you don't know what to do!!!\r\n\
-This app is use to reload resources\r\n\
-If you really want to reload resources:\r\n\
-1.Insert an SD card with [srcdata] resource.\r\n\
+  const WCHAR normal_res_info[] = L"Please [Exit] if you don't know what\r\nto do!!!\
+\r\nThis app is use to reload resources\r\n\
+If you really want to reload resou-\r\nrces:\r\n\
+1.Insert an SD card with [srcdata] \r\nresource.\
 3.Power up again the board.\r\n\
-2.Click the button below to load the resources.";
+2.Click the button below to load \r\n\
+the resources.";
   
   /* 默认显示信息 */
   const WCHAR *pStr = normal_res_info;
@@ -128,9 +129,9 @@ If you really want to reload resources:\r\n\
           if(!res_not_found_flag)
           {  
             /* 退出按钮 */
-            rc0.w = 60;
+            rc0.w = 40;
             rc0.x = rc.w - rc0.w - 5*2;
-            rc0.h = 30;
+            rc0.h = 25;
 
             CreateWindow(BUTTON, L"Exit",BS_FLAT | WS_VISIBLE,
                           rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_EXIT, NULL, NULL); 
@@ -140,7 +141,7 @@ If you really want to reload resources:\r\n\
           rc0.x = 5;
           rc0.y = 1*rc.h/5;
           rc0.w = rc.w - rc0.x*2;
-          rc0.h = 2*rc.h/5;
+          rc0.h = 3*rc.h/5;
       
           CreateWindow(TEXTBOX,pStr ,WS_VISIBLE,
                         rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_INFO, NULL, NULL); 
@@ -148,7 +149,7 @@ If you really want to reload resources:\r\n\
           /* 进度条 */
           rc0.x = 5;
           rc0.w = rc.w - rc0.x*2;
-          rc0.h = 30;
+          rc0.h = 20;
           rc0.y = 4*rc.h/5 - rc0.h-10;
  
           //PROGRESSBAR_CFG结构体的大小
@@ -168,17 +169,17 @@ If you really want to reload resources:\r\n\
 
           /* 烧录按钮 */
           rc0.x = 5;
-          rc0.w = rc.w/2- rc0.x*2;
-          rc0.h = 45;
+          rc0.w = 230;
+          rc0.h = 30;
           rc0.y = rc.h - rc0.h - 10;
 
           CreateWindow(BUTTON, L"Click me to load resources",BS_FLAT | WS_VISIBLE,
                         rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_BURN, NULL, NULL); 
 
           /* 复位按钮 */
-          rc0.x = rc.w/2 +5;
-          rc0.w = rc.w/2 - 5*2;
-          rc0.h = 45;
+          rc0.w = 230;
+          rc0.x = GUI_XSIZE - rc0.w;
+          rc0.h = 25;
           rc0.y = rc.h - rc0.h - 10;
           
           CreateWindow(BUTTON, L"Click me to reset system",BS_FLAT ,
@@ -203,7 +204,7 @@ If you really want to reload resources:\r\n\
         ShowWindow(GetDlgItem(hwnd,ID_BURN),SW_HIDE);
         ShowWindow(GetDlgItem(hwnd,ID_PROGBAR),SW_HIDE);
 
-        SetWindowText(wnd_res_writer_info_textbox,L"Load resources success!\r\n\r\nClick the button below to reset system!");
+        SetWindowText(wnd_res_writer_info_textbox,L"Load resources success!\r\n\r\nClick the button below to reset \r\nsystem!");
 
       }  
       

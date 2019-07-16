@@ -827,7 +827,7 @@ void	GUI_DEMO_Graphics_Accelerator(void)
 	MSG msg;
 
 	/////
-  GUI_DEBUG("Enter");
+//  GUI_DEBUG("Enter");
 	wcex.Tag 		    = WNDCLASS_TAG;
 
 	wcex.Style			= CS_HREDRAW | CS_VREDRAW;

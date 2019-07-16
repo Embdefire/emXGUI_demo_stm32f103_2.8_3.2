@@ -359,7 +359,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 ////    SetFont(hdc, GB2312_32_Font);
     SetFont(hdc, defaultFont);
-    GUI_DEBUG("滑动窗口重绘中");
+
     SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
     FillRect(hdc, &rc);
     SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));

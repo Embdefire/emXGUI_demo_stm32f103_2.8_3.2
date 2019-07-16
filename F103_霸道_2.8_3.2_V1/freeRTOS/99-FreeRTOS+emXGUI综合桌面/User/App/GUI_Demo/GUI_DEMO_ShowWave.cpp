@@ -1046,7 +1046,6 @@ static	LRESULT	WaveWinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		}
    case WM_CLOSE:
    {
-     GUI_DEBUG("成功关闭窗口");
       return DestroyWindow(hwnd);
    }
 

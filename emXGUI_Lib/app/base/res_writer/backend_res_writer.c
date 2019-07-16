@@ -465,7 +465,7 @@ FRESULT Burn_Content(void)
     BURN_INFO("-------------------------------------"); 
     BURN_INFO("准备烧录内容：%s",full_file_name);
     
-    x_wsprintf((WCHAR*)tempbuf,L"Writing file %d/%d.\r\nWriting big files will take a long time.\r\nPlease wait...",i,file_num);
+    x_wsprintf((WCHAR*)tempbuf,L"Writing file %d/%d.\r\nWriting big files will take a long \r\ntime.Please wait...",i,file_num);
     SetWindowText(wnd_res_writer_info_textbox,(WCHAR*)tempbuf);
     SendMessage(wnd_res_writer_progbar,PBM_SET_VALUE,TRUE,i);
 
@@ -674,7 +674,7 @@ FRESULT BurnFile(void)
   }
   f_closedir(&dir);
   
-  SetWindowText(wnd_res_writer_info_textbox,L"Erasing FLASH,it will take a long time,\r\nplease wait...");
+  SetWindowText(wnd_res_writer_info_textbox,L"  Erasing FLASH,it will take a long \r\ntime,please wait...");
   GUI_msleep(20);
   
   BURN_INFO("正在进行整片擦除，时间很长，请耐心等候...");  

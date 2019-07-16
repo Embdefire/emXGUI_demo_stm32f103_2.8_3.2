@@ -59,7 +59,7 @@ HFONT logoFont =NULL;
 HFONT logoFont_200 =NULL;
 /* 图标字体 */
 HFONT iconFont_50 =NULL;
-HFONT iconFont_200 =NULL;
+HFONT iconFont_150 =NULL;
 HFONT iconFont_252 =NULL;
 /* 控制图标字体 */
 HFONT controlFont_12 =NULL;
@@ -237,6 +237,7 @@ HFONT GUI_Init_Extern_Font_2RAM(const char* res_name,u8** buf)
 
 /**
   * @brief  加载外部字体
+  * @param  无
   * @retval 返回重新创建的defaultFont
   */
 HFONT GUI_Init_Extern_Font(void)
@@ -251,13 +252,14 @@ HFONT GUI_Init_Extern_Font(void)
 #else
    /* 使用流设备加载字体，按需要读取 */
   {
-    defaultFont = GUI_Init_Extern_Font_Stream(GUI_DEFAULT_EXTERN_FONT); 
-    logoFont = GUI_Init_Extern_Font_Stream(GUI_LOGO_FONT);  
-    controlFont_48 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_48);  
-    controlFont_24 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_24); 
+    defaultFont    = GUI_Init_Extern_Font_Stream(GUI_DEFAULT_EXTERN_FONT);
+    logoFont       = GUI_Init_Extern_Font_Stream(GUI_LOGO_FONT);
+    controlFont_48 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_48);
+    controlFont_24 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_24);
     controlFont_32 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_32);
     controlFont_16 = GUI_Init_Extern_Font_Stream(GUI_CONTROL_FONT_16);
-    iconFont_50 = GUI_Init_Extern_Font_Stream(GUI_ICON_FONT_50);  
+    iconFont_50    = GUI_Init_Extern_Font_Stream(GUI_ICON_FONT_50);
+//    iconFont_150   = GUI_Init_Extern_Font_Stream(GUI_ICON_FONT_150);
   }
 #endif 
  

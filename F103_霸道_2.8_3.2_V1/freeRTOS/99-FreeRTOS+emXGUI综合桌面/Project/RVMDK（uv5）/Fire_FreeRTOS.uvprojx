@@ -1007,6 +1007,16 @@
               <FileType>8</FileType>
               <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp</FilePath>
             </File>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>Backend_RGBLED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\rgb_led\Backend_RGBLED.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

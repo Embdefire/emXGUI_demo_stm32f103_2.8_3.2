@@ -92,6 +92,8 @@
 "..\..\output\gui_app_desktop.o"
 "..\..\output\gui_demo_graphics_accelerator.o"
 "..\..\output\gui_demo_showwave.o"
+"..\..\output\gui_rgbled_dialog.o"
+"..\..\output\backend_rgbled.o"
 "..\..\output\boot_logo.o"
 --library_type=microlib --strict --scatter "..\..\Output\Fire_FreeRTOS.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

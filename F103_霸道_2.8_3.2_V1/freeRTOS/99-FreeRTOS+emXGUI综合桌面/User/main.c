@@ -121,6 +121,7 @@ static void GUI_Thread_Entry(void* parameter)
     vTaskDelay(500);   /* ÑÓÊ±500¸ötick */
   }
 }
+
 void FSMC_Init(void);
 void FSMC_InitSRAM(void);
 void FSMC_InitLCD(void);

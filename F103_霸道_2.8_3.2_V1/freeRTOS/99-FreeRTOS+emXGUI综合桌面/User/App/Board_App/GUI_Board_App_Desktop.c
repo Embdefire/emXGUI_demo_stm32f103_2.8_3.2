@@ -130,30 +130,31 @@ static const struct __obj_list menu_list_1[] = {
     //L"Radiobox",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
     //L"Textbox",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
 
-      L"GUI应用",		NULL, 	L"J", 	RGB_WHITE,			GUI_App_Desktop,
-      L"MP3播放器",		NULL,	  L"I", RGB_WHITE,				dummy,
-      L"视频播放器",		NULL,	  L"D", RGB_WHITE,				dummy,
+      L"GUI应用",		  NULL, 	L"J", RGB_WHITE, GUI_App_Desktop,
+      L"MP3播放器",	  NULL,	  L"I", RGB_WHITE, dummy,
+      L"视频播放器",  NULL,	  L"D", RGB_WHITE, dummy,
 
-      L"RGB彩灯",		NULL,	  L"L", RGB_WHITE,				dummy,
-      L"摄像头",		NULL,	  L"M",RGB_WHITE, 				dummy,
+      L"RGB彩灯",		  NULL,	  L"L", RGB_WHITE, GUI_LED_DIALOG,//dummy,
+      L"摄像头",		  NULL,	  L"M", RGB_WHITE, dummy,
 
-      L"图片浏览器",	NULL, 	L"G", RGB_WHITE,				dummy,
-      L"温湿度",	NULL,   L"O", RGB_WHITE,				dummy,
-      L"电压表",		NULL,	  L"W", RGB_WHITE,				dummy,  
-      L"模拟U盘",	NULL,	  L"N", RGB_WHITE,				dummy, 
-      L"陀螺仪",	  NULL,	  L"R", 	RGB_WHITE,			dummy,
+      L"图片浏览器",  NULL, 	L"G", RGB_WHITE, dummy,
+      L"温湿度",	    NULL,   L"O", RGB_WHITE, dummy,
+      L"电压表",		  NULL,	  L"W", RGB_WHITE, dummy,  
+      L"模拟U盘",     NULL,	  L"N", RGB_WHITE, dummy, 
+      L"陀螺仪",	    NULL,	  L"R", RGB_WHITE, dummy,
 
-      L"以太网",		NULL,	  L"Q", RGB_WHITE,				dummy,
-      L"WiFi",		NULL,	  L"P", RGB_WHITE,				dummy,
-      L"游戏",	NULL,	  L"S", RGB_WHITE,				dummy,
+      L"以太网",		  NULL,	  L"Q", RGB_WHITE, dummy,
+      L"WiFi",		    NULL,	  L"P", RGB_WHITE, dummy,
+      L"游戏",	      NULL,	  L"S", RGB_WHITE, dummy,
+ 
+      L"电话",	      NULL, 	L"T", RGB_WHITE, dummy,
+      L"短信",	      NULL,   L"U", RGB_WHITE, dummy,
+      L"二维码",	    NULL,	  L"V", RGB_WHITE, dummy,
 
-      L"电话",	NULL, 	L"T", RGB_WHITE,				dummy,
-      L"短信",	NULL,   L"U", RGB_WHITE,				dummy,
-      L"二维码",	NULL,	  L"V", RGB_WHITE,				dummy,
 
-
-        L"时钟",		NULL,	  L"H", RGB_WHITE,				dummy,
-        L"录音机",	  NULL,	  L"Y", 	RGB_WHITE,			dummy,
+      L"时钟",		    NULL,	  L"H", RGB_WHITE, dummy,
+      L"录音机",	    NULL,	  L"Y", RGB_WHITE, dummy,
+      L"FlashWriter", NULL,	  L"b", RGB_WHITE, GUI_RES_Writer_Dialog,
 //        L"Checkbox",	NULL,	  L"J", RGB_WHITE,				dummy,
 //            L"Checkbox",	NULL, 	L"D", RGB_WHITE,				dummy,
 //        L"Radiobox",	NULL,   L"E", RGB_WHITE,				dummy,
@@ -172,7 +173,6 @@ static const struct __obj_list menu_list_1[] = {
 //        L"Hello",		NULL,	  L"H", RGB_WHITE,				dummy,
 //        L"Button",	  NULL,	  L"I", 	RGB_WHITE,			dummy,
 //        L"Checkbox",	NULL,	  L"J", RGB_WHITE,				dummy,
-        L"FlashWriter",	  NULL,	  L"b", 	RGB_WHITE,			GUI_RES_Writer_Dialog,
 
         NULL,	NULL,	NULL,NULL, NULL,//结束标志!
 
