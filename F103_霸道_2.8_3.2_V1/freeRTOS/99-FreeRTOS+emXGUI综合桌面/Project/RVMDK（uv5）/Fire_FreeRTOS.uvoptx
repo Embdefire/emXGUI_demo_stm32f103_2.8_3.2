@@ -1711,17 +1711,29 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>17</GroupNumber>
+      <FileNumber>112</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c</PathWithFileName>
+      <FilenameWithoutPath>GUI_Camera_Dialog.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
   </Group>
 
   <Group>
     <GroupName>app_res</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>18</GroupNumber>
-      <FileNumber>112</FileNumber>
+      <FileNumber>113</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1741,7 +1753,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>19</GroupNumber>
-      <FileNumber>113</FileNumber>
+      <FileNumber>114</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

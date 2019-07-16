@@ -537,7 +537,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         rc.y = 80;
         rc.h = 80;
         rc.w = 80;
-        InvalidateRect(hwnd, &rc, TRUE);    /* 不要佩奇 画个圆 */
+        InvalidateRect(hwnd, &rc, TRUE);    /* （不要佩奇 画个圆） 使圆区域无效化 */
         
          if(id == ID_EXIT && code == BN_CLICKED)
          {

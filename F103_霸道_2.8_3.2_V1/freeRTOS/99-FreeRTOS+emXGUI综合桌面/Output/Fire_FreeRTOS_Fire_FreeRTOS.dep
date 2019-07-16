@@ -4148,7 +4148,7 @@ I (..\..\..\..\..\emXGUI_Lib\inc\GUI_Font_XFT.h)(0x5D030164)
 I (..\..\..\..\..\emXGUI_Lib\inc\x_obj.h)(0x5D030164)
 I (..\..\..\..\..\emXGUI_Lib\inc\Clist.h)(0x5D030164)
 I (..\..\..\..\..\emXGUI_Lib\app\base\GUI_AppDef.h)(0x5D200B84)
-F (..\..\User\App\Board_App\rgb_led\GUI_RGBLED_DIALOG.c)(0x5D2C7DDD)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\FreeRTOS\include -I ..\..\FreeRTOS\port\RVDS\ARM_CM3 -I ..\..\User\led -I ..\..\User\usart -I ..\..\User\Key -I ..\..\User\liuwei -I ..\..\User\liuwei\drv_inc -I ..\..\User\liuwei\spi_flash -I ..\..\User\liuwei\System_Drv -I ..\..\User\liuwei\X_GUI_Drv -I ..\..\..\..\..\emXGUI_Lib\inc -I ..\..\..\..\..\emXGUI_Lib\drv -I ..\..\..\..\..\emXGUI_Lib\app\base -I ..\..\..\..\..\emXGUI_Lib\arch\Inc -I ..\..\..\..\..\emXGUI_Lib -I ..\..\User\bsp -I ..\..\..\..\..\emXGUI_Lib\arch -I ..\..\User\bsp\drv_inc -I ..\..\User\bsp\FATFS -I ..\..\User\bsp\FATFS\option -I ..\..\User\App\GUI_Demo -I ..\..\User\App\Board_App\pic_viewer -I ..\..\User\OwnerDraw -I ..\..\User\App\GUI_Demo-I.\RTE\_Fire_FreeRTOS-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F10X_HD -DSTM32F10X_HD -DX_GUI_USE_FREERTOS -DUSE_STDPERIPH_DRIVER-o ..\..\output\gui_rgbled_dialog.o --omf_browse ..\..\output\gui_rgbled_dialog.crf --depend ..\..\output\gui_rgbled_dialog.d)
+F (..\..\User\App\Board_App\rgb_led\GUI_RGBLED_DIALOG.c)(0x5D2D2161)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\FreeRTOS\include -I ..\..\FreeRTOS\port\RVDS\ARM_CM3 -I ..\..\User\led -I ..\..\User\usart -I ..\..\User\Key -I ..\..\User\liuwei -I ..\..\User\liuwei\drv_inc -I ..\..\User\liuwei\spi_flash -I ..\..\User\liuwei\System_Drv -I ..\..\User\liuwei\X_GUI_Drv -I ..\..\..\..\..\emXGUI_Lib\inc -I ..\..\..\..\..\emXGUI_Lib\drv -I ..\..\..\..\..\emXGUI_Lib\app\base -I ..\..\..\..\..\emXGUI_Lib\arch\Inc -I ..\..\..\..\..\emXGUI_Lib -I ..\..\User\bsp -I ..\..\..\..\..\emXGUI_Lib\arch -I ..\..\User\bsp\drv_inc -I ..\..\User\bsp\FATFS -I ..\..\User\bsp\FATFS\option -I ..\..\User\App\GUI_Demo -I ..\..\User\App\Board_App\pic_viewer -I ..\..\User\OwnerDraw -I ..\..\User\App\GUI_Demo-I.\RTE\_Fire_FreeRTOS-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F10X_HD -DSTM32F10X_HD -DX_GUI_USE_FREERTOS -DUSE_STDPERIPH_DRIVER-o ..\..\output\gui_rgbled_dialog.o --omf_browse ..\..\output\gui_rgbled_dialog.crf --depend ..\..\output\gui_rgbled_dialog.d)
 I (..\..\..\..\..\emXGUI_Lib\inc\emXGUI.h)(0x5D200810)
 I (..\..\..\..\..\emXGUI_Lib\inc\def.h)(0x5D030164)
 I (..\..\..\..\..\emXGUI_Lib\arch\Inc\gui_os_port.h)(0x5D197653)
@@ -4284,5 +4284,73 @@ I (..\..\User\bsp\FATFS\ff.h)(0x5D200628)
 I (..\..\User\bsp\FATFS\integer.h)(0x5D229B11)
 I (..\..\User\bsp\FATFS\ffconf.h)(0x589536AB)
 I (..\..\..\..\..\emXGUI_Lib\inc\web_color.h)(0x5D030164)
+F (..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c)(0x5D2D2162)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\FreeRTOS\include -I ..\..\FreeRTOS\port\RVDS\ARM_CM3 -I ..\..\User\led -I ..\..\User\usart -I ..\..\User\Key -I ..\..\User\liuwei -I ..\..\User\liuwei\drv_inc -I ..\..\User\liuwei\spi_flash -I ..\..\User\liuwei\System_Drv -I ..\..\User\liuwei\X_GUI_Drv -I ..\..\..\..\..\emXGUI_Lib\inc -I ..\..\..\..\..\emXGUI_Lib\drv -I ..\..\..\..\..\emXGUI_Lib\app\base -I ..\..\..\..\..\emXGUI_Lib\arch\Inc -I ..\..\..\..\..\emXGUI_Lib -I ..\..\User\bsp -I ..\..\..\..\..\emXGUI_Lib\arch -I ..\..\User\bsp\drv_inc -I ..\..\User\bsp\FATFS -I ..\..\User\bsp\FATFS\option -I ..\..\User\App\GUI_Demo -I ..\..\User\App\Board_App\pic_viewer -I ..\..\User\OwnerDraw -I ..\..\User\App\GUI_Demo-I.\RTE\_Fire_FreeRTOS-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F10X_HD -DSTM32F10X_HD -DX_GUI_USE_FREERTOS -DUSE_STDPERIPH_DRIVER-o ..\..\output\gui_camera_dialog.o --omf_browse ..\..\output\gui_camera_dialog.crf --depend ..\..\output\gui_camera_dialog.d)
+I (..\..\..\..\..\emXGUI_Lib\inc\emXGUI.h)(0x5D200810)
+I (..\..\..\..\..\emXGUI_Lib\inc\def.h)(0x5D030164)
+I (..\..\..\..\..\emXGUI_Lib\arch\Inc\gui_os_port.h)(0x5D197653)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599ECD2C)
+I (..\..\FreeRTOS\include\FreeRTOS.h)(0x5C46D7EB)
+I (C:\Keil_v5\ARM\ARMCC\include\stddef.h)(0x599ECD2C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599ECD2E)
+I (..\..\User\FreeRTOSConfig.h)(0x5D2C3E40)
+I (..\..\Libraries\CMSIS\stm32f10x.h)(0x5D197965)
+I (..\..\Libraries\CMSIS\core_cm3.h)(0x5C46D7EC)
+I (..\..\Libraries\CMSIS\system_stm32f10x.h)(0x5C46D7EC)
+I (..\..\User\stm32f10x_conf.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_adc.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_bkp.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_can.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_cec.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_crc.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_dac.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_dbgmcu.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_dma.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_exti.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_flash.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_fsmc.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_gpio.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_i2c.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_iwdg.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_pwr.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_rcc.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_rtc.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_sdio.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_spi.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_tim.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_usart.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\stm32f10x_wwdg.h)(0x5C46D7EC)
+I (..\..\Libraries\FWlib\inc\misc.h)(0x5C46D7EC)
+I (..\..\User\bsp\./usart/bsp_usart.h)(0x5D245AB6)
+I (..\..\FreeRTOS\include\projdefs.h)(0x5C46D7EB)
+I (..\..\FreeRTOS\include\portable.h)(0x5C46D7EB)
+I (..\..\FreeRTOS\include\deprecated_definitions.h)(0x5C46D7EB)
+I (..\..\FreeRTOS\port\RVDS\ARM_CM3\portmacro.h)(0x5C46D7EB)
+I (..\..\FreeRTOS\include\mpu_wrappers.h)(0x5C46D7EB)
+I (..\..\FreeRTOS\include\task.h)(0x5C46D7EB)
+I (..\..\FreeRTOS\include\list.h)(0x5C46D7EB)
+I (..\..\..\..\..\emXGUI_Lib\inc\emXGUI_Arch.h)(0x5D244FB8)
+I (..\..\..\..\..\emXGUI_Lib\arch\Inc\gui_drv.h)(0x5D1AEE56)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599ECD2E)
+I (..\..\User\gui_drv_cfg.h)(0x5D2C39F3)
+I (..\..\User\bsp\board.h)(0x5D26F6A2)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x599ECD2A)
+I (..\..\User\bsp\BSP.h)(0x5D1AB580)
+I (..\..\User\bsp\./spi_flash/bsp_flash_spi.h)(0x5D1C0B5A)
+I (..\..\..\..\..\emXGUI_Lib\inc\x_libc.h)(0x5D030164)
+I (..\..\User\bsp\./led/bsp_led.h)(0x5C46D7EC)
+I (..\..\User\bsp\./KEY/bsp_key.h)(0x5C46D7EC)
+I (..\..\..\..\..\emXGUI_Lib\drv\gui_mem_port.h)(0x5D030164)
+I (..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.h)(0x5D1F09D7)
+I (..\..\..\..\..\emXGUI_Lib\drv\gui_font_port.h)(0x5D2C314A)
+I (..\..\..\..\..\emXGUI_Lib\drv\gui_log_port.h)(0x5D030164)
+I (..\..\..\..\..\emXGUI_Lib\drv\gui_input_port.h)(0x5D030164)
+I (..\..\..\..\..\emXGUI_Lib\drv\gui_resource_port.h)(0x5D130D65)
+I (..\..\..\..\..\emXGUI_Lib\drv\gui_fs_port.h)(0x5D030164)
+I (..\..\User\bsp\FATFS\ff.h)(0x5D200628)
+I (..\..\User\bsp\FATFS\integer.h)(0x5D229B11)
+I (..\..\User\bsp\FATFS\ffconf.h)(0x589536AB)
+I (..\..\..\..\..\emXGUI_Lib\inc\web_color.h)(0x5D030164)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599ECD2C)
+I (..\..\User\OwnerDraw\Widget.h)(0x5D2068BD)
 F (..\..\..\..\..\emXGUI_Lib\app\base\boot_interface\boot_logo.c)(0x5D030164)(--c99 -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\..\Libraries\CMSIS -I ..\..\User -I ..\..\Libraries\FWlib\inc -I ..\..\FreeRTOS\include -I ..\..\FreeRTOS\port\RVDS\ARM_CM3 -I ..\..\User\led -I ..\..\User\usart -I ..\..\User\Key -I ..\..\User\liuwei -I ..\..\User\liuwei\drv_inc -I ..\..\User\liuwei\spi_flash -I ..\..\User\liuwei\System_Drv -I ..\..\User\liuwei\X_GUI_Drv -I ..\..\..\..\..\emXGUI_Lib\inc -I ..\..\..\..\..\emXGUI_Lib\drv -I ..\..\..\..\..\emXGUI_Lib\app\base -I ..\..\..\..\..\emXGUI_Lib\arch\Inc -I ..\..\..\..\..\emXGUI_Lib -I ..\..\User\bsp -I ..\..\..\..\..\emXGUI_Lib\arch -I ..\..\User\bsp\drv_inc -I ..\..\User\bsp\FATFS -I ..\..\User\bsp\FATFS\option -I ..\..\User\App\GUI_Demo -I ..\..\User\App\Board_App\pic_viewer -I ..\..\User\OwnerDraw -I ..\..\User\App\GUI_Demo-I.\RTE\_Fire_FreeRTOS-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="527" -DSTM32F10X_HD -DSTM32F10X_HD -DX_GUI_USE_FREERTOS -DUSE_STDPERIPH_DRIVER-o ..\..\output\boot_logo.o --omf_browse ..\..\output\boot_logo.crf --depend ..\..\output\boot_logo.d)
 F (..\..\Doc\readme.txt)(0x5C46D7EB)()

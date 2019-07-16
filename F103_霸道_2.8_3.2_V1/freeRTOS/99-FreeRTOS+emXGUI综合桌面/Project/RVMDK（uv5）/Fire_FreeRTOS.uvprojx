@@ -1017,6 +1017,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\App\Board_App\rgb_led\Backend_RGBLED.c</FilePath>
             </File>
+            <File>
+              <FileName>GUI_Camera_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

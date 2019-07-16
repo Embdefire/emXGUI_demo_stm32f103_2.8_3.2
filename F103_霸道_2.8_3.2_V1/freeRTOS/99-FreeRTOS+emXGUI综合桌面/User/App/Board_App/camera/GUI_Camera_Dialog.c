@@ -1779,7 +1779,6 @@ static LRESULT WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       PostCloseMessage(hwnd);
   
-
       break;
     }
     case WM_TIMER://ÉãÏñÍ·×´Ì¬»ú
