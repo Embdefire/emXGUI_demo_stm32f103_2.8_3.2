@@ -863,10 +863,10 @@ typedef struct tagNMHDR
 #define WS_OVERLAPPEDWINDOW (\
 		 	 	 	 	 	 WS_OVERLAPPED     | \
 							 WS_CLIPCHILDREN   | \
-                             WS_CAPTION        | \
+               WS_CAPTION        | \
 							 WS_CLOSEBOX       | \
-                             WS_BORDER         | \
-                             WS_DLGFRAME )
+               WS_BORDER         | \
+               WS_DLGFRAME )
 
 
 

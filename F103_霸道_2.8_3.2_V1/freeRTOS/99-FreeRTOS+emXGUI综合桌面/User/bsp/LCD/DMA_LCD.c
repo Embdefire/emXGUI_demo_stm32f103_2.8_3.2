@@ -112,7 +112,7 @@ void LCD_DMA_Init(u32 lcd_dat_addr)
 	{
 		NVIC_InitTypeDef   nvic_init;
 		nvic_init.NVIC_IRQChannel = LCD_DMA_IRQn;
-		nvic_init.NVIC_IRQChannelPreemptionPriority = 5;//抢占优先级0
+		nvic_init.NVIC_IRQChannelPreemptionPriority = 6;//抢占优先级0
 		nvic_init.NVIC_IRQChannelSubPriority = 0;//子优先级1
 		nvic_init.NVIC_IRQChannelCmd = ENABLE;//使能外部中断通道
 		NVIC_Init(&nvic_init);//配置

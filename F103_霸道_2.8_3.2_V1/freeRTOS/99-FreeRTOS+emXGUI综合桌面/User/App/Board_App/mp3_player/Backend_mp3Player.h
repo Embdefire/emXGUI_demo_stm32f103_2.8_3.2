@@ -8,13 +8,13 @@
 #define RECBUFFER_SIZE  1024*8
 #define FMT_COUNT	6		/* 音频格式数组元素个数 */
 /* 状态 */
-enum
+typedef enum 
 {
 	STA_IDLE = 0,	/* 待机状态 */
 	STA_PLAYING,	/* 放音状态 */
    STA_SWITCH,   /* 切歌状态 */
 	STA_ERR,			/*  error  */
-};
+}Music_State_t;
 
 typedef struct
 {
@@ -57,5 +57,10 @@ void mp3PlayerDemo(const char *mp3file, uint8_t vol, HDC hdc);
 void wavplayer(const char *wavfile, uint8_t vol, HDC hdc);
 extern int time2exit;
 extern GUI_SEM *exit_sem;
+
+extern Music_State_t Music_State;
+void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc);
+
+
 #endif  /* __MP3PLAYER_H__   */
 

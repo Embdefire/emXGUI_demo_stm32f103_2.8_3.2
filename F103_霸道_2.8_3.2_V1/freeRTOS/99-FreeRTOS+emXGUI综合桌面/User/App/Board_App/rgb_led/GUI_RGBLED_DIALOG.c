@@ -30,24 +30,24 @@ struct leddlg
 
 icon_S GUI_RGBLED_Icon[18] = 
 {
-      {"tuichu",           {292, 0,   28,  28},  FALSE},    // 退出按键
-      {"biaotilan",        {0,    0,   1,    1},  FALSE},    // APP标题栏
-      {"APPHouse",         {160, 40,  150, 150}, FALSE},    // APP房子图标
-      {"hongdeng",         {38,   0,  20,   20},  FALSE},    // 红灯图标
-      {"lvdeng",           {88,   0,  20,   20},  FALSE},    // 绿灯图标
-      {"landeng",          {138,  0,  20,   20},  FALSE},    // 蓝灯图标
-      {"hongdengscrollbar",{30,  25,  35,  180}, FALSE},    // 红色滚动条
-      {"lvdengscrollbar",  {80,  25,  35,  180}, FALSE},    // 绿色滚动条
-      {"landengscrollbar", {130, 25,  35,  180}, FALSE},    // 蓝色滚动条 
+      {"tuichu",           {292, 0,   28,  28},  FALSE},    // 退出按键0
+      {"biaotilan",        {0,    0,   1,    1},  FALSE},    // APP标题栏1
+      {"APPHouse",         {160, 40,  150, 150}, FALSE},    // APP房子图标2
+      {"hongdeng",         {38,  20,  20,   20},  FALSE},    // 红灯图标3
+      {"lvdeng",           {103,  20,  20,   20},  FALSE},    // 绿灯图标4
+      {"landeng",          {168, 20,  20,   20},  FALSE},    // 蓝灯图标5
+      {"hongdengscrollbar",{30,  45,  35,  140}, FALSE},    // 红色滚动条6
+      {"lvdengscrollbar",  {95,  45,  35,  140}, FALSE},    // 绿色滚动条7
+      {"landengscrollbar", {160, 45,  35,  140}, FALSE},    // 蓝色滚动条8
       
-      {"kongzhikaiguan",   {275, 195, 60,  60},  FALSE},    // 控制开关
+      {"kongzhikaiguan",   {275, 195, 60,  60},  FALSE},    // 控制开关9
       
-      {"hongdengwenzi",    {31,  223, 35,  20},  FALSE},    // 文字-红灯
-      {"lvdengwenzi",      {82,  223, 35,  20},  FALSE},    // 文字-绿灯
-      {"landengwenzi",     {131, 223, 35,  20},  FALSE},    // 文字-蓝灯
-      {"Rshuzhi",          {31,  206, 35,  20},  FALSE},    // 文字-R数值
-      {"Gshuzhi",          {82,  206, 35,  20},  FALSE},    // 文字-G数值
-      {"Bshuzhi",          {131, 206, 35,  20},  FALSE},    // 文字-B数值
+      {"hongdengwenzi",    {31,  203, 35,  20},  FALSE},    // 文字-红灯10
+      {"lvdengwenzi",      {97,  203, 35,  20},  FALSE},    // 文字-绿灯11
+      {"landengwenzi",     {161, 203, 35,  20},  FALSE},    // 文字-蓝灯12
+      {"Rshuzhi",          {31,  186, 35,  20},  FALSE},    // 文字-R数值13
+      {"Gshuzhi",          {97,  186, 35,  20},  FALSE},    // 文字-G数值14
+      {"Bshuzhi",          {161, 186, 35,  20},  FALSE},    // 文字-B数值15
 };
 
 RGBLED_DIALOG_s RGBLED_DIALOG =
@@ -104,7 +104,7 @@ static void GUI_RGBLED_drawscrollbar_V(HWND hwnd, HDC hdc, COLOR_RGB32 back_c, C
    rc_scrollbar.x = rc.w/2;
    rc_scrollbar.y = rc.y;
    rc_scrollbar.w = 2;
-   rc_scrollbar.h = rc.h;
+   rc_scrollbar.h = rc.h+1;
    EnableAntiAlias(hdc, TRUE);
    SetBrushColor(hdc, MapRGB888(hdc, Page_c));
 	 FillRect(hdc, &rc_scrollbar);
@@ -116,11 +116,11 @@ static void GUI_RGBLED_drawscrollbar_V(HWND hwnd, HDC hdc, COLOR_RGB32 back_c, C
 //	rc.x += (rc.w >> 2) >> 1;
 //	rc.w -= rc.w >> 2;
 	/* 边框 */
-	FillCircle(hdc, rc.x + rc.w / 2, rc.y + rc.h / 2, rc.h / 2);
+	FillCircle(hdc, rc.x + rc.w / 2+1, rc.y + rc.h / 2+1, rc.h / 2);
    InflateRect(&rc, -2, -2);
 
 	SetBrushColor(hdc, MapRGB888(hdc, fore_c));
-	FillCircle(hdc, rc.x + rc.w / 2, rc.y + rc.h / 2, rc.h / 2);
+	FillCircle(hdc, rc.x + rc.w / 2+1, rc.y + rc.h / 2+1, rc.h / 2);
   EnableAntiAlias(hdc, FALSE);
 }
 /*
@@ -398,7 +398,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          RGBLED_DIALOG.sif_R.nMin = 0;
          RGBLED_DIALOG.sif_R.nMax = 255;
          RGBLED_DIALOG.sif_R.nValue = RGBLED_DIALOG.col_R;
-         RGBLED_DIALOG.sif_R.TrackSize = 20;
+         RGBLED_DIALOG.sif_R.TrackSize = 25;
          RGBLED_DIALOG.sif_R.ArrowSize = 0;
          
          CreateWindow(SCROLLBAR, L"SCROLLBAR_R", SBS_VERT|WS_OWNERDRAW |WS_TRANSPARENT| WS_VISIBLE, 
@@ -413,7 +413,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          RGBLED_DIALOG.sif_G.nMin = 0;
          RGBLED_DIALOG.sif_G.nMax = 255;
          RGBLED_DIALOG.sif_G.nValue = RGBLED_DIALOG.col_G;
-         RGBLED_DIALOG.sif_G.TrackSize = 20;
+         RGBLED_DIALOG.sif_G.TrackSize = 25;
          RGBLED_DIALOG.sif_G.ArrowSize = 0;
          
          CreateWindow(SCROLLBAR, L"SCROLLBAR_G", SBS_VERT|WS_OWNERDRAW |WS_TRANSPARENT| WS_VISIBLE, 
@@ -428,7 +428,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          RGBLED_DIALOG.sif_B.nMin = 0;
          RGBLED_DIALOG.sif_B.nMax = 255;
          RGBLED_DIALOG.sif_B.nValue = RGBLED_DIALOG.col_B;
-         RGBLED_DIALOG.sif_B.TrackSize = 20;
+         RGBLED_DIALOG.sif_B.TrackSize = 25;
          RGBLED_DIALOG.sif_B.ArrowSize = 0;
          
          CreateWindow(SCROLLBAR, L"SCROLLBAR_B", SBS_VERT|WS_OWNERDRAW | WS_TRANSPARENT|WS_VISIBLE, 
@@ -533,7 +533,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         nr = (NMHDR*)lParam; //lParam参数，是以NMHDR结构体开头.
         
         RECT rc;
-        rc.x = 200;
+        rc.x = 220;
         rc.y = 80;
         rc.h = 80;
         rc.w = 80;
@@ -797,7 +797,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          {
             BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, RGBLED_DIALOG.hdc_mem, rc.x, rc.y, SRCCOPY);
             SetBrushColor(hdc,  MapRGB(hdc, leddlg_S.col_R, leddlg_S.col_G, leddlg_S.col_B));
-            FillCircle(hdc, 240, 120, 40);    /* 不要佩奇 画个圆 */
+            FillCircle(hdc, 260, 120, 40);    /* 不要佩奇 画个圆 */
          }
          else
          {

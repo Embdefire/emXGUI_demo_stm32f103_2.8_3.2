@@ -1775,6 +1775,4 @@ extern "C" void	GUI_DEMO_ShowWave(void)
 		DispatchMessage(&msg);
 	}
 	ShowCursor(TRUE);
-  UpdateWindow(GetDesktopWindow());
-  InvalidateRect(GetDesktopWindow(),NULL,TRUE);
 }

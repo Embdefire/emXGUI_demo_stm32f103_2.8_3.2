@@ -35,6 +35,7 @@ extern "C"{
 #include "./led/bsp_led.h" 
 #include "spi_flash/bsp_flash_spi.h"
 #include "./KEY/bsp_key.h"
+#include  "VS1053.h"
 
 
 //#include "Common/drv_inc/my_iic.h"

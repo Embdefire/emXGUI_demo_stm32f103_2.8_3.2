@@ -5,6 +5,7 @@
 #include "./mp3_player/GUI_MUSICPLAYER_DIALOG.h"
 #include	"CListMenu.h"
 #include "GUI_AppDef.h"
+#include <string.h>
 /******************按键ID值********************/
 #define ID_BUTTON_EXIT 0x2000  
 /******************列表ID值********************/
@@ -18,8 +19,8 @@
 #define ID_EXIT        0x3000
 
 /**********************变量****************************/
-char music_playlist[MUSIC_MAX_NUM][FILE_NAME_LEN] ;//播放List
-char music_lcdlist[MUSIC_MAX_NUM][MUSIC_NAME_LEN] ;//显示list
+char music_playlist[MUSIC_MAX_NUM][FILE_NAME_LEN] __EXRAM;//播放List
+char music_lcdlist[MUSIC_MAX_NUM][MUSIC_NAME_LEN] __EXRAM;//显示list
 uint8_t  music_file_num = 0;//文件个数
 int play_index = 0;   //播放歌曲的编号值
 
@@ -70,7 +71,7 @@ static void button_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 	//	DrawCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //画矩形外框
 
 	  /* 使用控制图标字体 */
-	SetFont(hdc, controlFont_64);
+	SetFont(hdc, controlFont_32);
 	//  SetTextColor(hdc,MapRGB(hdc,255,255,255));
 
 	GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文字
@@ -130,7 +131,7 @@ static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 	//	DrawCircle(hdc,rc.x+rc.w/2,rc.x+rc.w/2,rc.w/2); //画矩形外框
 
 	  /* 使用控制图标字体 */
-	SetFont(hdc, controlFont_48);
+	SetFont(hdc, controlFont_16);
 	//  SetTextColor(hdc,MapRGB(hdc,255,255,255));
 
 	GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文字
@@ -205,21 +206,21 @@ static LRESULT Win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          wnd = CreateWindow(&wcex_ListMenu,
                       L"ListMenu1",
                       WS_VISIBLE | LMS_ICONFRAME|LMS_PAGEMOVE,
-                      rc.x + 100, rc.y + 80, rc.w - 200, rc.h-80,
+                      rc.x + 30, rc.y + 20, rc.w - 60, rc.h-20,
                       hwnd,
                       ID_LIST_1,
                       NULL,
                       &cfg);         
          SendMessage(wnd, MSG_SET_SEL, play_index, 0);
          wnd= CreateWindow(BUTTON, L"L", BS_FLAT | BS_NOTIFY | WS_OWNERDRAW |WS_VISIBLE,
-                        0, rc.h * 1 / 2, 70, 70, hwnd, ICON_VIEWER_ID_PREV, NULL, NULL);
+                       2, (rc.h) / 2, 30, 30, hwnd, ICON_VIEWER_ID_PREV, NULL, NULL);
          SetWindowFont(wnd, controlFont_48); 
 	      wnd = CreateWindow(BUTTON, L"K", BS_FLAT | BS_NOTIFY | WS_OWNERDRAW | WS_VISIBLE,
-        rc.w - 65, rc.h * 1 / 2, 70, 70, hwnd, ICON_VIEWER_ID_NEXT, NULL, NULL);
-         SetWindowFont(wnd, controlFont_48);    
+        rc.w - 30, (rc.h ) / 2, 30, 30, hwnd, ICON_VIEWER_ID_NEXT, NULL, NULL);
+         SetWindowFont(wnd, controlFont_16);    
          
          CreateWindow(BUTTON, L"F", BS_FLAT | BS_NOTIFY|WS_OWNERDRAW |WS_VISIBLE,
-                        0, 0, 240, 80, hwnd, ID_EXIT, NULL, NULL);         
+                        0, 0, 35, 30, hwnd, ID_EXIT, NULL, NULL);         
          
          
          break;
@@ -251,8 +252,8 @@ static LRESULT Win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          //DrawBitmap(hdc,0,0,&bm_0,NULL);   
          rc.x = 0;
          rc.y = 0;
-         rc.w = 800;
-         rc.h = 80;
+         rc.w = 300;
+         rc.h = 20;
          SetTextColor(hdc, MapRGB(hdc, 250, 250, 250));
          DrawText(hdc, L"播放列表", -1, &rc, DT_VCENTER|DT_CENTER);
          EndPaint(hwnd, &ps);
@@ -273,7 +274,7 @@ static LRESULT Win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             {
                case ID_LIST_1:{
                      play_index = nm->idx;//切换至下一首
-                     mp3player.ucStatus = STA_SWITCH;	                  
+                     Music_State = STA_SWITCH;	                  
 //                  Play_index = ;
 //                  sw_flag = 1;
                   //PostCloseMessage(hwnd); //产生WM_CLOSE消息关闭主窗口

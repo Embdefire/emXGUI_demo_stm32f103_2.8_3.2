@@ -123,15 +123,9 @@ int thread_ctrl = 1;
 //}
 
 static const struct __obj_list menu_list_1[] = {
-    //	L"Speed",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
-    //L"Hello",		app_1,		NULL, 	 	RGB_WHITE,			dummy,
-    //L"Button",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
-    //L"Checkbox",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
-    //L"Radiobox",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
-    //L"Textbox",		app_1, 		NULL,	 	RGB_WHITE,			dummy,
-
+  
       L"GUI应用",		  NULL, 	L"J", RGB_WHITE, GUI_App_Desktop,
-      L"MP3播放器",	  NULL,	  L"I", RGB_WHITE, dummy,
+      L"MP3播放器",	  NULL,	  L"I", RGB_WHITE, GUI_MUSICPLAYER_DIALOG,//dummy,//
       L"视频播放器",  NULL,	  L"D", RGB_WHITE, dummy,
 
       L"RGB彩灯",		  NULL,	  L"L", RGB_WHITE, GUI_LED_DIALOG,//dummy,
@@ -155,25 +149,7 @@ static const struct __obj_list menu_list_1[] = {
       L"时钟",		    NULL,	  L"H", RGB_WHITE, dummy,
       L"录音机",	    NULL,	  L"Y", RGB_WHITE, dummy,
       L"FlashWriter", NULL,	  L"b", RGB_WHITE, GUI_RES_Writer_Dialog,
-//        L"Checkbox",	NULL,	  L"J", RGB_WHITE,				dummy,
-//            L"Checkbox",	NULL, 	L"D", RGB_WHITE,				dummy,
-//        L"Radiobox",	NULL,   L"E", RGB_WHITE,				dummy,
-//        L"Textbox",	NULL,	  L"F", RGB_WHITE,				dummy,
-
-//        L"Speed",		NULL,	  L"G", RGB_WHITE,				dummy,
-//        L"Hello",		NULL,	  L"H", RGB_WHITE,				dummy,
-//        L"Button",	  NULL,	  L"I", 	RGB_WHITE,			dummy,
-//        L"Checkbox",	NULL,	  L"J", RGB_WHITE,				dummy,
-
-//        L"Checkbox",	NULL, 	L"D", RGB_WHITE,				dummy,
-//        L"Radiobox",	NULL,   L"E", RGB_WHITE,				dummy,
-//        L"Textbox",	NULL,	  L"F", RGB_WHITE,				dummy,
-
-//        L"Speed",		NULL,	  L"G", RGB_WHITE,				dummy,
-//        L"Hello",		NULL,	  L"H", RGB_WHITE,				dummy,
-//        L"Button",	  NULL,	  L"I", 	RGB_WHITE,			dummy,
-//        L"Checkbox",	NULL,	  L"J", RGB_WHITE,				dummy,
-
+      
         NULL,	NULL,	NULL,NULL, NULL,//结束标志!
 
 };

@@ -10,7 +10,7 @@ typedef struct Reg
 }Reg_Info;
 
 /* ¼Ä´æÆ÷²ÎÊıÅäÖÃ */
-Reg_Info Sensor_Config[] =
+const Reg_Info Sensor_Config[] =
 {
 	{CLKRC,     0x00}, /*clock config*/
 	{COM7,      0x46}, /*QVGA RGB565 */

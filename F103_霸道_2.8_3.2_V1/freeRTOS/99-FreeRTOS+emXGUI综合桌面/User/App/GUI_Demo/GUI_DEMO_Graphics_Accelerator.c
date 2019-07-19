@@ -21,7 +21,7 @@ extern const char ASCII_24_4BPP[];
 extern const char ASCII_32_4BPP[];
 extern const char ASCII_40_4BPP[];
 #else
-
+extern const char ASCII_16_4BPP[];
 #define ASCII_32_4BPP "ASCII_40_4BPP.xft"
 #define ASCII_40_4BPP "ASCII_40_4BPP.xft"
 
@@ -403,7 +403,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 			BitmapInit(); //初始化位图数据
 #if 1
-			GA_hFont24 =XFT_CreateFont(ASCII_24_4BPP);
+			GA_hFont24 =XFT_CreateFont(ASCII_16_4BPP);
 			GA_hFont32 =XFT_CreateFont(ASCII_32_4BPP);
 			GA_hFont40 =XFT_CreateFont(ASCII_40_4BPP);
 #else
