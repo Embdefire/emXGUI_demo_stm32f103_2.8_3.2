@@ -176,7 +176,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 		if((time>=(25*type+playtime))&&(chgsch==0))
 		{
 			uint32_t timetemp=0;
-//			OSSchedLock(&err);
+
 			playtime=time;	
 			if((type==1)&&((f_kbps>448)||(f_kbps<32)))f_kbps=VS_Get_HeadInfo();
 			val=file.fsize/f_kbps/125;
@@ -188,14 +188,73 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 			x_wsprintf(wbuf, L"%02d:%02d", lrc.curtime/60,lrc.curtime%60);
       SetWindowText(GetDlgItem(MusicPlayer_hwnd, ID_TB2), wbuf);
       SendMessage(music_wnd_time, SBM_SETVALUE, TRUE, lrc.curtime*255/val);
-//      InvalidateRect(MusicPlayer_hwnd, &rc_cli, FALSE);
-			//printf("fkbps:%d,time:%d,val:%d\n",f_kbps,time,val);
 			
 			musicrate=lrc.curtime*255/val;
-//			SLIDER_SetValue(hSchedule,musicrate);
 
-			if((lrc.oldtime<=lrc.curtime*100)&&(lrc.indexsize>10))
-			{
+      if(lrc.flag == 1)
+      {
+        //+100是提前显示，显示需要消耗一点时间
+        if((lrc.oldtime <= lrc.curtime*100)&&(lrc.indexsize>7))//+100
+        {
+          //显示当前行的歌词
+          x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount]-1], LYRIC_MAX_SIZE);
+          SetWindowText(wnd_lrc3,wbuf);
+          //显示第i-1行的歌词（前一行）
+          if(lyriccount>0)
+          {
+             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount-1]-1], LYRIC_MAX_SIZE);
+             SetWindowText(wnd_lrc2,wbuf);
+          }
+          else
+             SetWindowText(wnd_lrc2,L" ");
+          //显示第i-2行的歌词（前两行）
+          if(lyriccount>0)
+          {
+             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount-2]-1], LYRIC_MAX_SIZE);
+             SetWindowText(wnd_lrc1,wbuf);
+          }
+          else
+             SetWindowText(wnd_lrc1,L" ");
+          //显示第i+1行的歌词（后一行）   
+          if(lyriccount < lrc.indexsize-1)
+          {
+             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount+1]-1], LYRIC_MAX_SIZE);
+             SetWindowText(wnd_lrc4,wbuf);                    
+          }
+          else
+             SetWindowText(wnd_lrc4,L" ");
+          //显示第i+2行的歌词（后二行）   
+          if(lyriccount < lrc.indexsize-2)
+          {
+             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount+2]-1], LYRIC_MAX_SIZE);
+             SetWindowText(wnd_lrc5,wbuf);                    
+          }
+          else
+             SetWindowText(wnd_lrc5,L" ");
+                    
+          do{
+          lyriccount++;					
+          if(lyriccount>=lrc.indexsize)
+          {
+             lrc.oldtime=0xffffff;
+             break;
+          }
+          lrc.oldtime=lrc.time_tbl[lyriccount];
+          }while(lrc.oldtime<=(lrc.curtime*100));
+        }                  
+             
+        }
+        //找不到歌词文件
+        else
+        {
+           
+           SetWindowText(wnd_lrc3,L"请在SDCard放入相应的歌词文件(*.lrc)");
+           SetWindowText(wnd_lrc1,L" ");
+           SetWindowText(wnd_lrc2,L" ");
+           SetWindowText(wnd_lrc4,L" ");
+           SetWindowText(wnd_lrc5,L" ");
+        }
+        
 //				i=0;
 //				while(i<lrc.length_tbl[lyriccount])
 //				{
@@ -215,10 +274,10 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 //					}
 //					lrc.oldtime=lrc.time_tbl[lyriccount];
 //				}while(lrc.oldtime<=(lrc.curtime*100));
-			}
-//			OSSchedUnlock(&err);	
+//			}
 		}
 	}
+  
 	lyriccount=0;
 	f_close(&file);
 }

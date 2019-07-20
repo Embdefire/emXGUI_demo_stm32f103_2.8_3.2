@@ -60,11 +60,11 @@ uint8_t chgsch=0; //调整进度条标志位
 char music_name[FILE_NAME_LEN] __EXRAM;//歌曲名数组
 //文件系统相关变量
 FRESULT f_result; 
-//FIL     f_file __EXRAM;
+FIL f_file __EXRAM;
 //FIL     f_file;
 UINT    f_num;
 //歌词数组--存放歌词数据
-uint8_t ReadBuffer1[1]={0};
+uint8_t ReadBuffer1[1024*5] __EXRAM;
 //MINI播放键、上一首、下一首控件句柄句柄
 static HWND mini_next,mini_start,mini_back;
 //歌词显示标志位
@@ -343,26 +343,15 @@ static void App_PlayMusic(HWND hwnd)
    SCROLLINFO sif;
 	if(thread==0)
 	{  
-//      =GUI_Thread_Create((void(*)(void*))App_PlayMusic,"App_PlayMusic",5*1024,NULL,12,10);
    xReturn = xTaskCreate((TaskFunction_t )(void(*)(void*))App_PlayMusic,  /* 任务入口函数 */
                             (const char*    )"App_PlayMusic",/* 任务名字 */
                             (uint16_t       )4*1024/4,  /* 任务栈大小FreeRTOS的任务栈以字为单位 */
                             (void*          )NULL,/* 任务入口函数参数 */
                             (UBaseType_t    )5, /* 任务的优先级 */
                             (TaskHandle_t  )&h_music);/* 任务控制块指针 */
-                            
-//  if(xReturn == pdPASS )
-//    GUI_ERROR("GUI Thread Create OK2:%s","App_PlayMusic");
-//  else
-//  {
-//    GUI_ERROR("GUI Thread Create failed:%s","App_PlayMusic");
-//    
-//  }      
-                            
+                                                
       thread =1;
-//      rt_thread_startup(h_music);//启动线程				
-//      rt_thread_suspend(h_music);//暂时挂起
-//      rt_schedule();//进行任务调度
+
       return;
 	}
 	while(thread) //线程已创建了
@@ -372,86 +361,67 @@ static void App_PlayMusic(HWND hwnd)
 			app=1;
          hdc = GetDC(hwnd);   
          int i = 0;      
+#if 1
          //读取歌词文件
-//         while(music_playlist[play_index][i]!='\0')
-//         {
-//           music_name[i]=music_playlist[play_index][i];
-//           i++;
-//         }			         
-//         music_name[i]='\0';
-//         //为歌词文件添加.lrc后缀
-//         lrc_chg_suffix((uint8_t *)music_name,"lrc");
-//         i=0;
-//         //初始化数组内容
-//         while(i<LYRIC_MAX_SIZE)
-//         {
-//           lrc.addr_tbl[i]=0;
-//           lrc.length_tbl[i]=0;
-//           lrc.time_tbl[i]=0;
-//           i++;
-//         }
-//         lrc.indexsize=0;
-//         lrc.oldtime=0;
-//         lrc.curtime=0;
-//         //打开歌词文件
-//         f_result=f_open(&f_file, music_name,FA_OPEN_EXISTING | FA_READ);
-//         //打开成功，读取歌词文件，分析歌词文件，同时将flag置1，表示文件读取成功
-//         if((f_result==FR_OK)&&(f_file.fsize<COMDATA_SIZE))
-//         {					
-//           f_result=f_read(&f_file,ReadBuffer1, sizeof(ReadBuffer1),&f_num);		
-//           if(f_result==FR_OK) 
-//           {  
-//              lyric_analyze(&lrc,ReadBuffer1);
-//              lrc_sequence(&lrc);
-//              lrc.flag = 1;      
-//           }
-//         }
-//         //打开失败（未找到该歌词文件），则将flag清零，表示没有读取到该歌词文件
-//         else
-//         {
-//            lrc.flag = 0;
-//            printf("读取歌词失败\n");
-//         }
-//         //关闭文件
-//			f_close(&f_file);	 
-         
+         while(music_playlist[play_index][i]!='\0')
+         {
+           music_name[i]=music_playlist[play_index][i];
+           i++;
+         }			         
+         music_name[i]='\0';
+         //为歌词文件添加.lrc后缀
+         lrc_chg_suffix((uint8_t *)music_name,"lrc");
+         i=0;
+         //初始化数组内容
+         while(i<LYRIC_MAX_SIZE)
+         {
+           lrc.addr_tbl[i]=0;
+           lrc.length_tbl[i]=0;
+           lrc.time_tbl[i]=0;
+           i++;
+         }
+         lrc.indexsize=0;
+         lrc.oldtime=0;
+         lrc.curtime=0;
+         //打开歌词文件
+         f_result=f_open(&f_file, music_name,FA_OPEN_EXISTING | FA_READ);
+         //打开成功，读取歌词文件，分析歌词文件，同时将flag置1，表示文件读取成功
+         if((f_result==FR_OK)&&(f_file.fsize<COMDATA_SIZE))
+         {					
+           f_result=f_read(&f_file,ReadBuffer1, sizeof(ReadBuffer1),&f_num);		
+           if(f_result==FR_OK) 
+           {  
+              lyric_analyze(&lrc,ReadBuffer1);
+              lrc_sequence(&lrc);
+              lrc.flag = 1;      
+           }
+         }
+         else    // 打开失败（未找到该歌词文件），则将flag清零，表示没有读取到该歌词文件
+         {
+            lrc.flag = 0;
+            printf("读取歌词失败\n");
+         }
+         //关闭文件
+			   f_close(&f_file);	 
+#endif
          i = 0;
          //得到播放曲目的文件名
-      while(music_playlist[play_index][i]!='\0')
-			{
-				music_name[i]=music_playlist[play_index][i];
-				i++;
-			}
-			music_name[i]='\0';
-         
-         //power = SendMessage(GetDlgItem(hwnd, ID_SCROLLBAR_POWER), SBM_GETVALUE, NULL, NULL);
-         //SendMessage(GetDlgItem(hwnd, ID_SCROLLBAR_POWER),SBM_GETSCROLLINFO,0,(LPARAM)&sif);
-         //power = sif.nValue;
-      if(strstr(music_name,".wav")||strstr(music_name,".WAV"))
-      {
-        printf("wav\r");
-      //           wavplayer(music_name, power,hdc);
-      }
-      else
-      {
-        uint32_t ulReturn;
-  
-//  /* 进入临界段，临界段可以嵌套 */
-//  taskENTER_CRITICAL();
+        while(music_playlist[play_index][i]!='\0')
+        {
+          music_name[i]=music_playlist[play_index][i];
+          i++;
+        }
+        music_name[i]='\0';
+
         vs1053_player(music_name, power, hdc);
-//                vs1053_player_song("0:/我的梦.mp3");// mp3PlayerDemo(music_name, power, hdc);music_name
 
-//  /* 退出临界段 */
-//  taskEXIT_CRITICAL();
-      }
-
-      printf("播放结束\n");
+        printf("播放结束\n");
          
-			app=0;
-    //使用 GETDC之后需要释放掉HDC
-      ReleaseDC(hwnd, hdc);
-      //进行任务调度
-      GUI_msleep(200);
+        app=0;
+        //使用 GETDC之后需要释放掉HDC
+        ReleaseDC(hwnd, hdc);
+        //进行任务调度
+        GUI_msleep(300);
 		}
    }
   
@@ -719,6 +689,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
       case WM_CREATE:
       {
          u8 *jpeg_buf;
+         u8 *j_buf;
          u32 jpeg_size;
          JPG_DEC *dec;
         
@@ -728,8 +699,9 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         VS_Sine_Test();	
         VS_HD_Reset();
         VS_Soft_Reset();
-        
+        printf("%d\n", '\0');
          res = RES_Load_Content(GUI_RGB_BACKGROUNG_PIC, (char**)&jpeg_buf, &jpeg_size);
+
          hdc_bk = CreateMemoryDC(SURF_SCREEN, GUI_XSIZE, GUI_YSIZE);
          if(res)
          {
@@ -816,16 +788,16 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                                 0, 40, 300, 20, hwnd, ID_TEXTBOX_LRC1, NULL, NULL);  
          SendMessage(wnd_lrc1,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);                                
          wnd_lrc2 = CreateWindow(TEXTBOX, L"2", WS_OWNERDRAW, 
-                                0, 60, 300, 20, hwnd, ID_TEXTBOX_LRC2, NULL, NULL); 
+                                0, 70, 300, 20, hwnd, ID_TEXTBOX_LRC2, NULL, NULL); 
          SendMessage(wnd_lrc2,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);
          wnd_lrc3 = CreateWindow(TEXTBOX, L"3", WS_OWNERDRAW, 
-                                0, 80, 300, 20, hwnd, ID_TEXTBOX_LRC3, NULL, NULL);  
+                                0, 100, 300, 20, hwnd, ID_TEXTBOX_LRC3, NULL, NULL);  
          SendMessage(wnd_lrc3,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);     
          wnd_lrc4 = CreateWindow(TEXTBOX, L"4", WS_OWNERDRAW, 
-                                0, 100, 300, 20, hwnd, ID_TEXTBOX_LRC4, NULL, NULL);  
+                                0, 130, 300, 20, hwnd, ID_TEXTBOX_LRC4, NULL, NULL);  
          SendMessage(wnd_lrc4,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND); 
          wnd_lrc5 = CreateWindow(TEXTBOX, L"5", WS_OWNERDRAW, 
-                                0, 120, 300, 20, hwnd, ID_TEXTBOX_LRC5, NULL, NULL);  
+                                0, 150, 300, 20, hwnd, ID_TEXTBOX_LRC5, NULL, NULL);  
          SendMessage(wnd_lrc5,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);  			
          CreateWindow(BUTTON,L"歌曲文件名",WS_OWNERDRAW|WS_TRANSPARENT|WS_VISIBLE,
                       30,0,260,20,hwnd,ID_TB5,NULL,NULL);
@@ -865,19 +837,19 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 //			bm_0.Bits =(void*)gImage_0;    //位图数据
       
         /* 创建蓝鱼的memdc */
-         rotate_disk_hdc = CreateMemoryDC(COLOR_FORMAT_ARGB8888,240,240); 
+         rotate_disk_hdc = CreateMemoryDC(COLOR_FORMAT_ARGB8888,50,50); 
          /* 清空背景为透明 */
          ClrDisplay(rotate_disk_hdc,NULL,0);
          //BitBlt(rotate_disk_hdc, 0, 0, 240, 240, hdc_bk, 280, 120, SRCCOPY);
          /* 绘制bmp到hdc */
-         RECT rc = {0,0,240,240};
+         RECT rc = {0,0,50,50};
          SetTextColor(rotate_disk_hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
          SetFont(rotate_disk_hdc, iconFont_50);
          DrawTextEx(rotate_disk_hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
          /* 转换成bitmap */
          DCtoBitmap(rotate_disk_hdc,&bm_0);
 
-         pSurf =CreateSurface(SURF_RGB565,240,240,-1,NULL);
+         pSurf =CreateSurface(SURF_RGB565,50,50,-1,NULL);
          
          
 //         SetTimer(hwnd, 1, 200, TMR_START,NULL);
@@ -886,8 +858,8 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          
           rc.x =0;
           rc.y =0;
-          rc.w =240;
-          rc.h =240;
+          rc.w =50;
+          rc.h =50;
           hdc_mem11 =CreateDC(pSurf,&rc);
 
          break;
@@ -903,14 +875,9 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                a%=360;
                //ClrDisplay(hdc_mem11,NULL,MapRGB(hdc_mem11,0,0,0));
                BitBlt(hdc_mem11, 0, 0, 240, 240, hdc_bk, 280, 120, SRCCOPY);
-               RotateBitmap(hdc_mem11,120,120,&bm_0,a);
+               RotateBitmap(hdc_mem11,160,120,&bm_0,0);
             }
-            rc.x=280;
-            rc.y=120;
-            rc.w=240;
-            rc.h=240;
-
-            InvalidateRect(hwnd,&rc,FALSE);
+            
          }
 			break;
       }         
@@ -1007,7 +974,13 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                      ShowWindow(wnd_lrc4, SW_HIDE);
                      ShowWindow(wnd_lrc5, SW_HIDE);
                      RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE);
-                     ResetTimer(hwnd, 1, 200, TMR_START,NULL);
+//                     ResetTimer(hwnd, 1, 200, NULL,NULL);
+                    rc.x=135;
+                    rc.y=95;
+                    rc.w=50;
+                    rc.h=50;
+
+                    InvalidateRect(hwnd,&rc,FALSE);
                   }
                   else
                   {
@@ -1021,8 +994,12 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                      ShowWindow(wnd_lrc3, SW_SHOW);
                      ShowWindow(wnd_lrc4, SW_SHOW);
                      ShowWindow(wnd_lrc5, SW_SHOW);
+                    rc.x=135;
+                    rc.y=95;
+                    rc.w=50;
+                    rc.h=50;
 
-                     ResetTimer(hwnd, 1, 200, NULL,NULL);
+                    InvalidateRect(hwnd,&rc,FALSE);
                   }                                              
                   break;
                }
@@ -1117,36 +1094,6 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                      InvalidateRect(hwnd, &music_icon[3].rc, TRUE);                     
                   break;                  
                }  
-            
-               //MINI播放/暂停处理case
-               case ID_BUTTON_MINISTOP:
-//               {
-//                     music_icon[9].state = ~music_icon[9].state;
-//                     //InvalidateRect(hwnd, &music_icon[9].rc, TRUE);
-//                     //ShowWindow(sub11_wnd, SW_HIDE);
-//                     //RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE);
-//                     if(music_icon[9].state == FALSE)
-//                     {
-//                        
-//                        vTaskSuspend(h_music);                 
-//                        SetWindowText(mini_start, L"I");
-//                        
-//                        SetWindowText(sub11_wnd, L"I");
-//                        
-//                     }
-//                     else if(music_icon[9].state != FALSE)
-//                     {
-//                        
-//                        vTaskResume(h_music);
-//                        SetWindowText(mini_start, L"H");
-//                        SetWindowText(sub11_wnd, L"H");
-//                        
-//                     }
-
-//                     
-//                     //ShowWindow(sub11_wnd, SW_HIDE);                  
-//                  break;                  
-//               }
             }
          }//end of if(code == BN_CLICKED) 
          
@@ -1164,7 +1111,6 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                   power= sb_nr->nTrackValue; //得到当前的音量值
                   if(power == 0) 
                   {
-//                     wm8978_OutMute(1);//静音
                      SetWindowText(wnd_power, L"J");
                      ttt = 1;
                   }
@@ -1255,11 +1201,12 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          
          //开始绘制
          hdc = BeginPaint(hwnd, &ps); 
-         if(tt == 0)
+//         if(tt == 0)
          {
-            tt = 1;
-            BitBlt(hdc_mem11, 0, 0, 240, 240, hdc_bk, 280, 120, SRCCOPY);
-            RotateBitmap(hdc_mem11,120,120,&bm_0,0);
+//            tt = 1;
+            BitBlt(hdc_mem11, 0, 0, 50, 50, hdc_bk, 135, 95, SRCCOPY);
+           if (show_lrc == 0)
+            RotateBitmap(hdc_mem11,25,25,&bm_0,0);
          }            
          //显示歌曲时长
          //DrawText(hdc, L"00:00", -1, &rc_MusicTimes, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
@@ -1274,10 +1221,10 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 //         BitBlt(hdc, rc_bot.x, rc_bot.y, rc_bot.w, rc_bot.h, 
 //                hdc_mem, rc_bot.x, rc_bot.y, SRCCOPY);
          
-        rc.x=280;
-        rc.y=120;
-        rc.w=240;
-        rc.h=240;
+        rc.x=135;
+        rc.y=95;
+        rc.w=50;
+        rc.h=50;
            
         BitBlt(hdc,rc.x,rc.y,rc.w,rc.h,hdc_mem11,0,0,SRCCOPY);
              

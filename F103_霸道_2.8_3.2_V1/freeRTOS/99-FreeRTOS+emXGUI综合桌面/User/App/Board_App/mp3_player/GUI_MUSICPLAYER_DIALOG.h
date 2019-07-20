@@ -30,7 +30,7 @@ typedef struct{
 typedef __packed struct 
 { 
 	uint8_t 	indexsize; 	
-  uint8_t		length_tbl[LYRIC_MAX_SIZE]; 
+  uint8_t		length_tbl[LYRIC_MAX_SIZE];    // 200
  	uint16_t	addr_tbl[LYRIC_MAX_SIZE];										
  	int32_t		curtime;										
   int32_t		oldtime;	
@@ -57,7 +57,7 @@ extern HWND wnd_lrc2;//¸è´Ê´°¿Ú¾ä±ú
 extern HWND wnd_lrc3;//¸è´Ê´°¿Ú¾ä±ú
 extern HWND wnd_lrc4;//¸è´Ê´°¿Ú¾ä±ú
 extern HWND wnd_lrc5;//¸è´Ê´°¿Ú¾ä±ú
-extern uint8_t ReadBuffer1[1];
+extern uint8_t ReadBuffer1[1024*5];
 
 extern HFONT Music_Player_hFont48;
 extern HFONT Music_Player_hFont64;

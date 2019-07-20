@@ -115,7 +115,7 @@ DRESULT disk_read (
       /* 进入临界段，临界段可以嵌套 */
 //      taskENTER_CRITICAL();
       
-			SD_state=SD_ReadMultiBlocks(buff,(uint64_t)sector*SD_BLOCKSIZE,SD_BLOCKSIZE,count);
+			SD_state=SD_ReadMultiBlocks(buff,(uint64_t)(sector*SD_BLOCKSIZE),SD_BLOCKSIZE,count);
       
       /* 退出临界段 */
 //      taskEXIT_CRITICAL();
