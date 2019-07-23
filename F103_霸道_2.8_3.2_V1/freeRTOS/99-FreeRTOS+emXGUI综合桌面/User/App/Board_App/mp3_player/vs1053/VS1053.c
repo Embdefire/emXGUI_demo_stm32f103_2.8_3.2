@@ -1,7 +1,6 @@
 #include "ff.h"
 #include "gui_drv_cfg.h"
 #include  "VS1053.h"
-#include "flac.h"
 #include "board.h"
 #include "string.h"
 //VS1053默认设置参数

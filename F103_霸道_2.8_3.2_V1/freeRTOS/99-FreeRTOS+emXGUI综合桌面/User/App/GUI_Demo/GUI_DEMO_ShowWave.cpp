@@ -1766,7 +1766,7 @@ extern "C" void	GUI_DEMO_ShowWave(void)
 							NULL,0,NULL,NULL);
 
 	ShowWindow(hwnd,SW_SHOW);
-	UpdateWindow(hwnd);
+	
 
 	ShowWindow(hwnd,SW_SHOW);
 	while(GetMessage(&msg,hwnd))
@@ -1774,5 +1774,6 @@ extern "C" void	GUI_DEMO_ShowWave(void)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+  UpdateWindow( GetDesktopWindow());
 	ShowCursor(TRUE);
 }

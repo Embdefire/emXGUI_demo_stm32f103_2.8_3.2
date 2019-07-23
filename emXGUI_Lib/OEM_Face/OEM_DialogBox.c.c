@@ -11,12 +11,10 @@ static const MSGBOX_OPTIONS *opsInt;
 
 void DialogBoxButton_OwnerDraw(DRAWITEM_HDR *ds)
 {
-  HWND hwnd;
 	HDC hdc;
 	RECT rc;
 	WCHAR wbuf[128];
 
-	hwnd = ds->hwnd; //button的窗口句柄.
 	hdc = ds->hDC;   //button的绘图上下文句柄.
 	rc = ds->rc;     //button的绘制矩形区.
   
@@ -55,9 +53,8 @@ static LRESULT WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
       RECT rc;
       RECT rc_button;
-      HDC hdc;
-      int FontH;
-      FontH = GetFontAveHeight(defaultFont);
+//      int FontH;
+//      FontH = GetFontAveHeight(defaultFont);
       GetClientRect(hwnd, &rc);
 
       for(uint8_t xC=0; xC<opsInt->ButtonCount; xC++)
@@ -115,7 +112,6 @@ static LRESULT WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     
     case WM_NOTIFY: 
     {
-      u16 ctr_id; 
       u16 code,  id;
       id  =LOWORD(wParam);//获取消息的ID码
       code=HIWORD(wParam);//获取消息的类型

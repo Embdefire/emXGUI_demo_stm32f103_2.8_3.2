@@ -301,7 +301,7 @@ void	GUI_Boot_Interface_Dialog(void *param)
                               "GUI Slide Window",/* 任务名字 */
                               1024,  /* 任务栈大小 */
                               NULL, /* 任务入口函数参数 */
-                              5,    /* 任务的优先级 */
+                              6,    /* 任务的优先级 */
                               10); /* 任务时间片，部分任务不支持 */
        GUI_Thread_Create(GUI_Board_App_Desktop,  /* 任务入口函数 */
                               "GUI_APP",/* 任务名字 */

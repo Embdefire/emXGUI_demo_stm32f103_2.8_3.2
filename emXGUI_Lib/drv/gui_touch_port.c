@@ -20,7 +20,7 @@
 
 /* ×¢²á´¥ÃþÉè±¸ */
 #if	GUI_TOUCHSCREEN_EN
-#ifdef STM32F10X_HD
+#ifdef STM32F10X_HD ||  
 #if GUI_TOUCHSCREEN_CALIBRATE
 #define	SET_TOUCH_DEV(obj)	  extern const GUI_TOUCH_DEV obj; \
 							  const GUI_TOUCH_DEV *pTouchDev=(GUI_TOUCH_DEV*)&obj;

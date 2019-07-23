@@ -123,6 +123,7 @@ void	GUI_MEM_Init(void)
 void*	GUI_MEM_Alloc(U32 size)
 {
 	void *p=NULL;
+//  printf("剩余：%d字节\n需要：%d字节\n", xPortGetFreeHeapSize(), size);
 	p =OS_MALLOC(size);
 	if(p==NULL)
 	{
@@ -142,6 +143,7 @@ void*	GUI_MEM_Alloc(U32 size)
 void	GUI_MEM_Free(void *p)
 {
 	OS_FREE(p);
+//  printf("释放后剩余：%d字节\n",xPortGetFreeHeapSize());
 }
 
 /*===================================================================================*/
@@ -153,6 +155,7 @@ void	GUI_MEM_Free(void *p)
 */
 void*	GUI_GRAM_Alloc(U32 size)
 {
+  
 	return GUI_VMEM_Alloc(size);
 }
 
