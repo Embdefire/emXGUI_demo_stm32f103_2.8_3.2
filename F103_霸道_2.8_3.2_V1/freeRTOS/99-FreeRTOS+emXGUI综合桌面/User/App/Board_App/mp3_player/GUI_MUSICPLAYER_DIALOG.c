@@ -820,9 +820,17 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          //BitBlt(rotate_disk_hdc, 0, 0, 240, 240, hdc_bk, 280, 120, SRCCOPY);
          /* 绘制bmp到hdc */
          RECT rc = {0,0,50,50};
+         
+//         /* 进入临界段，临界段可以嵌套 */
+//          taskENTER_CRITICAL();
+         
          SetTextColor(rotate_disk_hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
          SetFont(rotate_disk_hdc, iconFont_50);
          DrawTextEx(rotate_disk_hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
+         
+//         /* 退出临界段 */
+//          taskEXIT_CRITICAL();
+         
          /* 转换成bitmap */
          DCtoBitmap(rotate_disk_hdc,&bm_0);
 
@@ -1114,17 +1122,21 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 //         if(tt == 0)
          {
 //            tt = 1;
-            BitBlt(hdc_mem11, 0, 0, 50, 50, hdc_bk, 135, 95, SRCCOPY);
-           if (show_lrc == 0)
+//            BitBlt(hdc_mem11, 0, 0, 50, 50, hdc_bk, 135, 95, SRCCOPY);
+//           if (show_lrc == 0)
             RotateBitmap(hdc_mem11,25,25,&bm_0,0);
          }            
          
         rc.x=135;
-        rc.y=95;
+        rc.y=60;
         rc.w=50;
         rc.h=50;
+         
+         SetTextColor(hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
+         SetFont(hdc, iconFont_50);
+         DrawTextEx(hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
 
-        BitBlt(hdc,rc.x,rc.y,rc.w,rc.h,hdc_mem11,0,0,SRCCOPY);
+        BitBlt(hdc,rc.x,rc.y,rc.w,rc.h,rotate_disk_hdc,0,0,SRCCOPY);
              
          //获取屏幕点（385，404）的颜色，作为透明控件的背景颜色
         color_bg = GetPixel(hdc, 300, 200);

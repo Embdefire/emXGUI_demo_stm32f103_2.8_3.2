@@ -864,10 +864,10 @@ void	GUI_LED_DIALOG(void)
    //SetColorValue(leddlg_S.col_R, leddlg_S.col_R, leddlg_S.col_R);
    
 	//创建主窗口
-	hwnd = CreateWindowEx(WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
+	hwnd = CreateWindowEx(WS_EX_FRAMEBUFFER,//WS_EX_NOFOCUS|
                         &wcex,
                         L"GUI_LED_DIALOG",
-                        WS_CLIPCHILDREN,
+                        WS_CLIPCHILDREN,//WS_CLIPCHILDREN
                         0, 0, GUI_XSIZE, GUI_YSIZE,
                         NULL, NULL, NULL, NULL);
    //显示主窗口

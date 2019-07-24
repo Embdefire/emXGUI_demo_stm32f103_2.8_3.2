@@ -489,14 +489,14 @@ void	GUI_App_Desktop(void)
 	wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
 
 	//创建主窗口
-	hwnd = CreateWindowEx(NULL,
+	hwnd = CreateWindowEx(WS_EX_FRAMEBUFFER,
 		&wcex,
       L"IconViewer",
 		//								/*WS_MEMSURFACE|*/WS_CAPTION|WS_DLGFRAME|WS_BORDER|WS_CLIPCHILDREN,
 		/*WS_MEMSURFACE|*/WS_CLIPCHILDREN,
 
 		0, 0, GUI_XSIZE, GUI_YSIZE - HEAD_INFO_HEIGHT,
-		GetDesktopWindow(), NULL, NULL, NULL);
+		NULL, NULL, NULL, NULL);//GetDesktopWindow()
 
 	//显示主窗口
 	ShowWindow(hwnd, SW_SHOW);

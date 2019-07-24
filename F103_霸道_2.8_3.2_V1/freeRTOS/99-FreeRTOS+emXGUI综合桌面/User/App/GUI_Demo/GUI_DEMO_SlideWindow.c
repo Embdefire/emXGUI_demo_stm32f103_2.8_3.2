@@ -336,7 +336,7 @@ void	GUI_DEMO_SlideWindow(void *p)
 		/*WS_MEMSURFACE|*/WS_CLIPCHILDREN|WS_OVERLAPPED,
 
 		0, GUI_YSIZE, GUI_XSIZE, GUI_YSIZE,
-		GetDesktopWindow(), ID_SLIDE_WINDOW, NULL, NULL);
+		NULL, ID_SLIDE_WINDOW, NULL, NULL);//GetDesktopWindow()
 
 	//ÏÔÊ¾Ö÷´°¿Ú
 	ShowWindow(hwnd, SW_SHOW);
