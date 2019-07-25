@@ -290,12 +290,6 @@ void	GUI_Boot_Interface_Dialog(void *param)
 #endif     
      else
      {	
-        
-     
-//        h=rt_thread_create("GUI_APP",GUI_Board_App_Desktop,NULL,8*1024,5,5);
-//        rt_thread_startup(h);			
-//        h=rt_thread_create("GUI_SLIDE_WIN",GUI_DEMO_SlideWindow,NULL,4096,5,5);
-//        rt_thread_startup(h);
         /* 找到资源，正常跑应用*/      
         GUI_Thread_Create(GUI_DEMO_SlideWindow,  /* 任务入口函数 */
                               "GUI Slide Window",/* 任务名字 */

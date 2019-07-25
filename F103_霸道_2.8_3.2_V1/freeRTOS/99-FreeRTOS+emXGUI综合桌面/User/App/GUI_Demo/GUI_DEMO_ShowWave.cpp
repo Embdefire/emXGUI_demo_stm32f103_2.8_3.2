@@ -1182,7 +1182,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
             sif.nMin		=5;
             sif.nMax		=30;
             wave_freq = sif.nValue =15;
-            sif.TrackSize		=30;
+            sif.TrackSize		= rc.h;
             sif.ArrowSize		=0;//20;
 
             wnd = CreateWindow(SCROLLBAR,L"HScroll1",WS_OWNERDRAW|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_SCROLL1,NULL,NULL);

@@ -8,6 +8,7 @@
 #include "diskio.h"
 #include "stm32f10x.h"
 #include "./sdio/bsp_sdio_sdcard.h"
+#include "GUI_AppDef.h"
 
 /* 为每个设备定义一个物理编号 */
 #define ATA			           0     // SD卡
@@ -69,7 +70,7 @@ DSTATUS disk_initialize (
 	}
 	return status;
 }
-#include "GUI_AppDef.h"
+
 
 /*-----------------------------------------------------------------------*/
 /* 读扇区：读取扇区内容到指定存储区                                              */

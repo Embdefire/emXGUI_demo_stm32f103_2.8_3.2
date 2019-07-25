@@ -2800,7 +2800,8 @@ uint8_t convert_from_bytes_to_power_of_two(uint16_t NumberOfBytes)
  * 输出  ：无
  */
 void SDIO_IRQHandler(void) 
-{  uint32_t ulReturn;
+{ 
+//  uint32_t ulReturn;
   
   /* 进入临界段，临界段可以嵌套 */
 //  ulReturn = taskENTER_CRITICAL_FROM_ISR();

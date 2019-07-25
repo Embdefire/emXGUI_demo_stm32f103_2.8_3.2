@@ -105,7 +105,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
           i+=32;
         }
 			}
-      //根据进度条调整播放位置				
+      //根据进度条调整播放位置
       numb=SendMessage(music_wnd_time, SBM_GETVALUE, NULL, NULL);     //获取当前进度条的位置
 			sch = numb*file.fsize/0xff;
 //			printf("chgsch:%d,sch:%d\n",chgsch,sch);
@@ -257,27 +257,6 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
            SetWindowText(wnd_lrc4,L" ");
            SetWindowText(wnd_lrc5,L" ");
         }
-        
-//				i=0;
-//				while(i<lrc.length_tbl[lyriccount])
-//				{
-//					lyrictext[i]=readbuf[lrc.addr_tbl[lyriccount]+i-1];
-//					if(lyrictext[i]=='\0')break;
-//					++i;
-//				}
-//				lyrictext[i]='\0';
-//				if(i>2)TEXT_SetText(hlyric,lyrictext);
-//				
-//				do{
-//					lyriccount++;					
-//					if(lyriccount>=lrc.indexsize)
-//					{
-//						lrc.indexsize=0;
-//						break;
-//					}
-//					lrc.oldtime=lrc.time_tbl[lyriccount];
-//				}while(lrc.oldtime<=(lrc.curtime*100));
-//			}
 		}
 	}
   

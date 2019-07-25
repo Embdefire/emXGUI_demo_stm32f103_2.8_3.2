@@ -41,7 +41,7 @@ icon_S music_icon[12] = {
    {"yinliang",         {10,200,32,32},       FALSE},//音量0
    {"yinyueliebiao",    {285,209,24,24},      FALSE},//音乐列表1
    {"geci",             {258,209,24,24},      FALSE},//歌词栏2
-   {"laba",             {231,209,24,24},      FALSE},//喇叭3
+   {"laba",             {258,209,24,24},      FALSE},//喇叭3  231
    {"NULL",             {0,0,0,0},            FALSE},//无4
    {"shangyishou",      {112, 205, 32, 32},   FALSE},//上一首5
    {"zanting/bofang",   {144, 205, 34, 34},   FALSE},//播放6
@@ -67,8 +67,6 @@ UINT    f_num;
 uint8_t ReadBuffer1[1024*5] __EXRAM;
 //MINI播放键、上一首、下一首控件句柄句柄
 //static HWND mini_next,mini_start,mini_back;
-//歌词显示标志位
-static int show_lrc = 0;
 //歌词结构体
 LYRIC lrc;
 static HDC hdc_bk;
@@ -77,11 +75,7 @@ static HWND wnd_power;//音量icon句柄
 extern const unsigned char gImage_0[];
 GUI_SEM *exit_sem = NULL;
 /*============================================================================*/
-static BITMAP bm_0;
-static HDC rotate_disk_hdc;
 
-static SURFACE *pSurf;
-static HDC hdc_mem11=NULL;
 SCROLLINFO sif_power;
 //HFONT Music_Player_hFont48=NULL;
 //HFONT Music_Player_hFont64  =NULL;
@@ -273,7 +267,7 @@ static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
    rc.y = -4;
    rc.x = 6;
 	DrawText(hdc, wbuf, -1, &rc, NULL);//绘制文字(居中对齐方式)
-
+  GUI_DEBUG("进入退出按钮重绘");
 
   /* 恢复默认字体 */
 	SetFont(hdc, defaultFont);
@@ -342,11 +336,11 @@ static void App_PlayMusic(HWND hwnd)
 	if(thread==0)
 	{  
    xTaskCreate((TaskFunction_t )(void(*)(void*))App_PlayMusic,  /* 任务入口函数 */
-                            (const char*    )"App_PlayMusic",/* 任务名字 */
-                            (uint16_t       )4*1024/4,  /* 任务栈大小FreeRTOS的任务栈以字为单位 */
-                            (void*          )NULL,/* 任务入口函数参数 */
-                            (UBaseType_t    )5, /* 任务的优先级 */
-                            (TaskHandle_t  )&h_music);/* 任务控制块指针 */
+                            (const char*    )"App_PlayMusic",   /* 任务名字 */
+                            (uint16_t       )4*1024/4,          /* 任务栈大小FreeRTOS的任务栈以字为单位 */
+                            (void*          )NULL,              /* 任务入口函数参数 */
+                            (UBaseType_t    )5,                 /* 任务的优先级 */
+                            (TaskHandle_t  )&h_music);          /* 任务控制块指针 */
                                                 
       thread =1;
 
@@ -411,7 +405,7 @@ static void App_PlayMusic(HWND hwnd)
         }
         music_name[i]='\0';
 
-        vs1053_player((uint8_t *)music_name, power, hdc);
+        vs1053_player((uint8_t *)music_name, power, hdc);//
 
         printf("播放结束\n");
          
@@ -420,10 +414,15 @@ static void App_PlayMusic(HWND hwnd)
         ReleaseDC(hwnd, hdc);
         //进行任务调度
         GUI_msleep(300);
-		}
+        
+        if (time2exit == 1)
+        {
+           GUI_SemPost(exit_sem);
+        }
+ 		}
    }
-  
-  GUI_Thread_Delete(GUI_GetCurThreadHandle()); 
+//  
+//  GUI_Thread_Delete(GUI_GetCurThreadHandle()); 
 }
 /**
   * @brief  scan_files 递归扫描sd卡内的歌曲文件
@@ -477,7 +476,7 @@ static FRESULT scan_files (char* path)
 					{
 						sprintf(file_name, "%s/%s", path, fn);						
 						memcpy(music_playlist[music_file_num],file_name,strlen(file_name)+1);
-//                  printf("%s\r\n",music_playlist[music_file_num]);
+                  printf("%s\r\n",music_playlist[music_file_num]);
 						memcpy(music_lcdlist[music_file_num],fn,strlen(fn)+1);						
 						music_file_num++;//记录文件个数
 					}
@@ -689,7 +688,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
         VS_Init();
         printf("vs1053:%4X\n",VS_Ram_Test());
         GUI_msleep(100);
-        VS_Sine_Test();	
+//        VS_Sine_Test();	
         VS_HD_Reset();
         VS_Soft_Reset();
          res = RES_Load_Content(GUI_RGB_BACKGROUNG_PIC, (char**)&jpeg_buf, &jpeg_size);
@@ -721,10 +720,10 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                       music_icon[1].rc.w,music_icon[1].rc.h,//控件大小
                       hwnd,ID_BUTTON_List,NULL,NULL);//父窗口hwnd,ID为ID_BUTTON_List，附加参数为： NULL
          //歌词icon
-         CreateWindow(BUTTON,L"W",WS_OWNERDRAW |WS_VISIBLE,
-                      music_icon[2].rc.x,music_icon[2].rc.y,
-                      music_icon[2].rc.w,music_icon[2].rc.h,
-                      hwnd,ID_BUTTON_Equa,NULL,NULL);
+//         CreateWindow(BUTTON,L"W",WS_OWNERDRAW |WS_VISIBLE,
+//                      music_icon[2].rc.x,music_icon[2].rc.y,
+//                      music_icon[2].rc.w,music_icon[2].rc.h,
+//                      hwnd,ID_BUTTON_Equa,NULL,NULL);
          
          //喇叭icon
          horn_wnd = CreateWindow(BUTTON,L"Q",WS_OWNERDRAW |WS_VISIBLE,
@@ -776,19 +775,19 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          SendMessage(wnd, SBM_SETSCROLLINFO, TRUE, (LPARAM)&sif_power);
          
          //以下控件为TEXTBOX的创建
-         wnd_lrc1 = CreateWindow(TEXTBOX, L"1", WS_OWNERDRAW, 
+         wnd_lrc1 = CreateWindow(TEXTBOX, L" ", WS_OWNERDRAW | WS_VISIBLE, 
                                 0, 40, 300, 20, hwnd, ID_TEXTBOX_LRC1, NULL, NULL);  
          SendMessage(wnd_lrc1,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);                                
-         wnd_lrc2 = CreateWindow(TEXTBOX, L"2", WS_OWNERDRAW, 
+         wnd_lrc2 = CreateWindow(TEXTBOX, L" ", WS_OWNERDRAW | WS_VISIBLE, 
                                 0, 70, 300, 20, hwnd, ID_TEXTBOX_LRC2, NULL, NULL); 
          SendMessage(wnd_lrc2,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);
-         wnd_lrc3 = CreateWindow(TEXTBOX, L"3", WS_OWNERDRAW, 
+         wnd_lrc3 = CreateWindow(TEXTBOX, L" ", WS_OWNERDRAW | WS_VISIBLE, 
                                 0, 100, 300, 20, hwnd, ID_TEXTBOX_LRC3, NULL, NULL);  
          SendMessage(wnd_lrc3,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);     
-         wnd_lrc4 = CreateWindow(TEXTBOX, L"4", WS_OWNERDRAW, 
+         wnd_lrc4 = CreateWindow(TEXTBOX, L" ", WS_OWNERDRAW | WS_VISIBLE, 
                                 0, 130, 300, 20, hwnd, ID_TEXTBOX_LRC4, NULL, NULL);  
          SendMessage(wnd_lrc4,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND); 
-         wnd_lrc5 = CreateWindow(TEXTBOX, L"5", WS_OWNERDRAW, 
+         wnd_lrc5 = CreateWindow(TEXTBOX, L" ", WS_OWNERDRAW | WS_VISIBLE, 
                                 0, 150, 300, 20, hwnd, ID_TEXTBOX_LRC5, NULL, NULL);  
          SendMessage(wnd_lrc5,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);  			
          CreateWindow(BUTTON,L"歌曲文件名",WS_OWNERDRAW|WS_TRANSPARENT|WS_VISIBLE,
@@ -814,33 +813,33 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          GetClientRect(hwnd,&rc); //获得窗口的客户区矩形
       
         /* 创建蓝鱼的memdc */
-         rotate_disk_hdc = CreateMemoryDC(COLOR_FORMAT_ARGB8888,50,50); 
-         /* 清空背景为透明 */
-         ClrDisplay(rotate_disk_hdc,NULL,0);
-         //BitBlt(rotate_disk_hdc, 0, 0, 240, 240, hdc_bk, 280, 120, SRCCOPY);
-         /* 绘制bmp到hdc */
-         RECT rc = {0,0,50,50};
-         
-//         /* 进入临界段，临界段可以嵌套 */
-//          taskENTER_CRITICAL();
-         
-         SetTextColor(rotate_disk_hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
-         SetFont(rotate_disk_hdc, iconFont_50);
-         DrawTextEx(rotate_disk_hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
-         
-//         /* 退出临界段 */
-//          taskEXIT_CRITICAL();
-         
-         /* 转换成bitmap */
-         DCtoBitmap(rotate_disk_hdc,&bm_0);
+//         rotate_disk_hdc = CreateMemoryDC(COLOR_FORMAT_ARGB8888,50,50); 
+//         /* 清空背景为透明 */
+//         ClrDisplay(rotate_disk_hdc,NULL,0);
+//         //BitBlt(rotate_disk_hdc, 0, 0, 240, 240, hdc_bk, 280, 120, SRCCOPY);
+//         /* 绘制bmp到hdc */
+//         RECT rc = {0,0,50,50};
+//         
+////         /* 进入临界段，临界段可以嵌套 */
+////          taskENTER_CRITICAL();
+//         
+//         SetTextColor(rotate_disk_hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
+//         SetFont(rotate_disk_hdc, iconFont_50);
+//         DrawTextEx(rotate_disk_hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
+//         
+////         /* 退出临界段 */
+////          taskEXIT_CRITICAL();
+//         
+//         /* 转换成bitmap */
+//         DCtoBitmap(rotate_disk_hdc,&bm_0);
 
-         pSurf =CreateSurface(SURF_RGB565,50,50,-1,NULL);
+//         pSurf =CreateSurface(SURF_RGB565,50,50,-1,NULL);
 
-          rc.x =0;
-          rc.y =0;
-          rc.w =50;
-          rc.h =50;
-          hdc_mem11 =CreateDC(pSurf,&rc);
+//          rc.x =0;
+//          rc.y =0;
+//          rc.w =50;
+//          rc.h =50;
+//          hdc_mem11 =CreateDC(pSurf,&rc);
 
          break;
       }
@@ -898,40 +897,40 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                //歌词icon处理case
                case ID_BUTTON_Equa:
                {
-                  music_icon[2].state = ~music_icon[2].state;
-                  if(music_icon[2].state == FALSE)
-                  {
-                     show_lrc = 0; //未弹出歌词窗口
-                     ShowWindow(wnd_lrc1, SW_HIDE);
-                     ShowWindow(wnd_lrc2, SW_HIDE);
-                     ShowWindow(wnd_lrc3, SW_HIDE);
-                     ShowWindow(wnd_lrc4, SW_HIDE);
-                     ShowWindow(wnd_lrc5, SW_HIDE);
-                     RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE);
-//                     ResetTimer(hwnd, 1, 200, NULL,NULL);
-                    rc.x=135;
-                    rc.y=95;
-                    rc.w=50;
-                    rc.h=50;
+//                  music_icon[2].state = ~music_icon[2].state;
+//                  if(music_icon[2].state == FALSE)
+//                  {
+//                     show_lrc = 1; //未弹出歌词窗口
+//                     ShowWindow(wnd_lrc1, SW_HIDE);
+//                     ShowWindow(wnd_lrc2, SW_HIDE);
+//                     ShowWindow(wnd_lrc3, SW_HIDE);
+//                     ShowWindow(wnd_lrc4, SW_HIDE);
+//                     ShowWindow(wnd_lrc5, SW_HIDE);
+//                     RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE);
+////                     ResetTimer(hwnd, 1, 200, NULL,NULL);
+//                    rc.x=135;
+//                    rc.y=95;
+//                    rc.w=50;
+//                    rc.h=50;
 
-                    InvalidateRect(hwnd,&rc,FALSE);
-                  }
-                  else
-                  {
-                     show_lrc = 1;//歌词窗口已弹出
-                     ShowWindow(wnd_lrc1, SW_SHOW);  
-                     ShowWindow(wnd_lrc2, SW_SHOW);
-                     ShowWindow(wnd_lrc3, SW_SHOW);
-                     ShowWindow(wnd_lrc4, SW_SHOW);
-                     ShowWindow(wnd_lrc5, SW_SHOW);
-                    rc.x=135;
-                    rc.y=95;
-                    rc.w=50;
-                    rc.h=50;
+//                    InvalidateRect(hwnd,&rc,FALSE);
+//                  }
+//                  else
+//                  {
+//                     show_lrc = 1;//歌词窗口已弹出
+//                     ShowWindow(wnd_lrc1, SW_SHOW);  
+//                     ShowWindow(wnd_lrc2, SW_SHOW);
+//                     ShowWindow(wnd_lrc3, SW_SHOW);
+//                     ShowWindow(wnd_lrc4, SW_SHOW);
+//                     ShowWindow(wnd_lrc5, SW_SHOW);
+//                    rc.x=135;
+//                    rc.y=95;
+//                    rc.w=50;
+//                    rc.h=50;
 
-                    InvalidateRect(hwnd,&rc,FALSE);
-                  }                                              
-                  break;
+//                    InvalidateRect(hwnd,&rc,FALSE);
+//                  }                                              
+//                  break;
                }
                //播放icon处理case
                case ID_BUTTON_START:
@@ -1119,24 +1118,24 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          
          //开始绘制
          hdc = BeginPaint(hwnd, &ps); 
-//         if(tt == 0)
-         {
-//            tt = 1;
-//            BitBlt(hdc_mem11, 0, 0, 50, 50, hdc_bk, 135, 95, SRCCOPY);
-//           if (show_lrc == 0)
-            RotateBitmap(hdc_mem11,25,25,&bm_0,0);
-         }            
-         
-        rc.x=135;
-        rc.y=60;
-        rc.w=50;
-        rc.h=50;
-         
-         SetTextColor(hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
-         SetFont(hdc, iconFont_50);
-         DrawTextEx(hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
+////         if(tt == 0)
+//         {
+////            tt = 1;
+////            BitBlt(hdc_mem11, 0, 0, 50, 50, hdc_bk, 135, 95, SRCCOPY);
+////           if (show_lrc == 0)
+//            RotateBitmap(hdc_mem11,25,25,&bm_0,0);
+//         }            
+//         
+//        rc.x=135;
+//        rc.y=60;
+//        rc.w=50;
+//        rc.h=50;
+//         
+//         SetTextColor(hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
+//         SetFont(hdc, iconFont_50);
+//         DrawTextEx(hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
 
-        BitBlt(hdc,rc.x,rc.y,rc.w,rc.h,rotate_disk_hdc,0,0,SRCCOPY);
+//        BitBlt(hdc,rc.x,rc.y,rc.w,rc.h,rotate_disk_hdc,0,0,SRCCOPY);
              
          //获取屏幕点（385，404）的颜色，作为透明控件的背景颜色
         color_bg = GetPixel(hdc, 300, 200);
@@ -1200,32 +1199,25 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
     //关闭窗口消息处理case
       case WM_CLOSE:
       { 
-        Music_State = STA_IDLE;		/* 待机状态 */
-        time2exit = 1;
-        GUI_SemWait(exit_sem, 0xFFFFFFFF);
-
-        vTaskDelete(h_music);    // 删除播放线程
-        ShowWindow(MusicPlayer_hwnd, SW_HIDE);
         DestroyWindow(hwnd);
         return TRUE;	
       }
-    
+
       //关闭窗口消息处理case
       case WM_DESTROY:
       {        
-        
+        Music_State = STA_IDLE;		/* 待机状态 */
+        time2exit = 1;
+        GUI_SemWait(exit_sem, 0xFFFFFFFF);
+        vTaskDelete(h_music);    // 删除播放线程
         GUI_SemDelete(exit_sem);
-        DeleteSurface(pSurf);
-        DeleteDC(hdc_mem11);
         DeleteDC(hdc_bk);
-        DeleteDC(rotate_disk_hdc);
         thread = 0;
         time2exit = 0;
         play_index = 0;
         res = FALSE;
         music_file_num = 0;
         power = 220;
-        show_lrc = 0;
         PostQuitMessage(hwnd);	        
         return TRUE;	
       }
@@ -1273,7 +1265,7 @@ void	GUI_MUSICPLAYER_DIALOG(void)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-  UpdateWindow( GetDesktopWindow());
+//  UpdateWindow( GetDesktopWindow());
 }
 
 

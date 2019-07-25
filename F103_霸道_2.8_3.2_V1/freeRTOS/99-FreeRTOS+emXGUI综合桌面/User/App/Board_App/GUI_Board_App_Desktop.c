@@ -124,12 +124,12 @@ int thread_ctrl = 1;
 
 static const struct __obj_list menu_list_1[] = {
   
-      L"GUI应用",		  NULL, 	L"J", RGB_WHITE, GUI_App_Desktop,
+      L"GUI应用",		  NULL, 	L"J", RGB_WHITE, GUI_App_Desktop,//dummy,//
       L"MP3播放器",	  NULL,	  L"I", RGB_WHITE, GUI_MUSICPLAYER_DIALOG,//dummy,//
       L"视频播放器",  NULL,	  L"D", RGB_WHITE, dummy,
 
-      L"RGB彩灯",		  NULL,	  L"L", RGB_WHITE, GUI_LED_DIALOG,//dummy,
-      L"摄像头",		  NULL,	  L"M", RGB_WHITE, GUI_Camera_DIALOG,//dummy,
+      L"RGB彩灯",		  NULL,	  L"L", RGB_WHITE, GUI_LED_DIALOG,//dummy,//
+      L"摄像头",		  NULL,	  L"M", RGB_WHITE, GUI_Camera_DIALOG,//dummy,//
 
       L"图片浏览器",  NULL, 	L"G", RGB_WHITE, dummy,
       L"温湿度",	    NULL,   L"O", RGB_WHITE, dummy,
@@ -444,7 +444,7 @@ void	GUI_Board_App_Desktop(void *p)
     wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
 
     //创建主窗口
-    hwnd = CreateWindowEx(WS_EX_FRAMEBUFFER,
+    hwnd = CreateWindowEx(WS_EX_FRAMEBUFFER,//
         &wcex,
         L"IconViewer",
         //								/*WS_MEMSURFACE|*/WS_CAPTION|WS_DLGFRAME|WS_BORDER|WS_CLIPCHILDREN,

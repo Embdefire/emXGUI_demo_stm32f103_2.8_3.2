@@ -489,7 +489,7 @@ void	GUI_App_Desktop(void)
 	wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
 
 	//创建主窗口
-	hwnd = CreateWindowEx(WS_EX_FRAMEBUFFER,
+	hwnd = CreateWindowEx(WS_EX_FRAMEBUFFER,//
 		&wcex,
       L"IconViewer",
 		//								/*WS_MEMSURFACE|*/WS_CAPTION|WS_DLGFRAME|WS_BORDER|WS_CLIPCHILDREN,
