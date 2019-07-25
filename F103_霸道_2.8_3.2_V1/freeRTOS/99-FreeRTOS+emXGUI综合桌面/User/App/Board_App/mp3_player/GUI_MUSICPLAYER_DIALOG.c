@@ -292,16 +292,19 @@ static void App_MusicList()
 	if(thread==0)
 	{  
 //      h1=rt_thread_create("App_MusicList",(void(*)(void*))App_MusicList,NULL,4*1024,5,1);
-     xTaskCreate((TaskFunction_t )(void(*)(void*))App_MusicList,  /* 任务入口函数 */
-                            (const char*    )"App_MusicList",/* 任务名字 */
-                            (uint16_t       )2*1024/4,  /* 任务栈大小FreeRTOS的任务栈以字为单位 */
-                            (void*          )NULL,/* 任务入口函数参数 */
-                            (UBaseType_t    )5, /* 任务的优先级 */
-                            (TaskHandle_t  )&h1);/* 任务控制块指针 */
-//      rt_thread_startup(h1);				
+     xTaskCreate((TaskFunction_t )(void(*)(void*))App_MusicList,    /* 任务入口函数 */
+                            (const char*    )"App_MusicList",       /* 任务名字 */
+                            (uint16_t       )2*1024/4,              /* 任务栈大小FreeRTOS的任务栈以字为单位 */
+                            (void*          )NULL,                  /* 任务入口函数参数 */
+                            (UBaseType_t    )5,                     /* 任务的优先级 */
+                            (TaskHandle_t  )&h1);                   /* 任务控制块指针 */
+	
       thread =1;
       return;
 	}
+
+   vTaskSuspend(h_music);    // 进入列表挂起音乐播放
+
 	while(thread) //线程已创建了
 	{
     if(thread == 1)
@@ -316,6 +319,9 @@ static void App_MusicList()
     }
     GUI_msleep(10);
 	}
+
+   vTaskResume(h_music);    // 退出选择列表恢复音乐播放
+    
   GUI_Thread_Delete(GUI_GetCurThreadHandle()); 
 }
 /**
@@ -811,36 +817,6 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 
          GetClientRect(hwnd,&rc); //获得窗口的客户区矩形
-      
-        /* 创建蓝鱼的memdc */
-//         rotate_disk_hdc = CreateMemoryDC(COLOR_FORMAT_ARGB8888,50,50); 
-//         /* 清空背景为透明 */
-//         ClrDisplay(rotate_disk_hdc,NULL,0);
-//         //BitBlt(rotate_disk_hdc, 0, 0, 240, 240, hdc_bk, 280, 120, SRCCOPY);
-//         /* 绘制bmp到hdc */
-//         RECT rc = {0,0,50,50};
-//         
-////         /* 进入临界段，临界段可以嵌套 */
-////          taskENTER_CRITICAL();
-//         
-//         SetTextColor(rotate_disk_hdc, MapARGB(rotate_disk_hdc, 255, 50, 205, 50));
-//         SetFont(rotate_disk_hdc, iconFont_50);
-//         DrawTextEx(rotate_disk_hdc,L"a",-1,&rc,DT_SINGLELINE|DT_VCENTER|DT_CENTER,NULL);
-//         
-////         /* 退出临界段 */
-////          taskEXIT_CRITICAL();
-//         
-//         /* 转换成bitmap */
-//         DCtoBitmap(rotate_disk_hdc,&bm_0);
-
-//         pSurf =CreateSurface(SURF_RGB565,50,50,-1,NULL);
-
-//          rc.x =0;
-//          rc.y =0;
-//          rc.w =50;
-//          rc.h =50;
-//          hdc_mem11 =CreateDC(pSurf,&rc);
-
          break;
       }
 
@@ -893,45 +869,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
                   break;
                }                  
-               
-               //歌词icon处理case
-               case ID_BUTTON_Equa:
-               {
-//                  music_icon[2].state = ~music_icon[2].state;
-//                  if(music_icon[2].state == FALSE)
-//                  {
-//                     show_lrc = 1; //未弹出歌词窗口
-//                     ShowWindow(wnd_lrc1, SW_HIDE);
-//                     ShowWindow(wnd_lrc2, SW_HIDE);
-//                     ShowWindow(wnd_lrc3, SW_HIDE);
-//                     ShowWindow(wnd_lrc4, SW_HIDE);
-//                     ShowWindow(wnd_lrc5, SW_HIDE);
-//                     RedrawWindow(hwnd, NULL, RDW_ALLCHILDREN|RDW_INVALIDATE);
-////                     ResetTimer(hwnd, 1, 200, NULL,NULL);
-//                    rc.x=135;
-//                    rc.y=95;
-//                    rc.w=50;
-//                    rc.h=50;
 
-//                    InvalidateRect(hwnd,&rc,FALSE);
-//                  }
-//                  else
-//                  {
-//                     show_lrc = 1;//歌词窗口已弹出
-//                     ShowWindow(wnd_lrc1, SW_SHOW);  
-//                     ShowWindow(wnd_lrc2, SW_SHOW);
-//                     ShowWindow(wnd_lrc3, SW_SHOW);
-//                     ShowWindow(wnd_lrc4, SW_SHOW);
-//                     ShowWindow(wnd_lrc5, SW_SHOW);
-//                    rc.x=135;
-//                    rc.y=95;
-//                    rc.w=50;
-//                    rc.h=50;
-
-//                    InvalidateRect(hwnd,&rc,FALSE);
-//                  }                                              
-//                  break;
-               }
                //播放icon处理case
                case ID_BUTTON_START:
                {

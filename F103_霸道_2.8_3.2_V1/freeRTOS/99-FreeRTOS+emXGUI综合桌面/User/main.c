@@ -104,7 +104,6 @@ extern void GUI_Startup(void);
   ********************************************************************/
 static void GUI_Thread_Entry(void* parameter)
 {	
-  
   printf("野火emXGUI演示例程\n\n");
 
   /* 执行本函数不会返回 */
@@ -113,11 +112,11 @@ static void GUI_Thread_Entry(void* parameter)
   while (1)
   {
     LED1_ON;
-//    printf("Test_Task Running,LED1_ON\r\n");
+    printf("Test_Task Running,LED1_ON\r\n");
     vTaskDelay(500);   /* 延时500个tick */
     
     LED1_OFF;     
-//    printf("Test_Task Running,LED1_OFF\r\n");
+    printf("Test_Task Running,LED1_OFF\r\n");
     vTaskDelay(500);   /* 延时500个tick */
   }
 }

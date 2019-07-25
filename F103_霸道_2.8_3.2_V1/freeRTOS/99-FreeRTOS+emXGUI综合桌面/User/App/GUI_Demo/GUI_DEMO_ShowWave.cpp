@@ -268,12 +268,10 @@ static void draw_scrollbar(HWND hwnd, HDC hdc, COLOR_RGB32 back_c, COLOR_RGB32 P
 }
 static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
-	HWND hwnd;
 	HDC hdc;
 	RECT rc;
 	WCHAR wbuf[128];
 
-	hwnd = ds->hwnd; //button的窗口句柄.
 	hdc = ds->hDC;   //button的绘图上下文句柄.
 	rc = ds->rc;     //button的绘制矩形区.
    
@@ -315,12 +313,9 @@ static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 }
 static void RB_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
-	HWND hwnd;
 	HDC hdc;
 	RECT rc;
-	WCHAR wbuf[128];
 
-	hwnd = ds->hwnd; //button的窗口句柄.
 	hdc = ds->hDC;   //button的绘图上下文句柄.
 	rc = ds->rc;     //button的绘制矩形区.
 
@@ -777,9 +772,7 @@ static void wave_owner_draw(HDC hdc)
 }
 
 /*============================================================================*/
-static float ADS1120_GetVoltage_mV(u16 addata);
 
-static int x1,x2,y1,y2,ysc,xsc;
 //波形显示的窗口过程.
 static	LRESULT	WaveWinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 {
@@ -800,14 +793,7 @@ static	LRESULT	WaveWinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 			focus_obj =NULL;
 
-//			hFont20 =XFT_CreateFont(ASCII_20_4BPP);
-//			hFont24 =XFT_CreateFont(ASCII_24_4BPP);
-
 			GetClientRect(hwnd,&rc);
-			// pSurfTop =CreateSurface(SURF_ARGB4444,rc.w,rc.h,NULL,0);
-			// hdcTop =CreateDC(pSurfTop,NULL);
-			// ClrDisplay(hdcTop,NULL,MapARGB(hdcTop,0,0,0,0));
-
 
 			GetClientRect(hwnd,&rc_main);
 			CopyRect(&rc_wav,&rc_main);
@@ -841,8 +827,6 @@ static	LRESULT	WaveWinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				x2_cur_obj = x_obj_create(L"X2", ID_X2_CUR, &rc_x2_cur,	X_OBJ_VISIBLE,0,button_item);
 				y1_cur_obj = x_obj_create(L"Y1", ID_Y1_CUR, &rc_y1_cur,	X_OBJ_VISIBLE,0,button_item);
 				y2_cur_obj = x_obj_create(L"Y2", ID_Y2_CUR, &rc_y2_cur,	X_OBJ_VISIBLE,0,button_item);
-
-
 			}
 			return TRUE;
 			////
@@ -1687,7 +1671,6 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
     return DestroyWindow(hwnd);
   }
-  break;
   
 	case WM_DESTROY:
 	{
@@ -1717,20 +1700,20 @@ static void ADS1120_Init(void)
 //	sensor_enable();
 }
 
-static u16 ADS1120_GetData(void)
-{
-	//return get_alco_data();
-	return x_rand()%0x7FFF;
-}
+//static u16 ADS1120_GetData(void)
+//{
+//	//return get_alco_data();
+//	return x_rand()%0x7FFF;
+//}
 
-static float ADS1120_GetVoltage_mV(u16 addata)
-{
-	float val;
+//static float ADS1120_GetVoltage_mV(u16 addata)
+//{
+//	float val;
 
-	addata=ADS1120_GetData();
-	val=(float)addata*(float)2048/32768;
-	return val;
-}
+//	addata=ADS1120_GetData();
+//	val=(float)addata*(float)2048/32768;
+//	return val;
+//}
 
 
 extern "C" void	GUI_DEMO_ShowWave(void)
