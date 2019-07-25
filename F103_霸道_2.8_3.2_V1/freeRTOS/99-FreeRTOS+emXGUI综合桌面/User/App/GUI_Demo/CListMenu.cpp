@@ -1525,11 +1525,11 @@ LRESULT	CListMenu::OnTimer(HWND hwnd, int tmr_id)
                         }
                         else if ((x - x_move_to) > 20)
                         {
-                            x = MIN(obj->rc.w >> 4, x - x_move_to);
+                            x = MIN(obj->rc.w >> 3, x - x_move_to);
                         }
                         else
                         {
-                            x = MIN(1, x - x_move_to);
+                            x = MIN(3, x - x_move_to);
                         }
 
                         OffsetObjs(-x, 0);
@@ -1544,11 +1544,11 @@ LRESULT	CListMenu::OnTimer(HWND hwnd, int tmr_id)
                         }
                         else if ((x_move_to - x) > 20)
                         {
-                            x = MIN(obj->rc.w >> 4, x_move_to - x);
+                            x = MIN(obj->rc.w >> 3, x_move_to - x);
                         }
                         else
                         {
-                            x = MIN(1, x_move_to - x);
+                            x = MIN(3, x_move_to - x);
                         }
                         OffsetObjs(x, 0);
                         need_draw = TRUE;
@@ -1589,14 +1589,14 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         return pApp->OnCreate(hwnd, cfg);
     }
 
-		case 	MSG_SET_SEL:
-		{
-			int idx =wParam;
+    case 	MSG_SET_SEL:
+    {
+        int idx =wParam;
 
-			pApp->SetSelObj(idx);
+        pApp->SetSelObj(idx);
 
-		}
-		break;
+    }
+    break;
 
     case	MSG_MOVE_PREV:
     {
@@ -1758,7 +1758,8 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
     return DefWindowProc(hwnd, msg, wParam, lParam);
 
-    default:			return DefWindowProc(hwnd, msg, wParam, lParam);
+    default:			
+        return DefWindowProc(hwnd, msg, wParam, lParam);
 
     }
 

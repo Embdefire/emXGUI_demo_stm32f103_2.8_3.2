@@ -517,7 +517,10 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          //DrawBitmap(hdc_bk,0, 0,&RGBdesktop_0,NULL);
          //StretchBlt(RGBLED_DIALOG.hdc_mem, rc.x, rc.y, rc.w, rc.h, hdc_bk, 0, 0,RGBdesktop_0.Width, RGBdesktop_0.Height, SRCCOPY);               
          SetColorValue(leddlg_S.led_R, leddlg_S.led_G, leddlg_S.led_B);
-         //GUI_DEBUG("%x%x", leddlg_S.led_R/16, leddlg_S.led_R%16);
+
+         //创建1个20ms定时器，处理循环事件.
+			SetTimer(hwnd,1,20,TMR_START,NULL);
+         
          break;
       }
 
@@ -846,7 +849,7 @@ void	GUI_LED_DIALOG(void)
 	HWND	hwnd;
 	WNDCLASS	wcex;
 	MSG msg;
-
+  uint8_t LED_Flag=0;
 
 	wcex.Tag = WNDCLASS_TAG;
 
@@ -875,6 +878,32 @@ void	GUI_LED_DIALOG(void)
 	//开始窗口消息循环(窗口关闭并销毁时,GetMessage将返回FALSE,退出本消息循环)。
 	while (GetMessage(&msg, hwnd))
 	{
+    if (Key_Scan(KEY1_GPIO_PORT, KEY1_GPIO_PIN) == KEY_ON)
+    {
+      if (LED_Flag)
+      {
+         LED_Flag = !LED_Flag;
+         SetColorValue(0, 0, 0);
+      }
+      else
+      {
+         LED_Flag = !LED_Flag;
+         SetColorValue(0, 255, 0);
+      }
+    }
+    if (Key_Scan(KEY2_GPIO_PORT, KEY2_GPIO_PIN) == KEY_ON)
+    {
+      if (LED_Flag)
+      {
+         LED_Flag = !LED_Flag;
+         SetColorValue(0, 0, 0);
+      }
+      else
+      {
+         LED_Flag = !LED_Flag;
+         SetColorValue(0, 0, 255);
+      }
+    }
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}

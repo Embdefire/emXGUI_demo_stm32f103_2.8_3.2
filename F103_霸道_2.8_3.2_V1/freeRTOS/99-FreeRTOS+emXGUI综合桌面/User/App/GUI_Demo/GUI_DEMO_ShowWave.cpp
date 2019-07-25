@@ -1373,41 +1373,42 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				y=GET_LPARAM_Y(lParam);
 
 				focus_obj =x_obj_get_from_pos(button_item,x,y); //从x,y坐标值获得 x_obj对象.
+
 				if(focus_obj==NULL)
 				{ //没有
 					return DefWindowProc(hwnd,msg,wParam,lParam);
 				}
         
-        else if(focus_obj->id == ID_Y_STEP_SUB)
+       			else if(focus_obj->id == ID_Y_STEP_SUB)
 				{
-          InvalidateRect(hwnd,&focus_obj->rc,FALSE);
+					InvalidateRect(hwnd,&focus_obj->rc,FALSE);
 
-          if(y_step_cur > 0)
-          {
-            y_step_cur--;
-            x_obj_set_text(x_obj_get_from_id(button_item,ID_Y_STEP),y_step_str[y_step_cur]);
-            InvalidateRect(hwnd,&x_obj_get_from_id(button_item,ID_Y_STEP)->rc,FALSE);
-            InvalidateRect(GetDlgItem(hwnd,ID_WAVE),NULL,FALSE);
-            // InvalidateRect(GetDlgItem(hwnd,ID_Y_STR),NULL,FALSE);
-            //发 MSG_CUR_Y_CAHNGLE 消息.
-					  PostMessage(hwnd,MSG_CUR_Y1_CHANGE,x1_cur,0);
+					if(y_step_cur > 0)
+					{
+						y_step_cur--;
+						x_obj_set_text(x_obj_get_from_id(button_item,ID_Y_STEP),y_step_str[y_step_cur]);
+						InvalidateRect(hwnd,&x_obj_get_from_id(button_item,ID_Y_STEP)->rc,FALSE);
+						InvalidateRect(GetDlgItem(hwnd,ID_WAVE),NULL,FALSE);
+						// InvalidateRect(GetDlgItem(hwnd,ID_Y_STR),NULL,FALSE);
+						//发 MSG_CUR_Y_CAHNGLE 消息.
+						PostMessage(hwnd,MSG_CUR_Y1_CHANGE,x1_cur,0);
 
-          }
+					}
 				}
 
 				else if(focus_obj->id == ID_Y_STEP_ADD)
 				{
 					InvalidateRect(hwnd,&focus_obj->rc,FALSE);
 
-          if(y_step_cur < (Y_STEP_NUM-1))
-          {
-            y_step_cur++;
-					  x_obj_set_text(x_obj_get_from_id(button_item,ID_Y_STEP),y_step_str[y_step_cur]);
-            InvalidateRect(hwnd,&x_obj_get_from_id(button_item,ID_Y_STEP)->rc,FALSE);
-            InvalidateRect(GetDlgItem(hwnd,ID_WAVE),NULL,FALSE);
-            // InvalidateRect(GetDlgItem(hwnd,ID_Y_STR),NULL,FALSE);
-            PostMessage(hwnd,MSG_CUR_Y1_CHANGE,x1_cur,0);
-          }
+					if(y_step_cur < (Y_STEP_NUM-1))
+					{
+						y_step_cur++;
+								x_obj_set_text(x_obj_get_from_id(button_item,ID_Y_STEP),y_step_str[y_step_cur]);
+						InvalidateRect(hwnd,&x_obj_get_from_id(button_item,ID_Y_STEP)->rc,FALSE);
+						InvalidateRect(GetDlgItem(hwnd,ID_WAVE),NULL,FALSE);
+						// InvalidateRect(GetDlgItem(hwnd,ID_Y_STR),NULL,FALSE);
+						PostMessage(hwnd,MSG_CUR_Y1_CHANGE,x1_cur,0);
+					}
 				}
 
         else if(focus_obj->id == ID_X_STEP_SUB)
@@ -1477,9 +1478,9 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 		if(id==ID_EXIT && code==BN_CLICKED)
 		{
-      /* 重置随机波形标志 */
-      scatter_init = 0;
-      PostCloseMessage(GetDlgItem(hwnd,ID_WAVE));
+      		/* 重置随机波形标志 */
+			scatter_init = 0;
+			PostCloseMessage(GetDlgItem(hwnd,ID_WAVE));
 			PostCloseMessage(hwnd);
 		}
     else if(id == ID_SCROLL1 || id == ID_SCROLL2 )
@@ -1565,7 +1566,7 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	case MSG_CUR_Y1_CHANGE:
 	case MSG_CUR_Y2_CHANGE:
 	{
-    InvalidateRect(hwnd,&rc_label,TRUE);
+    	InvalidateRect(hwnd,&rc_label,TRUE);
 
 		// WCHAR wbuf[128];
 
