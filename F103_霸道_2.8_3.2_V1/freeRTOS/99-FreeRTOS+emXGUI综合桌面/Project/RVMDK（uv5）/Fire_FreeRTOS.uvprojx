@@ -18,7 +18,7 @@
           <Vendor>STMicroelectronics</Vendor>
           <PackID>Keil.STM32F1xx_DFP.2.1.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
-          <Cpu>IROM(0x08000000,0x80000) IRAM(0x20000000,0x10000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
+          <Cpu>IRAM(0x20000000,0x10000) IROM(0x08000000,0x80000) CPUTYPE("Cortex-M3") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
           <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_512 -FS08000000 -FL080000 -FP0($$Device:STM32F103ZE$Flash\STM32F10x_512.FLM))</FlashDriverDll>
@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,X_GUI_USE_FREERTOS,USE_STDPERIPH_DRIVER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\pic_viewer;..\..\User\OwnerDraw;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\camera\ov7725;..\..\User\App\Board_App;..\..\User\App\Board_App\mp3_player\vs1053</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\pic_viewer;..\..\User\OwnerDraw;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\camera\ov7725;..\..\User\App\Board_App;..\..\User\App\Board_App\mp3_player\vs1053;..\..\User\App\Board_App\adc_Collect_voltage</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1260,6 +1260,16 @@
               <FileName>Backend_mp3Player.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\Board_App\mp3_player\Backend_mp3Player.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\adc_Collect_voltage\bsp_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ADC_CollectVoltage_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\adc_Collect_voltage\GUI_ADC_CollectVoltage_Dialog.c</FilePath>
             </File>
           </Files>
         </Group>

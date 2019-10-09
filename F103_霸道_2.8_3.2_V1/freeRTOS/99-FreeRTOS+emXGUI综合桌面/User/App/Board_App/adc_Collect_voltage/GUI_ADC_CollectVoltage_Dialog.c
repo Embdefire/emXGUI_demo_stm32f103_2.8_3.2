@@ -16,24 +16,25 @@
 #define ID_TEXTBOX_Title   0x03    // 标题栏
 #define ID_TEXTBOX_Brigh   0x04    // 亮度百分比
 
-#define CircleCenter_1    (79)     // 三角形旋转半径
-#define CircleCenter_2    (100)    // 圆弧进度条半径（小）
-#define CircleCenter_3    (CircleCenter_2 + 10)    //  不大于 CircleSize / 2
+#define CircleCenter_1    (40)     // 三角形旋转半径
+#define CircleCenter_2    (50)    // 圆弧进度条半径（小）
+#define CircleCenter_3    (CircleCenter_2 + 5)    //  不大于 CircleSize / 2
 
 /* 移动方向标志 */
 #define LeftToRight    0
 #define RightToLeft    1
 #define MOVE_WIN       1
 
-#define CircleSize    240    // 圆形显示区域的大小
-#define Circle_X      500    // 圆形显示区域的位置
-#define Circle_Y      (50)   // 圆形显示区域的位置
+#define CircleSize    130    // 圆形显示区域的大小
+#define Circle_X      180    // 圆形显示区域的位置
+#define Circle_Y      (40)   // 圆形显示区域的位置
 
+//#define GUI_ADC_BACKGROUNG_PIC      "adc_desktop.jpg"
 #define GUI_ADC_BACKGROUNG_PIC      "musicdesktop.jpg"
 
-#define TitleHeight    70    // 标题栏的高度
+#define TitleHeight    28    // 标题栏的高度
 
-#define TriangleLen    20    // 三角形的边长
+#define TriangleLen    10    // 三角形的边长
 
 uint8_t AovingDirection = 0;
 double count = 0.0;
@@ -113,11 +114,11 @@ static void CollectVoltage_ExitButton_OwnerDraw(DRAWITEM_HDR *ds)
 	}
 
 	  /* 使用控制图标字体 */
-	SetFont(hdc, controlFont_64);
+	SetFont(hdc, controlFont_24);
 
 	GetWindowText(hwnd, wbuf, 128); //获得按钮控件的文字
-  rc.y = -10;
-  rc.x = 16;
+  rc.y = -4;
+  rc.x = 6;
 	DrawText(hdc, wbuf, -1, &rc, NULL);//绘制文字(居中对齐方式)
 
   /* 恢复默认字体 */
@@ -147,16 +148,16 @@ static void draw_scrollbar(HWND hwnd, HDC hdc, COLOR_RGB32 back_c, COLOR_RGB32 P
    BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, bk_hdc, rc_tmp.x, rc_tmp.y, SRCCOPY);
 
    rc_scrollbar.x = rc.x;
-   rc_scrollbar.y = rc.h/2-15;
+   rc_scrollbar.y = rc.h/2-7;
    rc_scrollbar.w = rc.w;
-   rc_scrollbar.h = 30;
+   rc_scrollbar.h = 15;
    
 	SetBrushColor(hdc, MapRGB888(hdc, Page_c));
 	FillRect(hdc, &rc_scrollbar);
 }
 
 /*
- * @brief  绘制滚动条
+ * @brief  渐变的方式绘制滚动条
  * @param  hwnd:   滚动条的句柄值
  * @param  hdc:    绘图上下文
  * @param  back_c：背景颜色
@@ -177,9 +178,9 @@ static void draw_gradient_scrollbar(HWND hwnd, HDC hdc, COLOR_RGB32 back_c, COLO
    BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, bk_hdc, rc_tmp.x, rc_tmp.y, SRCCOPY);
 
    rc_scrollbar.x = rc.x;
-   rc_scrollbar.y = rc.h/2-15;
+   rc_scrollbar.y = rc.h/2-7;
    rc_scrollbar.w = rc.w;
-   rc_scrollbar.h = 30;
+   rc_scrollbar.h = 15;
    
 //	SetBrushColor(hdc, MapRGB888(hdc, Page_c));
 	GradientFillRect(hdc, &rc_scrollbar, RGB888(175, 150, 150), RGB888( 255, 255, 255), FALSE);
@@ -303,8 +304,8 @@ void Circle_Paint(HWND hwnd, HDC hdc)
   /* 使用默认字体 */
 	SetFont(hdc, defaultFont);
 
-  rc.w = 24*4;
-  rc.h = 30;
+  rc.w = 16*4;
+  rc.h = 20;
   rc.x = CircleSize/2 - rc.w/2;
   rc.y = CircleSize/2 - rc.h/2;
 
@@ -325,22 +326,23 @@ void Circle_Paint(HWND hwnd, HDC hdc)
  * @param  HDC:	自定义绘制结构体
  * @retval NONE
 */
-#define CircleCenter_r    25
-#define CircleCenter_R    35
+#define CircleCenter_r    13
+#define CircleCenter_R    18
 void BrighCircle_Paint(HDC hdc)
 {
-  /* 先画左边 */
-  SetBrushColor(hdc, MapRGB(hdc, 200, 200, 200));
-  EnableAntiAlias(hdc, TRUE);
-  FillArc(hdc, GUI_XSIZE + 100, 105, 15, 18, 0, 360); 
-  // EnableAntiAlias(hdc, FALSE);
+  
 
   /* 右边 */
   SetBrushColor(hdc, MapRGB(hdc, 255, 255, 255));
-  // EnableAntiAlias(hdc, TRUE);
-  FillArc(hdc, GUI_XSIZE + 700, 105, 16, 19, 0, 360); 
-  EnableAntiAlias(hdc, FALSE);
+  EnableAntiAlias(hdc, TRUE);
+  FillArc(hdc, GUI_XSIZE + 275, TitleHeight + TitleHeight / 2 + 10, 6, 9, 0, 360); 
+  // EnableAntiAlias(hdc, FALSE);
 
+/* 先画左边 */
+  SetBrushColor(hdc, MapRGB(hdc, 200, 200, 200));
+  // EnableAntiAlias(hdc, TRUE);
+  FillArc(hdc, GUI_XSIZE + 45, TitleHeight + TitleHeight / 2 + 10, 6, 9, 0, 360); 
+  EnableAntiAlias(hdc, FALSE);
   int Little_x, Little_y;
   int Big_x,    Big_y;
 
@@ -349,12 +351,12 @@ void BrighCircle_Paint(HDC hdc)
   for(int i=0; i<8; i++)
   {
     /* 靠近圆的点 */
-    Little_x = GUI_XSIZE + 700 + CircleCenter_r * sin(0.785 * i);    // 0.785 = 3.14/4 = π/4 = 45°
-    Little_y = 105 - CircleCenter_r * cos(0.785 * i);
+    Little_x = GUI_XSIZE + 275 + CircleCenter_r * sin(0.785 * i);    // 0.785 = 3.14/4 = π/4 = 45°
+    Little_y = TitleHeight + TitleHeight / 2 + 10 - CircleCenter_r * cos(0.785 * i);
 
     /* 远离圆的点 */
-    Big_x = GUI_XSIZE + 700 + CircleCenter_R * sin(0.785 * i);    // 0.785 = 3.14/4 = π/4 = 45°
-    Big_y = 105 - CircleCenter_R * cos(0.785 * i);
+    Big_x = GUI_XSIZE + 275 + CircleCenter_R * sin(0.785 * i);    // 0.785 = 3.14/4 = π/4 = 45°
+    Big_y = TitleHeight + TitleHeight / 2 + 10 - CircleCenter_R * cos(0.785 * i);
 
     /* 画直线 */
     Line(hdc, Little_x, Little_y, Big_x, Big_y);
@@ -371,7 +373,7 @@ static LRESULT	ADCWinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       HWND hwnd_scrolbar;
       SCROLLINFO sif;/*设置滑动条的参数*/
       GetClientRect(hwnd, &rc);
-      Rheostat_Init();    // 初始化 ADC
+      ADCx_Init();    // 初始化 ADC
 
       /*********************亮度调节滑动条******************/
       sif.cbSize = sizeof(sif);
@@ -379,19 +381,21 @@ static LRESULT	ADCWinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       sif.nMin = 0;
       sif.nMax = 100;
       sif.nValue = 50;//初始值
-      sif.TrackSize = 60;//滑块值
+      sif.TrackSize = 30;//滑块值
       sif.ArrowSize = 0;//两端宽度为0（水平滑动条）          
       hwnd_scrolbar = CreateWindow(SCROLLBAR, L"SCROLLBAR_Brigh", WS_OWNERDRAW | WS_VISIBLE,//  
-                      GUI_XSIZE + 100, (GUI_YSIZE - TitleHeight * 2) / 2, 600, 60, hwnd, SCROLLBAR_Brigh_ID, NULL, NULL);
+                      GUI_XSIZE + 45, (GUI_YSIZE - TitleHeight * 2) / 2, 230, 30, hwnd, SCROLLBAR_Brigh_ID, NULL, NULL);
       SendMessage(hwnd_scrolbar, SBM_SETSCROLLINFO, TRUE, (LPARAM)&sif); 
 
-      rc.w = 24*5;
+      rc.w = 12*5;
       rc.h = TitleHeight;
       rc.x = GUI_XSIZE + GUI_XSIZE / 2 - rc.w / 2;
-      rc.y = TitleHeight;
+      rc.y = TitleHeight+10;
 
       Brigh_Handle = CreateWindow(TEXTBOX, L"50%", WS_VISIBLE | WS_OWNERDRAW, rc.x, rc.y, rc.w, rc.h, hwnd, ID_TEXTBOX_Brigh, NULL, NULL);//
-      SendMessage(Brigh_Handle, TBM_SET_TEXTFLAG, 0, DT_VCENTER | DT_CENTER | DT_BKGND);   
+      SendMessage(Brigh_Handle, TBM_SET_TEXTFLAG, 0, DT_VCENTER | DT_CENTER | DT_BKGND);  
+      
+       
 
       SetTimer(hwnd, 2, 10, TMR_START, NULL);
 
@@ -425,10 +429,10 @@ static LRESULT	ADCWinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         }
         else if (AovingDirection == RightToLeft)
         {
-          if (rc.x > -800)
+          if (rc.x > -GUI_XSIZE)
           {
             OffsetRect(&rc, -(rc.w >> 3), 0);
-            rc.x = MAX(rc.x, -800);
+            rc.x = MAX(rc.x, -GUI_XSIZE);
             MoveWindow(hwnd, rc.x, rc.y, rc.w, rc.h, TRUE);
           }
           else
@@ -488,6 +492,7 @@ static LRESULT	ADCWinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       ScreenToClient(hwnd, (POINT *)&rc, 1);
       BitBlt(hdc, rc.x, rc.y, GUI_XSIZE, rc.h, bk_hdc, 0, TitleHeight, SRCCOPY);
+      BrighCircle_Paint(hdc);    // 绘制两个亮度表示图标
 
       return TRUE;
     }
@@ -506,8 +511,7 @@ static LRESULT	ADCWinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       BitBlt(hdc_mem, 0, 0, CircleSize, CircleSize, bk_hdc, rc.x, rc.y, SRCCOPY);
 
-      Circle_Paint(hwnd, hdc_mem);
-      BrighCircle_Paint(hdc);
+      Circle_Paint(hwnd, hdc_mem);    // 绘制第一个界面中的圆形显示区域
       
       BitBlt(hdc, Circle_X, Circle_Y, CircleSize, CircleSize, hdc_mem, 0, 0, SRCCOPY);
       DeleteDC(hdc_mem);
@@ -576,8 +580,8 @@ static LRESULT	ADCWinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       ClientToScreen(hwnd, (POINT *)&rc, 1);
       OffsetRect(&Client_rc, rc.x - x_move, 0);
 
-      Client_rc.x = MIN(Client_rc.x, 30);
-      Client_rc.x = MAX(Client_rc.x, -800 - 30);
+      Client_rc.x = MIN(Client_rc.x, 10);
+      Client_rc.x = MAX(Client_rc.x, -GUI_XSIZE - 10);
       
       MoveWindow(hwnd, Client_rc.x, Client_rc.y, Client_rc.w, Client_rc.h, TRUE);
 
@@ -614,9 +618,9 @@ static LRESULT	ADCWinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       }
       else    // 从右往左滑
       {
-        if (Client_rc.x < -800)
+        if (Client_rc.x < -GUI_XSIZE)
         {
-          MoveWindow(hwnd, -800, Client_rc.y, Client_rc.w, Client_rc.h, TRUE);
+          MoveWindow(hwnd, -GUI_XSIZE, Client_rc.y, Client_rc.w, Client_rc.h, TRUE);
         }
         else 
         {
@@ -679,7 +683,7 @@ static LRESULT	CollectVoltage_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
       GetClientRect(hwnd, &rc); 
             
       CreateWindow(BUTTON, L"O", WS_TRANSPARENT|BS_FLAT | BS_NOTIFY |WS_OWNERDRAW|WS_VISIBLE,
-                  730, 0, 70, 70, hwnd, eID_ADC_EXIT, NULL, NULL); 
+                  292, 0, 28, 28, hwnd, eID_ADC_EXIT, NULL, NULL); 
 
       WNDCLASS wcex;
 
@@ -824,7 +828,7 @@ static LRESULT	CollectVoltage_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
 
     case WM_DESTROY:
     {
-      Rheostat_DISABLE();    // 停止ADC的采集
+      stopADC();    // 停止ADC的采集
       DeleteDC(bk_hdc);
       return PostQuitMessage(hwnd);	
     } 
@@ -852,7 +856,7 @@ void GUI_ADC_CollectVoltage_Dialog(void)
 	wcex.hInstance = NULL;//hInst;
 	wcex.hIcon = NULL;//LoadIcon(hInstance, (LPCTSTR)IDI_WIN32_APP_TEST);
 	wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
-   
+    
 	//创建主窗口
 	MAIN_Handle = CreateWindowEx(WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
                               &wcex,
