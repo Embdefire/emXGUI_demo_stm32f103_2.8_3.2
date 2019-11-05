@@ -26,7 +26,7 @@
 #include "./mp3_player/GUI_MUSICPLAYER_DIALOG.h"
 
 #define Delay_ms GUI_msleep
-
+void FileSystem_Test(void);
 RECT rc_cli = {45, 183, 230, 20};//进度条
 Music_State_t Music_State;
 
@@ -76,10 +76,10 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 	lyriccount=0;
 	lrc.oldtime=lrc.time_tbl[0];
 	
-	result=f_open(&file,(const TCHAR*)filepath,FA_READ);//打开文件	
+	result=f_open(&file,(const TCHAR*)filepath, FA_OPEN_EXISTING | FA_READ);//打开文件	
 	
 	if(result!=FR_OK) return;
-	
+//FileSystem_Test();
 	VS_SPI_SpeedHigh();	//高速						   
 	while(Music_State==STA_PLAYING)
 	{
@@ -131,6 +131,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 		
 		if(bw!=BUFSIZE||result!=FR_OK)
 		{
+      printf("%s（%d）", result != FR_OK ? "读失败" : "放完了", result);
 			VS_Soft_Reset();
 			Delay_ms(10);
 			if(play_index<music_file_num-1)		//自动开始下一首歌曲

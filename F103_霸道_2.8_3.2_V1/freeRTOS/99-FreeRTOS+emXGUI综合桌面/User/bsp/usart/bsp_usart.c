@@ -92,8 +92,8 @@ void Usart_SendArray( USART_TypeDef * pUSARTx, uint8_t *array, uint16_t num)
 }
 
 /*****************  ·¢ËÍ×Ö·û´® **********************/
-void Usart_SendString( USART_TypeDef * pUSARTx, char *str)
-{
+void Usart_SendString(  char *str)
+{USART_TypeDef * pUSARTx = USART1;
 	unsigned int k=0;
   do 
   {

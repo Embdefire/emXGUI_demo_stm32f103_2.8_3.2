@@ -156,49 +156,33 @@ static void BitmapInit(void)
 }
 static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
-	HWND hwnd;
-	HDC hdc;
-	RECT rc;
-	WCHAR wbuf[128];
+  HDC hdc;
+  RECT rc, rc_tmp;
+  HWND hwnd;
 
-  
-	hwnd = ds->hwnd; //button的窗口句柄.
-	hdc = ds->hDC;   //button的绘图上下文句柄.
-	rc = ds->rc;     //button的绘制矩形区.
+	hdc = ds->hDC;   
+	rc = ds->rc; 
+  hwnd = ds->hwnd;
 
-	SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-   
-   FillCircle(hdc, rc.x+rc.w, rc.y, rc.w);
-	//FillRect(hdc, &rc); //用矩形填充背景
+  GetClientRect(hwnd, &rc_tmp);//得到控件的位置
+  WindowToScreen(hwnd, (POINT *)&rc_tmp, 1);//坐标转换
 
-   if (ds->State & BST_PUSHED)
+  BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, hdc_bk, rc_tmp.x, rc_tmp.y, SRCCOPY);
+
+  if (ds->State & BST_PUSHED)
 	{ //按钮是按下状态
-//    GUI_DEBUG("ds->ID=%d,BST_PUSHED",ds->ID);
-//		SetBrushColor(hdc,MapRGB(hdc,150,200,250)); //设置填充色(BrushColor用于所有Fill类型的绘图函数)
-//		SetPenColor(hdc,MapRGB(hdc,250,0,0));        //设置绘制色(PenColor用于所有Draw类型的绘图函数)
-		SetTextColor(hdc, MapRGB(hdc, 105, 105, 105));      //设置文字色
+		SetPenColor(hdc, MapRGB(hdc, 120, 120, 120));      //设置文字色
 	}
 	else
 	{ //按钮是弹起状态
-//		SetBrushColor(hdc,MapRGB(hdc,255,255,255));
-//		SetPenColor(hdc,MapRGB(hdc,0,250,0));
-		SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));
+		SetPenColor(hdc, MapRGB(hdc, 250, 250, 250));
 	}
-
-	  /* 使用控制图标字体 */
-	SetFont(hdc, controlFont_24);
-	//  SetTextColor(hdc,MapRGB(hdc,255,255,255));
-
-	GetWindowText(hwnd, wbuf, 128); //获得按钮控件的文字
-
-   rc.y = -4;//-5;//
-   rc.x = 6;//10;//
-	DrawText(hdc, wbuf, -1, &rc, NULL);//绘制文字(居中对齐方式)
-
-
-  /* 恢复默认字体 */
-	SetFont(hdc, defaultFont);
-
+  
+  for(int i=0; i<4; i++)
+  {
+    HLine(hdc, rc.x, rc.y, rc.w);
+    rc.y += 5;
+  }
 }
 static void GA_BUTTON_OwnerDraw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
@@ -452,7 +436,7 @@ static LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 //      hdc =BeginPaint(hwnd,&ps);
 
       /* Home按钮 */    
-			wnd=CreateWindow(BUTTON,L"O",	WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,292,0,28,28,hwnd,ID_EXIT,NULL,NULL); //创建一个按钮.
+			wnd=CreateWindow(BUTTON,L"O",	WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,286, 10, 23, 23,hwnd,ID_EXIT,NULL,NULL); //创建一个按钮.
 			SetWindowFont(wnd,controlFont_24); //设置控件窗口字体.
 
 //      SetFont(hdc, defaultFont);
@@ -839,7 +823,7 @@ void	GUI_DEMO_Graphics_Accelerator(void)
 	wcex.hCursor		= NULL;
 
 	//创建主窗口
-	hwnd	=CreateWindowEx(	WS_EX_LOCKPOS|WS_EX_NOFOCUS,
+	hwnd	=CreateWindowEx(	WS_EX_LOCKPOS|WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
                             &wcex,
                             L"GUI_DEMO: MEMDC Blt", //窗口名称
                             WS_VISIBLE|WS_CLIPCHILDREN,

@@ -3,7 +3,17 @@
 
 #include <emXGUI.h>
 
-#define GUI_RGB_BACKGROUNG_PIC      "desktop.jpg"
+#if 1
+  #define GUI_RGB_BACKGROUNG_PIC      "0:/rgbled_desktop.jpg"
+  #define GUI_RGBLED_CHECKED_PIC      "0:/rgbled_checked.png"
+  #define GUI_RGB_SLIDER_PIC          "0:/slider.png"
+  #define GUI_RGB_SLIDER_BTN_PIC      "0:/slider_button.png"
+#else
+  #define GUI_RGB_BACKGROUNG_PIC      "rgbled_desktop.jpg"
+  #define GUI_RGBLED_CHECKED_PIC      "rgbled_checked.png"
+  #define GUI_RGB_SLIDER_PIC          "slider.png"
+  #define GUI_RGB_SLIDER_BTN_PIC      "slider_button.png"
+#endif
 
 #define APP_BackColor                ARGB8888(0,169,169,169)
 
@@ -28,10 +38,17 @@ enum GUI_RGBLEDID
    ID_SCROLLBAR_G  ,
    ID_SCROLLBAR_B ,
 
+   /* RGB 选择 */
+   ID_RGB_SELECT_R,
+   ID_RGB_SELECT_G,
+   ID_RGB_SELECT_B,
+
    /*文本框ID宏定义*/
+   ID_TEXTBOX_PCT,
+   ID_TEXTBOX_SMALL,
+   ID_TEXTBOX_BIG,
+
    ID_TEXTBOX_Title,
-   ID_TEXTBOX_APP,
-   ID_TEXTBOX_R,
   
    ID_TEXTBOX_R_LED,   
    ID_TEXTBOX_R_NUM,

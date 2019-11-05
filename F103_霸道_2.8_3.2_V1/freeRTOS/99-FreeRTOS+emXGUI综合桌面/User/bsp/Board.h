@@ -26,7 +26,7 @@ extern "C"{
 #include "misc.h" /* High level functions for NVIC and SysTick (add-on to CMSIS functions) */
 
 #include "system_stm32f10x.h"
-
+#include "./dwt_delay/core_delay.h"
 
 //#include "drv_inc/bsp_spi_flash.h"
 //#include "drv_inc/bsp_eeprom_24xx.h"
@@ -37,7 +37,7 @@ extern "C"{
 #include "./KEY/bsp_key.h"
 #include  "VS1053.h"
 #include  "bsp_adc.h"
-
+#include "./beep/bsp_beep.h"   
 
 //#include "Common/drv_inc/my_iic.h"
 //#include "Common/drv_inc/my_uart.h"

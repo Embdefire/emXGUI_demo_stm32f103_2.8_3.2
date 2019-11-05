@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,X_GUI_USE_FREERTOS,USE_STDPERIPH_DRIVER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\pic_viewer;..\..\User\OwnerDraw;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\camera\ov7725;..\..\User\App\Board_App;..\..\User\App\Board_App\mp3_player\vs1053;..\..\User\App\Board_App\adc_Collect_voltage</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\pic_viewer;..\..\User\OwnerDraw;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\camera\ov7725;..\..\User\App\Board_App;..\..\User\App\Board_App\mp3_player\vs1053;..\..\User\App\Board_App\adc_Collect_voltage;..\..\User\App\Board_App\T_RH;..\..\User\App\Board_App\Phone_SMS</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -616,6 +616,16 @@
               <FileName>DMA_LCD.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\bsp\LCD\DMA_LCD.c</FilePath>
+            </File>
+            <File>
+              <FileName>core_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\bsp\dwt_delay\core_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_beep.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\bsp\beep\bsp_beep.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1077,14 +1087,14 @@
               <FilePath>..\..\..\..\..\emXGUI_Lib\libs\libjpeg_MDK_CM3.lib</FilePath>
             </File>
             <File>
-              <FileName>libpng_MDK_CM3.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\..\..\emXGUI_Lib\libs\libpng_MDK_CM3.lib</FilePath>
-            </File>
-            <File>
               <FileName>x_obj.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\..\..\emXGUI_Lib\libs\x_obj.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>libpng_MDK_CM3.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\..\..\..\emXGUI_Lib\libs\libpng_MDK_CM3.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -1202,20 +1212,40 @@
               <FilePath>..\..\User\App\GUI_Demo\GUI_App_Desktop.c</FilePath>
             </File>
             <File>
+              <FileName>GUI_DEMO_ShowWave.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp</FilePath>
+            </File>
+            <File>
               <FileName>GUI_DEMO_Graphics_Accelerator.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Graphics_Accelerator.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_RectSpeed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_RectSpeed.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Settings.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Settings.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SelectDialogBox.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_SelectDialogBox.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_DEMO_Number_Keyboard.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Number_Keyboard.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board_app</GroupName>
           <Files>
-            <File>
-              <FileName>GUI_DEMO_ShowWave.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_ShowWave.cpp</FilePath>
-            </File>
             <File>
               <FileName>GUI_RGBLED_DIALOG.c</FileName>
               <FileType>1</FileType>
@@ -1284,12 +1314,52 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>tutorial/T_RH</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_T_RH_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\T_RH\GUI_T_RH_Dialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_dht11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\T_RH\DHT11\bsp_dht11.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>DOC</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Doc\readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/Phone_SMS</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_Phone_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\Phone_SMS\GUI_Phone_Dialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_SMS_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\Phone_SMS\GUI_SMS_Dialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_sim900a.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\Phone_SMS\sim900a\bsp_sim900a.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_gsm_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\Phone_SMS\sim900a\bsp_gsm_usart.c</FilePath>
             </File>
           </Files>
         </Group>

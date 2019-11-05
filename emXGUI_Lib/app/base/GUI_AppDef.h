@@ -21,10 +21,17 @@ extern BOOL Load_state;
 /* 启动界面的进度条句柄 */
 extern HWND Boot_progbar;
 
+/* 桌面图片背景 */
+extern HDC hdc_home_bk;
+/* 主页面窗口句柄 */
+extern HWND	hwnd_home;
+
+/* 主题标志 */
+extern uint8_t Theme_Flag;
 
 #define ID_SLIDE_WINDOW   1200
 
-#define HEAD_INFO_HEIGHT   45
+#define HEAD_INFO_HEIGHT   36
 #define WM_MSG_FRAME_DOWN  (WM_USER+50)
 
 #define COLOR_DESKTOP_BACK_GROUND         215,61,50

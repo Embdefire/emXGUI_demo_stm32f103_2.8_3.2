@@ -24,6 +24,7 @@
 #include "./led/bsp_led.h"
 #include "./key/bsp_key.h"   
 #include "./usart/bsp_usart.h"
+#include "./dwt_delay/core_delay.h"
 /* FreeRTOS头文件 */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -139,6 +140,8 @@ static void BSP_Init(void)
     
 	/* LED 端口初始化 */
 	LED_GPIO_Config();	
+  
+  BEEP_GPIO_Config();                // 初始化蜂鸣器
 	
 	/* usart 端口初始化 */
   Debug_USART_Config();
@@ -146,6 +149,8 @@ static void BSP_Init(void)
   FSMC_Init();
 	FSMC_InitSRAM();
 	FSMC_InitLCD();
+  
+  CPU_TS_TmrInit();
 
   /* KEY 端口初始化 */
   Key_GPIO_Config();

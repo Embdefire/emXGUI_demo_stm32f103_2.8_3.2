@@ -80,10 +80,21 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
 		CopyRect(&rc,lprc);
 	}
 
-	SetBrushColor(hdc,MapRGB(hdc,COLOR_DESKTOP_BACK_GROUND));
-//  SetBrushColor(hdc,MapRGB(hdc,0,0,0));
-	FillRect(hdc,&rc);
-  	
+  if (Theme_Flag == 0) 
+  {
+    BitBlt(hdc, rc.x, rc.h - HEAD_INFO_HEIGHT, rc.w, HEAD_INFO_HEIGHT, hdc_home_bk, rc.x, rc.h - HEAD_INFO_HEIGHT, SRCCOPY);
+  }
+  else if (Theme_Flag == 1)
+  {
+    SetBrushColor(hdc,MapRGB(hdc,82,85,82));
+    FillRect(hdc,&rc);
+  }
+  else
+  {
+    SetBrushColor(hdc, MapRGB(hdc, 100, 100, 100));
+    FillRect(hdc, &rc);
+  }
+
   SetTextColor(hdc,MapRGB(hdc,255,255,255));
   
 //  SetFont(hdc, iconFont_100);
@@ -95,11 +106,11 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
 //  DrawText(hdc,L"emXGUI@Embedfire STM32F103 ",-1,&rc,DT_CENTER);
     
   /* 背景 */
-  GetClientRect(hwnd,&rc);
-  SetBrushColor(hdc,MapRGB(hdc,82,85,82));
-  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT;
-  rc.h = HEAD_INFO_HEIGHT;
-  FillRect(hdc,&rc);
+  // GetClientRect(hwnd,&rc);
+  // SetBrushColor(hdc,MapRGB(hdc,82,85,82));
+  // rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT;
+  // rc.h = HEAD_INFO_HEIGHT;
+  // FillRect(hdc,&rc);
   
     /* 首栏 */ 
   SetFont(hdc, logoFont);
@@ -125,7 +136,7 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
   rc.w = 52;
   rc.x = GUI_XSIZE/2 - rc.w/2;
   rc.h = 23;
-  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT + 10;
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT+5;
   
   
   /* 控制图标字体 */
@@ -251,17 +262,20 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		case	WM_ERASEBKGND:
 		{   
       RECT rc = *(RECT*)lParam;
-			HDC hdc =(HDC)wParam; 
-        /* 字体资源加载完成后才显示正常界面，刚开始时只显示纯色 */
-       if(Load_state == TRUE)
-       {
-          _EraseBackgnd(hdc,NULL,hwnd);
-       }
-       else
-       {
-          SetBrushColor(hdc, MapRGB(hdc, 255, 0, 0));
-          FillRect(hdc, &rc);
-       }
+      HDC hdc =(HDC)wParam; 
+      /* 字体资源加载完成后才显示正常界面，刚开始时只显示纯色 */
+      if(Load_state == TRUE)
+      {
+
+        _EraseBackgnd(hdc,NULL,hwnd);
+        
+      }
+      else
+      {
+        SetBrushColor(hdc, MapRGB(hdc, 255, 0, 0));
+        FillRect(hdc, &rc);
+      }
+      
 		}
 		return TRUE;  
 

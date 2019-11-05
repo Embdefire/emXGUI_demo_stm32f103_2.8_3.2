@@ -77,17 +77,40 @@ static void CreateSlogan(HDC hdc, const RECT *lprc, HWND hwnd)
 	{
 		CopyRect(&rc, lprc);
 	}
-
-	/* 背景 */
-	GetClientRect(hwnd, &rc);
-	rc.h = HEAD_INFO_HEIGHT;
-	SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-	FillRect(hdc, &rc);
-
-	SetBrushColor(hdc, MapRGB(hdc, 82, 85, 82));
-	rc.y = rc.y + rc.h;
-	rc.h = GUI_YSIZE + 0 - rc.y;
-	FillRect(hdc, &rc);
+  
+  if (Theme_Flag == 0) 
+  {
+    BitBlt(hdc, rc.x, rc.y, rc.w, HEAD_INFO_HEIGHT, hdc_home_bk, rc.x, rc.h - HEAD_INFO_HEIGHT, SRCCOPY);    // 将主页面的下面纯色部分拷贝到标题栏
+    BitBlt(hdc, rc.x, HEAD_INFO_HEIGHT, rc.w, rc.h - HEAD_INFO_HEIGHT, hdc_home_bk, rc.x, 0, SRCCOPY);      // 将主页面的纯色以上部分拷贝到显示内容区域
+  }
+  else if (Theme_Flag == 1)
+  {
+    /* 背景 */
+    GetClientRect(hwnd, &rc);
+    rc.h = HEAD_INFO_HEIGHT;
+    SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
+    FillRect(hdc, &rc);    // 绘制标题栏
+    
+    SetBrushColor(hdc, MapRGB(hdc, 82, 85, 82));
+    rc.y = rc.y + rc.h;
+    rc.h = GUI_YSIZE + 0 - rc.y;
+    FillRect(hdc, &rc);
+  }
+  else
+  {
+    /* 背景 */
+    GetClientRect(hwnd, &rc);
+    rc.h = HEAD_INFO_HEIGHT;
+    SetBrushColor(hdc, MapRGB(hdc, 100, 100, 100));
+    FillRect(hdc, &rc);
+    
+    SetBrushColor(hdc, MapRGB(hdc, 82, 85, 82));
+    rc.y = rc.y + rc.h;
+    rc.h = GUI_YSIZE + 0 - rc.y;
+    FillRect(hdc, &rc);
+  }
+  
+	
 
 	/* 首栏 */
 
@@ -107,10 +130,19 @@ static void CreateSlogan(HDC hdc, const RECT *lprc, HWND hwnd)
 	//  DrawText(hdc, SLOGAN, -1,&rc0,DT_LEFT);       
 
 	DrawText(hdc, p_string, -1, &rc, DT_LEFT);
-
-	SetTextColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-  
-	SetTextColor(hdc, MapRGB(hdc, 250,250,250));
+  if (Theme_Flag == 0) 
+  {
+    SetTextColor(hdc, MapRGB(hdc, 0, 0, 0));
+  }
+  else if (Theme_Flag == 1)
+  {
+    SetTextColor(hdc, MapRGB(hdc, 250,250,250));
+  }
+  else
+  {
+    SetTextColor(hdc, MapRGB(hdc, 100,100,100));
+  }
+	
 	rc.y = GUI_YSIZE - 45;
 //  rc.x = 8;
   rc.h = 40;
@@ -173,7 +205,7 @@ static LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		hdc_mem = CreateMemoryDC(SURF_SCREEN, rc.w, rc.h);
 
 		/* 绘制slogan到内存设备 */
-		CreateSlogan(hdc_mem, NULL, hwnd);
+//		CreateSlogan(hdc_mem, NULL, hwnd);
 
 		SetTimer(hwnd, 1, 5, TMR_START, NULL);
 
@@ -207,7 +239,7 @@ static LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			if (rc.y > 0)
 			{
-				OffsetRect(&rc, 0, -(rc.h >> 3));
+				OffsetRect(&rc, 0, -(rc.h >> 2));
 				rc.y = MAX(rc.y, 0);
 				MoveWindow(hwnd, rc.x, rc.y, rc.w, rc.h, TRUE);
 			}
@@ -218,7 +250,7 @@ static LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			if (rc.y < (GUI_YSIZE))
 			{
-				OffsetRect(&rc, 0, 80);//(rc.h >> 3));
+				OffsetRect(&rc, 0, (rc.h >> 2));//
 				rc.y = MIN(rc.y, (GUI_YSIZE));//
 				MoveWindow(hwnd, rc.x, rc.y, rc.w, rc.h, TRUE);
 			}
@@ -249,16 +281,16 @@ static LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	break;
 
-	case WM_ERASEBKGND:
-	{
-		//			HDC hdc=(HDC)wParam;
+	// case WM_ERASEBKGND:
+	// {
+	// 	//			HDC hdc=(HDC)wParam;
 
-		//			GetClientRect(hwnd,&rc);
-		//      SetBrushColor(hdc,MapRGB(hdc,0,99,166));
-		//			FillRect(hdc,&rc);      
-	}
-	return TRUE;
-	/////
+	// 	//			GetClientRect(hwnd,&rc);
+	// 	//      SetBrushColor(hdc,MapRGB(hdc,0,99,166));
+	// 	//			FillRect(hdc,&rc);      
+	// }
+	// return TRUE;
+	// /////
 
 	case WM_PAINT: //窗口需要绘制时，会自动产生该消息.
 	{
@@ -272,7 +304,8 @@ static LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		////用户的绘制内容...
 		GetClientRect(hwnd, &rc0);
 		/* 把内存对象绘制至屏幕 */
-		BitBlt(hdc, 0, 0, rc0.w, rc0.h, hdc_mem, 0, 0, SRCCOPY);
+    CreateSlogan(hdc, NULL, hwnd);
+//		BitBlt(hdc, 0, 0, rc0.w, rc0.h, hdc_mem, 0, 0, SRCCOPY);
 
 		EndPaint(hwnd, &ps);
 		//////////
@@ -329,7 +362,7 @@ void	GUI_DEMO_SlideWindow(void *p)
 	wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
 
 	//创建主窗口
-	hwnd = CreateWindowEx(NULL,
+	hwnd = CreateWindowEx(WS_EX_FRAMEBUFFER,
 		&wcex,
 		L"SlideWindow",
 		//								/*WS_MEMSURFACE|*/WS_CAPTION|WS_DLGFRAME|WS_BORDER|WS_CLIPCHILDREN,

@@ -64,7 +64,7 @@ void FSMC_InitSRAM(void)
 
 
 	 /*-- FSMC Configuration ------------------------------------------------------*/
-	  p.FSMC_AddressSetupTime = 2;
+	  p.FSMC_AddressSetupTime = 0;
 	  p.FSMC_AddressHoldTime = 0;
 	  p.FSMC_DataSetupTime = 2;
 	  p.FSMC_BusTurnAroundDuration = 0;
@@ -76,6 +76,7 @@ void FSMC_InitSRAM(void)
 	  FSMC_NORSRAMInitStructure.FSMC_Bank = EXT_SRAM_FSMC_BANK;
 	  FSMC_NORSRAMInitStructure.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;
 	  FSMC_NORSRAMInitStructure.FSMC_MemoryType = FSMC_MemoryType_SRAM;
+  
 	  FSMC_NORSRAMInitStructure.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;
 	  FSMC_NORSRAMInitStructure.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;
 	  FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;
@@ -110,17 +111,17 @@ void FSMC_InitLCD(void)
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
 
-	wr_t.FSMC_AddressSetupTime      = 0x01;	 //地址建立时间
+	wr_t.FSMC_AddressSetupTime      = 0x03;	 //地址建立时间
 	wr_t.FSMC_AddressHoldTime       = 0x00;	 //地址保持时间
-	wr_t.FSMC_DataSetupTime         = 0x01;	 //数据建立时间
+	wr_t.FSMC_DataSetupTime         = 0x03;	 //数据建立时间
 	wr_t.FSMC_BusTurnAroundDuration = 0x00;
 	wr_t.FSMC_CLKDivision           = 0x00;
 	wr_t.FSMC_DataLatency           = 0x00;
 	wr_t.FSMC_AccessMode            = FSMC_AccessMode_B;
 
-	rd_t.FSMC_AddressSetupTime      = 0x01;	 //地址建立时间
+	rd_t.FSMC_AddressSetupTime      = 0x03;	 //地址建立时间
 	rd_t.FSMC_AddressHoldTime       = 0x00;	 //地址保持时间
-	rd_t.FSMC_DataSetupTime         = 0x02;	 //数据建立时间
+	rd_t.FSMC_DataSetupTime         = 0x03;	 //数据建立时间
 	rd_t.FSMC_BusTurnAroundDuration = 0x00;
 	rd_t.FSMC_CLKDivision           = 0x00;
 	rd_t.FSMC_DataLatency           = 0x00;

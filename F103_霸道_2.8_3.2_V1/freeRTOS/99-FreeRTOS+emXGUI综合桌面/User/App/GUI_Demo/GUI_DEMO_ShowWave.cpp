@@ -268,48 +268,28 @@ static void draw_scrollbar(HWND hwnd, HDC hdc, COLOR_RGB32 back_c, COLOR_RGB32 P
 }
 static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
-	HDC hdc;
-	RECT rc;
-	WCHAR wbuf[128];
+  HDC hdc;
+  RECT rc;
+  HWND hwnd;
 
-	hdc = ds->hDC;   //button的绘图上下文句柄.
-	rc = ds->rc;     //button的绘制矩形区.
-   
-//   
-//   SetBrushColor(hdc, MapRGB(hdc, 0,0,0));
-//   FillRect(hdc, &rc); //用矩形填充背景
-	SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-   
-   FillCircle(hdc, rc.x+rc.w, rc.y, rc.w);
-	
+	hdc = ds->hDC;   
+	rc = ds->rc; 
+  hwnd = ds->hwnd;
 
-   if (ds->State & BST_PUSHED)
+  if (ds->State & BST_PUSHED)
 	{ //按钮是按下状态
-//    GUI_DEBUG("ds->ID=%d,BST_PUSHED",ds->ID);
-//		SetBrushColor(hdc,MapRGB(hdc,150,200,250)); //设置填充色(BrushColor用于所有Fill类型的绘图函数)
-//		SetPenColor(hdc,MapRGB(hdc,250,0,0));        //设置绘制色(PenColor用于所有Draw类型的绘图函数)
-		SetTextColor(hdc, MapRGB(hdc, 105, 105, 105));      //设置文字色
+		SetPenColor(hdc, MapRGB(hdc, 120, 120, 120));      //设置文字色
 	}
 	else
 	{ //按钮是弹起状态
-//		SetBrushColor(hdc,MapRGB(hdc,255,255,255));
-//		SetPenColor(hdc,MapRGB(hdc,0,250,0));
-		SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));
+		SetPenColor(hdc, MapRGB(hdc, 250, 250, 250));
 	}
-
-	  /* 使用控制图标字体 */
-	SetFont(hdc, controlFont_24);
-	//  SetTextColor(hdc,MapRGB(hdc,255,255,255));
-
-	GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文字
-   rc.y = -4;
-   rc.x = 6;
-	DrawText(hdc, wbuf, -1, &rc, NULL);//绘制文字(居中对齐方式)
-
-
-  /* 恢复默认字体 */
-	SetFont(hdc, defaultFont);
-
+  
+  for(int i=0; i<4; i++)
+  {
+    HLine(hdc, rc.x, rc.y, rc.w);
+    rc.y += 5;
+  }
 }
 static void RB_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
@@ -1135,10 +1115,10 @@ static	LRESULT	WinProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
         CreateWindow(TEXTBOX,L"波形显示",TBS_FLAT|TBS_CENTER|TBS_TOP|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_TEXT5,NULL,NULL);
         
-        rc.w = 28;
-        rc.h = 28;
-        rc.x = 292;
-        rc.y = 0;  
+        rc.w = 22;
+        rc.h = 22;
+        rc.x = 286;
+        rc.y = 5;  
              
         /* 关闭按钮 */  
         wnd=CreateWindow(BUTTON,L"O",	BS_FLAT|WS_OWNERDRAW|WS_TRANSPARENT|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_EXIT,NULL,NULL); //创建一个按钮.

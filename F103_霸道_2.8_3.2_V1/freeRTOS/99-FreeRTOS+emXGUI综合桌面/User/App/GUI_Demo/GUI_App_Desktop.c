@@ -118,15 +118,25 @@ static void button_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
 	HWND hwnd;
 	HDC hdc;
-	RECT rc;
+	RECT rc, rc_tmp;
 	WCHAR wbuf[128];
 
 	hwnd = ds->hwnd; //button的窗口句柄.
 	hdc = ds->hDC;   //button的绘图上下文句柄.
 	rc = ds->rc;     //button的绘制矩形区.
 
-	SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-	FillRect(hdc, &rc); //用矩形填充背景
+	if (Theme_Flag == 0)
+  {
+    GetClientRect(hwnd, &rc_tmp);//得到控件的位置
+    WindowToScreen(hwnd, (POINT *)&rc_tmp, 1);//坐标转换
+
+    BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, hdc_home_bk, rc_tmp.x, rc_tmp.y, SRCCOPY);
+  }
+  else 
+  {
+    SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
+    FillRect(hdc, &rc); //用矩形填充背景
+  }
 
 	if (IsWindowEnabled(hwnd) == FALSE)
 	{
@@ -173,15 +183,26 @@ static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
 	HWND hwnd;
 	HDC hdc;
-	RECT rc;
+	RECT rc, rc_tmp;
 	WCHAR wbuf[128];
 
 	hwnd = ds->hwnd; //button的窗口句柄.
 	hdc = ds->hDC;   //button的绘图上下文句柄.
 	rc = ds->rc;     //button的绘制矩形区.
 
-   SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-	FillRect(hdc, &rc); //用矩形填充背景
+  if (Theme_Flag == 0)
+  {
+    GetClientRect(hwnd, &rc_tmp);//得到控件的位置
+    WindowToScreen(hwnd, (POINT *)&rc_tmp, 1);//坐标转换
+
+    BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, hdc_home_bk, rc_tmp.x, rc_tmp.y, SRCCOPY);
+  }
+  else 
+  {
+    SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
+    FillRect(hdc, &rc); //用矩形填充背景
+  }
+   
 
 	if (IsWindowEnabled(hwnd) == FALSE)
 	{
@@ -257,7 +278,15 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		cfg.list_objs = menu_list_1; //指定list列表.
 		cfg.x_num = 3; //水平项数.
 		cfg.y_num = 1; //垂直项数.
-    cfg.bg_color = COLOR_DESKTOP_BACK_GROUND_HEX;
+    
+    if (Theme_Flag == 0)
+    {
+      cfg.bg_color = 1;    // 为 1 时不使用这个颜色作为背景色
+    }
+    else 
+    {
+      cfg.bg_color = COLOR_DESKTOP_BACK_GROUND_HEX;    // 为 1 时不使用这个颜色作为背景色
+    }
 
 		chwnd = CreateWindow(&wcex_ListMenu,
                             L"ListMenu1",
@@ -341,8 +370,16 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		RECT rc;
 
 		GetClientRect(hwnd, &rc);
-		SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-		FillRect(hdc, &rc);
+    
+    if (Theme_Flag == 0)
+    {
+      BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, hdc_home_bk, rc.x, rc.y, SRCCOPY);
+    }
+    else 
+    {
+      SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
+      FillRect(hdc, &rc); //用矩形填充背景
+    }
 	}
 	break;
 
@@ -360,8 +397,6 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 ////    SetFont(hdc, GB2312_32_Font);
     SetFont(hdc, defaultFont);
 
-    SetBrushColor(hdc, MapRGB(hdc, COLOR_DESKTOP_BACK_GROUND));
-    FillRect(hdc, &rc);
     SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));
 //    rc.y += 5;
    

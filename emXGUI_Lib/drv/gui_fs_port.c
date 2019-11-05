@@ -129,11 +129,11 @@ WIFI_PDN_INIT();
 }
 
 #if 0
-FIL fnew;													/* 文件对象 */
+FIL fnew __EXRAM;													/* 文件对象 */
 UINT fnum;            					  /* 文件成功读写数量 */
-BYTE ReadBuffer[1024]={0};        /* 读缓冲区 */
+BYTE ReadBuffer[512]={0};        /* 读缓冲区 */
 BYTE WriteBuffer[] =              /* 写缓冲区*/
-"欢迎使用野火STM32 F767开发板 今天是个好日子，新建文件系统测试文件\r\n";  
+"testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttsttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestteesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttsttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest\r\n";  
 
 /**
   * @brief  文件系统读写测试
