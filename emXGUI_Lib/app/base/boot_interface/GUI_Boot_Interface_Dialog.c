@@ -41,7 +41,7 @@ static void App_Load_Res(void )
     /* 创建线程运行自己 */
     GUI_Thread_Create((void(*)(void*))App_Load_Res,  /* 任务入口函数 */
                         "Load Res",/* 任务名字 */
-                        10*1024,  /* 任务栈大小 */
+                        8*1024,  /* 任务栈大小 */
                         NULL, /* 任务入口函数参数 */
                         1,    /* 任务的优先级 */
                         10); /* 任务时间片，部分任务不支持 */
@@ -345,12 +345,12 @@ void	GUI_Boot_Interface_Dialog(void *param)
                               7,    /* 任务的优先级 */
                               10); /* 任务时间片，部分任务不支持 */
        
-       xTaskCreate(PhoneCallMonitorTask,       /* 任务入口函数 */
-                            "Phone_Call_Monitor",  /* 任务名字 */
-                            3*1024/4,                /* 任务栈大小 */
-                            NULL,                  /* 任务入口函数参数 */
-                            6,                     /* 任务的优先级 */
-                            CallCallMonitorHandle);                   /* 任务时间片，部分任务不支持 */
+//       xTaskCreate(PhoneCallMonitorTask,       /* 任务入口函数 */
+//                            "Phone_Call_Monitor",  /* 任务名字 */
+//                            2*1024/4,                /* 任务栈大小 */
+//                            NULL,                  /* 任务入口函数参数 */
+//                            6,                     /* 任务的优先级 */
+//                            CallCallMonitorHandle);                   /* 任务时间片，部分任务不支持 */
      }   
 //  } 
     /* 部分操作系统在退出任务函数时，必须删除线程自己 */

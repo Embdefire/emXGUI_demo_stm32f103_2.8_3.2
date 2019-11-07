@@ -6,6 +6,7 @@
 #include "def.h"
 #include "ff.h"
 #include "./dwt_delay/core_delay.h"  
+#include	"emXGUI_Arch.h"
 
 static uint8_t MaxMessAdd=50;
 uint8_t Sim900aReceiveAcc=0;    // 接收完成
@@ -306,7 +307,7 @@ void sim900a_utf82ucs2hex(char * ucs2hex,char * utf8,uint16_t utf8len)
 {
     char *ucs,*tmp;//ucs用于存储unicode变量，tmp用作unicode变量的指针运算，如果运算后free tmp会出错
 		
-		ucs	= (char *)malloc(sizeof(char)*utf8len*2);		//UC编码全为2字节一个			
+		ucs	= (char *)GUI_VMEM_Alloc(sizeof(char)*utf8len*2);		//UC编码全为2字节一个			
 		
 		if(ucs == NULL)
 		{

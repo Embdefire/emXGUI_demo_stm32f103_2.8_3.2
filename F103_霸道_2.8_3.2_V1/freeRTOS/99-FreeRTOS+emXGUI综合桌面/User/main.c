@@ -25,6 +25,7 @@
 #include "./key/bsp_key.h"   
 #include "./usart/bsp_usart.h"
 #include "./dwt_delay/core_delay.h"
+#include "board.h"
 /* FreeRTOS头文件 */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -154,6 +155,18 @@ static void BSP_Init(void)
 
   /* KEY 端口初始化 */
   Key_GPIO_Config();
+  
+  /* 配置RTC秒中断优先级 */
+//	RTC_NVIC_Config();	
+//  int tm_sec;
+//	int tm_min;
+//	int tm_hour;
+//	int tm_mday;
+//	int tm_mon;
+//	int tm_year;
+//	int tm_wday;
+  struct rtc_time systmtime ={0, 41, 10, 7, 11, 2019, 0};
+	RTC_CheckAndConfig(&systmtime);
 }
  
 

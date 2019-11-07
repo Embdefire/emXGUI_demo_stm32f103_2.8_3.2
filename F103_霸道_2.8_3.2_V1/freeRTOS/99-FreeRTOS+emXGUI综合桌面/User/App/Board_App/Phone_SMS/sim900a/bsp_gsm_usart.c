@@ -181,7 +181,7 @@ void GSM_USART_IRQHandler(void)
     if(USART_GetITStatus(GSM_USARTx, USART_IT_IDLE) != RESET)
     {
       USART_ReceiveData(GSM_USART);
-      GUI_SemPostISR(Call_Sem);
+//      GUI_SemPostISR(Call_Sem);
       USART_ClearITPendingBit(GSM_USART, USART_IT_IDLE);    // 清除中断挂起位
       USART_ClearFlag(GSM_USART, USART_IT_IDLE);            // 清除空闲中断
       Sim900aReceiveAcc=1;

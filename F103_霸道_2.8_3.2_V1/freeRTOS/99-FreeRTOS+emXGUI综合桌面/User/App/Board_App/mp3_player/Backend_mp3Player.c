@@ -59,7 +59,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
   
 	if(strstr((const char*)filepath,".flac")||strstr((const char*)filepath,".FLAC"))
 	{
-		VS_Load_Patch((u16*)vs1053b_patch,VS1053B_PATCHLEN);
+//		VS_Load_Patch((u16*)vs1053b_patch,VS1053B_PATCHLEN);
 		Delay_ms(1);//1ms
 		type=2;
 	}

@@ -37,7 +37,7 @@
 #define Music_Player_72 "Music_Player_72_72.xft"
 
 //图标管理数组
-icon_S music_icon[12] = {
+icon_S music_icon[8] = {
    {"yinliang",         {10,200,32,32},       FALSE},//音量0
    {"yinyueliebiao",    {285,209,24,24},      FALSE},//音乐列表1
    {"geci",             {258,209,24,24},      FALSE},//歌词栏2
@@ -68,7 +68,7 @@ uint8_t ReadBuffer1[1024*5] __EXRAM;
 //MINI播放键、上一首、下一首控件句柄句柄
 //static HWND mini_next,mini_start,mini_back;
 //歌词结构体
-LYRIC lrc;
+LYRIC lrc  __EXRAM;
 static HDC hdc_bk;
 static HWND wnd;//音量滑动条窗口句柄 
 static HWND wnd_power;//音量icon句柄

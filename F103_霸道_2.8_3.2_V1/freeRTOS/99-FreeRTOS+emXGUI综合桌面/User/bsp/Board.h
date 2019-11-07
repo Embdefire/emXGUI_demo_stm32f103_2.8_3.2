@@ -27,6 +27,7 @@ extern "C"{
 
 #include "system_stm32f10x.h"
 #include "./dwt_delay/core_delay.h"
+#include  ".\clock\rtc\bsp_rtc.h"
 
 //#include "drv_inc/bsp_spi_flash.h"
 //#include "drv_inc/bsp_eeprom_24xx.h"

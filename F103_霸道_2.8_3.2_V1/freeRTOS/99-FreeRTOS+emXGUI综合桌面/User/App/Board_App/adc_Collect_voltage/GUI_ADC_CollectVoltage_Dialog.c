@@ -244,7 +244,7 @@ static LRESULT	CollectVoltage_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lP
       /*  Õ∑≈Õº∆¨ƒ⁄»›ø’º‰ */
       RES_Release_Content((char **)&jpeg_buf);
 
-      SetTimer(hwnd, 2, 100, TMR_START, NULL);
+      SetTimer(hwnd, 2, 20, TMR_START, NULL);
 
       break;
     } 

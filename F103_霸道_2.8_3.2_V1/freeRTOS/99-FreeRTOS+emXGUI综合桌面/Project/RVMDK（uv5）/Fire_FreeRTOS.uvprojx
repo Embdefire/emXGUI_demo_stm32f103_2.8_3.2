@@ -1241,6 +1241,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Number_Keyboard.c</FilePath>
             </File>
+            <File>
+              <FileName>GUI_DEMO_Button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Button.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1329,16 +1334,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>DOC</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\Doc\readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>tutorial/Phone_SMS</GroupName>
           <Files>
             <File>
@@ -1360,6 +1355,41 @@
               <FileName>bsp_gsm_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\Board_App\Phone_SMS\sim900a\bsp_gsm_usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/clock</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_CLOCK_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\clock\GUI_CLOCK_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_calendar.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_calendar.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_date.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_date.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_rtc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>DOC</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Doc\readme.txt</FilePath>
             </File>
           </Files>
         </Group>

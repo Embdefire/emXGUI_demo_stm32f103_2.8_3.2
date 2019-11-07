@@ -19,6 +19,8 @@
 
 /*===================================================================================*/
 
+static int count = 0;
+
 static void button_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 {
 //	HWND hwnd;
@@ -45,10 +47,17 @@ static void button_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 	}
 
 	FillRect(hdc,&rc); //用矩形填充背景
-	DrawRect(hdc,&rc); //画矩形外框
+//	DrawRect(hdc,&rc); //画矩形外框
 
 	GetWindowText(ds->hwnd,wbuf,128); //获得按钮控件的文字
 	DrawText(hdc,wbuf,-1,&rc,DT_VCENTER|DT_CENTER);//绘制文字(居中对齐方式)
+  
+  if (ds->ID == ID_BTN6)
+  {
+    SetTextColor(hdc,MapRGB(hdc,0,0,0));
+    x_wsprintf(wbuf, L"%d", count);
+    DrawText(hdc,wbuf,-1,&rc,DT_BOTTOM|DT_RIGHT);//绘制文字(居中对齐方式)
+  }
 
 }
 
@@ -101,9 +110,19 @@ static	LRESULT	win_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 				OffsetRect(&rc,0,rc.h+10);
 				//创建圆角风格的按钮(BS_ROUND+WS_DISABLE)
 				CreateWindow(BUTTON,L"Button7",BS_ROUND|WS_DISABLED|WS_VISIBLE,rc.x,rc.y,rc.w,rc.h,hwnd,ID_BTN7,NULL,NULL);
+        
+        SetTimer(hwnd, 1, 1000, TMR_START, NULL);
 
 				return TRUE;
 				////////
+        
+      case WM_TIMER:
+      {
+        count++;
+        InvalidateRect(GetDlgItem(hwnd, ID_BTN6), NULL, TRUE);    // 将会产生 ID_BTN6 按钮重绘
+        InvalidateRect(hwnd, NULL, TRUE);    // 将会产生 WM_PAINT 消息
+      }  
+			break; 
 
 
 		case	WM_NOTIFY: //WM_NOTIFY消息:wParam低16位为发送该消息的控件ID,高16位为通知码;lParam指向了一个NMHDR结构体.
@@ -199,11 +218,14 @@ static	LRESULT	win_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 
 		case	WM_PAINT: //窗口需要重绘制时，会自动收到该消息.
 		{	PAINTSTRUCT ps;
+      WCHAR wbuf[128];
 
 			hdc	=BeginPaint(hwnd,&ps);
 
 			SetTextColor(hdc,MapRGB(hdc,0,0,255));
 			TextOut(hdc,8,4,L"Button Test:",-1);
+      x_wsprintf(wbuf, L"%d", count);
+      TextOut(hdc,100,4,wbuf,-1);
 
 			EndPaint(hwnd,&ps);
 			return	TRUE;
@@ -221,11 +243,11 @@ static	LRESULT	win_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 void	GUI_DEMO_Button(void)
 {
 		HWND	hwnd;
-		WNDCLASSEX	wcex;
+		WNDCLASS	wcex;
 		MSG msg;
 
 		/////
-		wcex.Tag 		    = WNDCLASSEX_TAG;
+		wcex.Tag 		    = WNDCLASS_TAG;
 
 		wcex.Style			= CS_HREDRAW | CS_VREDRAW;
 		wcex.lpfnWndProc	= win_proc; //设置主窗口消息处理的回调函数.
@@ -234,7 +256,6 @@ void	GUI_DEMO_Button(void)
 		wcex.hInstance		= NULL;//hInst;
 		wcex.hIcon			= NULL;//LoadIcon(hInstance, (LPCTSTR)IDI_WIN32_APP_TEST);
 		wcex.hCursor		= NULL;//LoadCursor(NULL, IDC_ARROW);
-		wcex.hIconSm		= NULL;//LoadIcon(wcex.hInstance, (LPCTSTR)IDI_SMALL);
 		
 		//创建主窗口
 		hwnd	=CreateWindowEx(	NULL,

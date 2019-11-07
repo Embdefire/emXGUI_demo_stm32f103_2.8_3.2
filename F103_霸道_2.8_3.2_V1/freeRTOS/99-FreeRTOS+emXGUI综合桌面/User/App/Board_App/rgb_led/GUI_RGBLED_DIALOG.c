@@ -38,7 +38,7 @@ struct leddlg
    int colB_ctr;//硬件RGB灯控制位
 }leddlg_S={0, 0, 0, 0, 0, 0, 1, 1, 1};
 
-icon_S GUI_RGBLED_Icon[18] = 
+const icon_S GUI_RGBLED_Icon[18] = 
 {
       {"tuichu",           {286, 10, 23, 23},   FALSE},    // 退出按键
       {"biaotilan",        {50,0,220,36},       FALSE},    // APP标题栏

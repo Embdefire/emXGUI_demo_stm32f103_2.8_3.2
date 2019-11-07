@@ -445,10 +445,10 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       {  
         SetTimer(hwnd, 0, 0, TMR_START|TMR_SINGLE, NULL);        
       }
-      // else
-      // {
-      //   SetTimer(hwnd, 1, 500, TMR_START, NULL); 
-      // }
+      else
+      {
+        SetTimer(hwnd, 1, 500, TMR_START, NULL); 
+      }
       SIM900A_CLEAN_RX();//清除接收缓存
 
       InflateRectEx(&rc, -2, -56, -2, -49);
@@ -488,7 +488,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         SelectDialogBox(hwnd, RC, L"没有检测到GSM模块\n请重新检查连接。", L"错误", &ops);    // 显示错误提示框
         PostCloseMessage(hwnd);                                                              // 发送关闭窗口的消息
       }
-      else if(0)    // 放在任务里跑了
+      else if(tmr_id == 1)    // 定时检查来电情况
       {
         char num[20]={0};
         
@@ -719,7 +719,7 @@ void GUI_Phone_Dialog(void)
 	
 	WNDCLASS	wcex;
 	MSG msg;
-  HWND MAIN_Handle;
+  HWND hwnd;
 	wcex.Tag = WNDCLASS_TAG;
 
 	wcex.Style = CS_HREDRAW | CS_VREDRAW;
@@ -731,22 +731,23 @@ void GUI_Phone_Dialog(void)
 	wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
    
 	//创建主窗口
-	MAIN_Handle = CreateWindowEx(WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
+	hwnd = CreateWindowEx(WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
                               &wcex,
                               L"GUI Phone Dialog",
                               WS_VISIBLE|WS_CLIPCHILDREN,
                               0, 0, GUI_XSIZE, GUI_YSIZE,
                               NULL, NULL, NULL, NULL);
    //显示主窗口
-	ShowWindow(MAIN_Handle, SW_SHOW);
+	ShowWindow(hwnd, SW_SHOW);
 	//开始窗口消息循环(窗口关闭并销毁时,GetMessage将返回FALSE,退出本消息循环)。
-	while (GetMessage(&msg, MAIN_Handle))
+	while (GetMessage(&msg, hwnd))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}  
 }
 
+#if 0    // 内存有限，不单独建立一个任务放在后台跑
 /*
  * @brief  来电显示窗口
  * @param  num[]:来电电话号码
@@ -769,7 +770,7 @@ void GUI_PhoneCall_Dialog(char num[])
   x_wstrcpy(CallInfo.Status, L"来电提醒");
 	
 	MSG msg;
-  HWND MAIN_Handle;
+  HWND hwnd;
 	wcex.Tag = WNDCLASS_TAG;
 
 	wcex.Style = CS_HREDRAW | CS_VREDRAW;
@@ -781,16 +782,16 @@ void GUI_PhoneCall_Dialog(char num[])
 	wcex.hCursor = NULL;//LoadCursor(NULL, IDC_ARROW);
    
 	//创建主窗口
-	MAIN_Handle = CreateWindowEx(WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
+	hwnd = CreateWindowEx(WS_EX_NOFOCUS|WS_EX_FRAMEBUFFER,
                               &wcex,
                               L"GUI PhoneCall Dialog",
                               WS_VISIBLE|WS_CLIPCHILDREN,
                               0, 0, GUI_XSIZE, GUI_YSIZE,
                               NULL, NULL, NULL, &CallInfo);
    //显示主窗口
-	ShowWindow(MAIN_Handle, SW_SHOW);
+	ShowWindow(hwnd, SW_SHOW);
 	//开始窗口消息循环(窗口关闭并销毁时,GetMessage将返回FALSE,退出本消息循环)。
-	while (GetMessage(&msg, MAIN_Handle))
+	while (GetMessage(&msg, hwnd))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -833,5 +834,5 @@ void PhoneCallMonitorTask(void *p)
     }
   }
 }
-
+#endif
 
