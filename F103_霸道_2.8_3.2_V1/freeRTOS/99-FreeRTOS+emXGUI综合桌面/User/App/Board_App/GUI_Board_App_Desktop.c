@@ -68,6 +68,7 @@ extern void GUI_Settings_DIALOG(void);
 extern void GUI_Phone_Dialog(void);
 extern void GUI_SMS_Dialog(void);
 extern void GUI_CLOCK_DIALOG(void);
+extern void GUI_RECORDER_DIALOG(void);
 extern BOOL player_state;
 int thread_ctrl = 1;
 
@@ -131,7 +132,7 @@ int thread_ctrl = 1;
 //		}
 //	}   
 //}
-void	GUI_DEMO_Button(void);
+
 static const struct __obj_list menu_list_1[] = {
   
       L"GUI应用",		  NULL, 	L"J", RGB_WHITE, GUI_App_Desktop,//dummy,//
@@ -144,7 +145,7 @@ static const struct __obj_list menu_list_1[] = {
 //      L"图片浏览器",  NULL, 	L"G", RGB_WHITE, dummy,
       L"温湿度",	    NULL,   L"O", RGB_WHITE, GUI_T_RH_Dialog,
       L"电压表",		  NULL,	  L"W", RGB_WHITE, GUI_ADC_CollectVoltage_Dialog,  
-      L"模拟U盘",     NULL,	  L"N", RGB_WHITE, GUI_DEMO_Button, 
+      L"模拟U盘",     NULL,	  L"N", RGB_WHITE, dummy, 
       L"陀螺仪",	    NULL,	  L"R", RGB_WHITE, GUI_Settings_DIALOG,
 
       L"以太网",		  NULL,	  L"Q", RGB_WHITE, dummy,
@@ -157,7 +158,7 @@ static const struct __obj_list menu_list_1[] = {
 
 
       L"时钟",		    NULL,	  L"H", RGB_WHITE, GUI_CLOCK_DIALOG,
-      L"录音机",	    NULL,	  L"Y", RGB_WHITE, dummy,
+      L"录音机",	    NULL,	  L"Y", RGB_WHITE, GUI_RECORDER_DIALOG,
       L"FlashWriter", NULL,	  L"b", RGB_WHITE, GUI_RES_Writer_Dialog,
       
         NULL,	NULL,	NULL,NULL, NULL,//结束标志!

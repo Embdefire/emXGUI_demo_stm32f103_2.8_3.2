@@ -25,7 +25,7 @@
 #include "flac.h"
 #include "./mp3_player/GUI_MUSICPLAYER_DIALOG.h"
 
-#define Delay_ms GUI_msleep
+//#define Delay_ms GUI_msleep
 void FileSystem_Test(void);
 RECT rc_cli = {45, 183, 230, 20};//½ø¶ÈÌõ
 Music_State_t Music_State;
@@ -40,10 +40,10 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 {
 	uint16_t playtime=0,time=0;
 	static uint8_t lyriccount=0;
-	uint16_t musicrate=0,f_kbps=0xffff;
+	uint16_t f_kbps=0xffff;
 	uint16_t i=0;
 	uint32_t val=0;
-  char lyrictext[MAX_LINE_LEN]={0};
+//  char lyrictext[MAX_LINE_LEN]={0};
   Music_State=STA_PLAYING;
 	uint8_t type=0;
   WCHAR wbuf[128];
@@ -110,7 +110,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 			sch = numb*file.fsize/0xff;
 //			printf("chgsch:%d,sch:%d\n",chgsch,sch);
 			f_lseek(&file,sch);
-			VS_Set_Vol(vsset.mvol);
+			VS_Set_Vol(vol);
 			chgsch=0;
       lrc.oldtime=0;
       lyriccount=0;
@@ -179,7 +179,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 		time++;
 		if((time>=(25*type+playtime))&&(chgsch==0))
 		{
-			uint32_t timetemp=0;
+//			uint32_t timetemp=0;
 
 			playtime=time;	
 			if((type==1)&&((f_kbps>448)||(f_kbps<32)))f_kbps=VS_Get_HeadInfo();
@@ -193,7 +193,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
       SetWindowText(GetDlgItem(MusicPlayer_hwnd, ID_TB2), wbuf);
       SendMessage(music_wnd_time, SBM_SETVALUE, TRUE, lrc.curtime*255/val);
 			
-			musicrate=lrc.curtime*255/val;
+//			musicrate=lrc.curtime*255/val;
 
       if(lrc.flag == 1)
       {

@@ -3123,7 +3123,7 @@ void SDIO_IRQHandler(void)
 #define SD_SINGLE_BUS_SUPPORT           ((uint32_t)0x00010000)
 #define SD_CARD_LOCKED                  ((uint32_t)0x02000000)
 
-#define SD_DATATIMEOUT                  ((uint32_t)0x0000AFFF)
+#define SD_DATATIMEOUT                  ((uint32_t)0x000FAFFF)
 #define SD_0TO7BITS                     ((uint32_t)0x000000FF)
 #define SD_8TO15BITS                    ((uint32_t)0x0000FF00)
 #define SD_16TO23BITS                   ((uint32_t)0x00FF0000)

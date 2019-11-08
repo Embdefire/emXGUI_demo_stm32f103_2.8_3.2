@@ -312,7 +312,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
@@ -1241,72 +1241,10 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Number_Keyboard.c</FilePath>
             </File>
-            <File>
-              <FileName>GUI_DEMO_Button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Button.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>board_app</GroupName>
-          <Files>
-            <File>
-              <FileName>GUI_RGBLED_DIALOG.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
-            </File>
-            <File>
-              <FileName>Backend_RGBLED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\rgb_led\Backend_RGBLED.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_Camera_Dialog.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_ov7725.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\camera\ov7725\bsp_ov7725.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_sccb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\camera\ov7725\bsp_sccb.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_MUSICPLAYER_DIALOG.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\mp3_player\GUI_MUSICPLAYER_DIALOG.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_MusicList_DIALOG.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\mp3_player\GUI_MusicList_DIALOG.c</FilePath>
-            </File>
-            <File>
-              <FileName>VS1053.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\mp3_player\vs1053\VS1053.c</FilePath>
-            </File>
-            <File>
-              <FileName>Backend_mp3Player.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\mp3_player\Backend_mp3Player.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\adc_Collect_voltage\bsp_adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>GUI_ADC_CollectVoltage_Dialog.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\adc_Collect_voltage\GUI_ADC_CollectVoltage_Dialog.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>app_res</GroupName>
@@ -1380,6 +1318,91 @@
               <FileName>bsp_rtc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_rtc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/music_record</GroupName>
+          <Files>
+            <File>
+              <FileName>VS1053.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\mp3_player\vs1053\VS1053.c</FilePath>
+            </File>
+            <File>
+              <FileName>Backend_mp3Player.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\mp3_player\Backend_mp3Player.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_MusicList_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\mp3_player\GUI_MusicList_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_MUSICPLAYER_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\mp3_player\GUI_MUSICPLAYER_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_RECORDER_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\recorder\GUI_RECORDER_DIALOG.c</FilePath>
+            </File>
+            <File>
+              <FileName>Backend_Recorder.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\recorder\Backend_Recorder.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/rgbled</GroupName>
+          <Files>
+            <File>
+              <FileName>Backend_RGBLED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\rgb_led\Backend_RGBLED.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_RGBLED_DIALOG.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\rgb_led\GUI_RGBLED_DIALOG.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/camera</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp_sccb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\camera\ov7725\bsp_sccb.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_ov7725.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\camera\ov7725\bsp_ov7725.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Camera_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\camera\GUI_Camera_Dialog.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/adc</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\adc_Collect_voltage\bsp_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_ADC_CollectVoltage_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\adc_Collect_voltage\GUI_ADC_CollectVoltage_Dialog.c</FilePath>
             </File>
           </Files>
         </Group>
