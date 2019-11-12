@@ -1,6 +1,6 @@
 
 #include "BSP.h"
-#include "bsp_flash_spi.h"
+#include "./spi_flash/bsp_flash_spi.h"
 
 static __IO uint32_t  SPITimeout = SPIT_LONG_TIMEOUT;   
 static uint16_t SPI_TIMEOUT_UserCallback(void);

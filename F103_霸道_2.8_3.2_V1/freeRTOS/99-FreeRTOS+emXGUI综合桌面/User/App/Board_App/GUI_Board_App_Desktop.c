@@ -71,6 +71,7 @@ extern void GUI_CLOCK_DIALOG(void);
 extern void GUI_RECORDER_DIALOG(void);
 extern void gui_wifi_dialog(void);
 extern void gui_network_dialog(void);
+extern void GUI_SimulateUDisk_Dialog(void);
 extern BOOL player_state;
 int thread_ctrl = 1;
 
@@ -146,7 +147,7 @@ static const struct __obj_list menu_list_1[] = {
 //      L"Í¼Æ¬ä¯ÀÀÆ÷",  NULL, 	L"G", RGB_WHITE, dummy,
       L"ÎÂÊª¶È",	    NULL,   L"O", RGB_WHITE, GUI_T_RH_Dialog,
       L"µçÑ¹±í",		  NULL,	  L"W", RGB_WHITE, GUI_ADC_CollectVoltage_Dialog,  
-      L"Ä£ÄâUÅÌ",     NULL,	  L"N", RGB_WHITE, dummy, 
+      L"Ä£ÄâUÅÌ",     NULL,	  L"N", RGB_WHITE, GUI_SimulateUDisk_Dialog, 
       L"ÍÓÂÝÒÇ",	    NULL,	  L"R", RGB_WHITE, GUI_Settings_DIALOG,
 
       L"ÒÔÌ«Íø",		  NULL,	  L"Q", RGB_WHITE, gui_network_dialog,
