@@ -10,7 +10,7 @@
 #include "CListMenu.h"
 
 /* Í¼Æ¬×ÊÔ´Ãû */
-#define GUI_SETTINGS_BACKGROUNG_PIC      "0:/settingsdesktop.jpg"        // 320*240
+#define GUI_SETTINGS_BACKGROUNG_PIC      "settingsdesktop.jpg"        // 320*240
 
 typedef enum 
 { 

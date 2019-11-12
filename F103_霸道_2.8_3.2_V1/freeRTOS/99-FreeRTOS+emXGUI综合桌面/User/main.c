@@ -85,6 +85,7 @@ int main(void)
                         (uint16_t       )512,  /* 任务栈大小 */
                         (void*          )NULL,/* 任务入口函数参数 */
                         (UBaseType_t    )10, /* 任务的优先级 */
+                        
                         (TaskHandle_t*  )NULL);/* 任务控制块指针 */ 
   /* 启动任务调度 */           
   if(pdPASS == xReturn)
@@ -166,6 +167,7 @@ static void BSP_Init(void)
 //	int tm_year;
 //	int tm_wday;
   struct rtc_time systmtime ={0, 41, 10, 7, 11, 2019, 0};
+//  RTC_NVIC_Config();
 	RTC_CheckAndConfig(&systmtime);
 }
  

@@ -40,9 +40,8 @@ void RTC_NVIC_Config(void)
  */
 int8_t RTC_CheckAndConfig(struct rtc_time *tm)
 {
-   	  /*在启动时检查备份寄存器BKP_DR1，如果内容不是0xA5A5,表明是第一次配置rtc，设置系统默认时间，
-				如果内容是5A5A，表明用户通过LCD滚轮调整过时间。*/
-	if (BKP_ReadBackupRegister(BKP_DR1) != 0xA5A5 && BKP_ReadBackupRegister(BKP_DR1) != 0x5A5A)
+  /*在启动时检查备份寄存器BKP_DR1，如果内容不是0xA5A5,表明是第一次配置rtc，设置系统默认时间 */
+	if (BKP_ReadBackupRegister(BKP_DR1) != 0xA5A5)//
 	{
 		printf("\r\n\r\n RTC not yet configured....");
 
@@ -315,6 +314,9 @@ void Time_Adjust(struct rtc_time *tm)
 {
   /* Get time entred by the user on the hyperterminal */
 //	  Time_Regulate(tm);
+  
+  /* RTC Configuration */
+	if(RTC_Configuration()!=RTC_OK) return;
 	  
   /* Get wday */
   GregorianDay(tm);
@@ -426,4 +428,19 @@ void RTC_TimeCovr(struct rtc_time *tm)
 	to_tm(BJ_TimeVar, tm);/*把定时器的值转换为北京时间*/	
 
 }
+
+void RTC_IRQHandler(void)
+{
+	
+	if (RTC_GetITStatus(RTC_IT_SEC) != RESET)
+	{
+		/* Clear the RTC Second interrupt */
+		RTC_ClearITPendingBit(RTC_IT_SEC);		
+
+		/* Wait until last write operation on RTC registers has finished */
+		RTC_WaitForLastTask();
+	}
+
+}
+
 /************************END OF FILE***************************************/

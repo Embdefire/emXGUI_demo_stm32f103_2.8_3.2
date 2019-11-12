@@ -3,7 +3,7 @@
 
 #include <emXGUI.h>
 
-#if 1
+#if 0
   #define GUI_RGB_BACKGROUNG_PIC      "0:/rgbled_desktop.jpg"
   #define GUI_RGBLED_CHECKED_PIC      "0:/rgbled_checked.png"
   #define GUI_RGB_SLIDER_PIC          "0:/slider.png"

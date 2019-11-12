@@ -258,6 +258,7 @@ void Ov7725_GPIO_Config(void);
 ErrorStatus Ov7725_Init(void);
 void VSYNC_Init(void);
 void discameraexit(void);
+void DisableCamera(void);
 #endif
 
 

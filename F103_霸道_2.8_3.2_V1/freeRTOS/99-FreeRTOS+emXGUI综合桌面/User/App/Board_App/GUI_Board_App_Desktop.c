@@ -69,6 +69,8 @@ extern void GUI_Phone_Dialog(void);
 extern void GUI_SMS_Dialog(void);
 extern void GUI_CLOCK_DIALOG(void);
 extern void GUI_RECORDER_DIALOG(void);
+extern void gui_wifi_dialog(void);
+extern void gui_network_dialog(void);
 extern BOOL player_state;
 int thread_ctrl = 1;
 
@@ -137,7 +139,6 @@ static const struct __obj_list menu_list_1[] = {
   
       L"GUI应用",		  NULL, 	L"J", RGB_WHITE, GUI_App_Desktop,//dummy,//
       L"MP3播放器",	  NULL,	  L"I", RGB_WHITE, GUI_MUSICPLAYER_DIALOG,//dummy,//
-//      L"视频播放器",  NULL,	  L"D", RGB_WHITE, dummy,
 
       L"RGB彩灯",		  NULL,	  L"L", RGB_WHITE, GUI_LED_DIALOG,//dummy,//
       L"摄像头",		  NULL,	  L"M", RGB_WHITE, GUI_Camera_DIALOG,//dummy,//
@@ -148,20 +149,19 @@ static const struct __obj_list menu_list_1[] = {
       L"模拟U盘",     NULL,	  L"N", RGB_WHITE, dummy, 
       L"陀螺仪",	    NULL,	  L"R", RGB_WHITE, GUI_Settings_DIALOG,
 
-      L"以太网",		  NULL,	  L"Q", RGB_WHITE, dummy,
-      L"WiFi",		    NULL,	  L"P", RGB_WHITE, dummy,
+      L"以太网",		  NULL,	  L"Q", RGB_WHITE, gui_network_dialog,
+      L"WiFi",		    NULL,	  L"P", RGB_WHITE, gui_wifi_dialog,
       L"游戏",	      NULL,	  L"S", RGB_WHITE, dummy,
  
       L"电话",	      NULL, 	L"T", RGB_WHITE, GUI_Phone_Dialog,
       L"短信",	      NULL,   L"U", RGB_WHITE, GUI_SMS_Dialog,
-//      L"二维码",	    NULL,	  L"V", RGB_WHITE, dummy,
 
 
       L"时钟",		    NULL,	  L"H", RGB_WHITE, GUI_CLOCK_DIALOG,
       L"录音机",	    NULL,	  L"Y", RGB_WHITE, GUI_RECORDER_DIALOG,
       L"FlashWriter", NULL,	  L"b", RGB_WHITE, GUI_RES_Writer_Dialog,
       
-        NULL,	NULL,	NULL,NULL, NULL,//结束标志!
+      NULL,	NULL,	NULL,NULL, NULL,//结束标志!
 
 };
 

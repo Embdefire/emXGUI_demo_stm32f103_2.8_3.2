@@ -10,7 +10,7 @@
 #include "./dht11/bsp_dht11.h"
 
 /* 图片资源 */
-#define Resource_From_Where 1//图片资源从何处加载,1为SD卡,0为Flash
+#define Resource_From_Where 0//图片资源从何处加载,1为SD卡,0为Flash
 
 #if Resource_From_Where
 #define GUI_HUMITURE_BACKGROUNG_PIC    "0:/humiture_desktop.jpg"

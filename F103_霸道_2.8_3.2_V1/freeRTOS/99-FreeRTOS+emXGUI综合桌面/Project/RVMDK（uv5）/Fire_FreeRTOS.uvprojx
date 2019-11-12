@@ -312,7 +312,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>2</Optim>
+            <Optim>3</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>0</OneElfS>
@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,X_GUI_USE_FREERTOS,USE_STDPERIPH_DRIVER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\pic_viewer;..\..\User\OwnerDraw;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\camera\ov7725;..\..\User\App\Board_App;..\..\User\App\Board_App\mp3_player\vs1053;..\..\User\App\Board_App\adc_Collect_voltage;..\..\User\App\Board_App\T_RH;..\..\User\App\Board_App\Phone_SMS</IncludePath>
+              <IncludePath>..\..\Libraries\CMSIS;..\..\User;..\..\Libraries\FWlib\inc;..\..\FreeRTOS\include;..\..\FreeRTOS\port\RVDS\ARM_CM3;..\..\User\led;..\..\User\usart;..\..\User\Key;..\..\User\liuwei;..\..\User\liuwei\drv_inc;..\..\User\liuwei\spi_flash;..\..\User\liuwei\System_Drv;..\..\User\liuwei\X_GUI_Drv;..\..\..\..\..\emXGUI_Lib\inc;..\..\..\..\..\emXGUI_Lib\drv;..\..\..\..\..\emXGUI_Lib\app\base;..\..\..\..\..\emXGUI_Lib\arch\Inc;..\..\..\..\..\emXGUI_Lib;..\..\User\bsp;..\..\..\..\..\emXGUI_Lib\arch;..\..\User\bsp\drv_inc;..\..\User\bsp\FATFS;..\..\User\bsp\FATFS\option;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\pic_viewer;..\..\User\OwnerDraw;..\..\User\App\GUI_Demo;..\..\User\App\Board_App\camera\ov7725;..\..\User\App\Board_App;..\..\User\App\Board_App\mp3_player\vs1053;..\..\User\App\Board_App\adc_Collect_voltage;..\..\User\App\Board_App\T_RH;..\..\User\App\Board_App\Phone_SMS;..\..\User\App\Board_App\network\W5500</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -626,6 +626,16 @@
               <FileName>bsp_beep.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\bsp\beep\bsp_beep.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_i2c_ee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\bsp\EEPROM\bsp_i2c_ee.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_i2c_gpio_ee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\bsp\EEPROM\bsp_i2c_gpio_ee.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1305,19 +1315,14 @@
               <FilePath>..\..\User\App\Board_App\clock\GUI_CLOCK_DIALOG.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_calendar.c</FileName>
+              <FileName>bsp_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_calendar.c</FilePath>
+              <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_rtc.c</FilePath>
             </File>
             <File>
               <FileName>bsp_date.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_date.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\App\Board_App\clock\rtc\bsp_rtc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1403,6 +1408,61 @@
               <FileName>GUI_ADC_CollectVoltage_Dialog.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\Board_App\adc_Collect_voltage\GUI_ADC_CollectVoltage_Dialog.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/Wi-Fi</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_WiFi_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\WiFi\GUI_WiFi_Dialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_esp8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\WiFi\ESP8266\bsp_esp8266.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/network</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_network_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\network\GUI_network_Dialog.c</FilePath>
+            </File>
+            <File>
+              <FileName>socket.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\network\W5500\socket.c</FilePath>
+            </File>
+            <File>
+              <FileName>utility.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\network\W5500\utility.c</FilePath>
+            </File>
+            <File>
+              <FileName>w5500.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\network\W5500\w5500.c</FilePath>
+            </File>
+            <File>
+              <FileName>dhcp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\network\W5500\dhcp\dhcp.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_TiMbase.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\network\TimBase\bsp_TiMbase.c</FilePath>
+            </File>
+            <File>
+              <FileName>w5500_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\network\W5500\w5500_conf.c</FilePath>
             </File>
           </Files>
         </Group>

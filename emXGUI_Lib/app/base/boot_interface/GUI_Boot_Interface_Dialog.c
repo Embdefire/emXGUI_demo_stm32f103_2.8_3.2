@@ -10,7 +10,7 @@
 
 /**********************分界线*********************/
 
-#define GUI_HOME_BACKGROUNG_PIC      "0:/home_desktop.jpg"
+#define GUI_HOME_BACKGROUNG_PIC      "home_desktop.jpg"
 
 HWND GUI_Boot_hwnd;
 /* 各类控件ID */

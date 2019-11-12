@@ -26,7 +26,7 @@ const WCHAR Week_List[][4] = {{L"星期一"}, {L"星期二"}, {L"星期三"}, {L"星期四"}
 const uint8_t month_list[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};    // 记录每月的最多天数
 
 //图标管理数组
-const clock_icon_t clock_icon[] = {
+const clock_icon_t clock_icon[19] = {
 
   /* 按钮 */
   {L"设置",           {123, 197,  71,  30},  ID_CLOCK_SET},             // 0. 设置
@@ -1313,8 +1313,8 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             /* 创建 HDC */
             hdc_clock_png[clock_png_info[xC].id] = CreateMemoryDC((SURF_FORMAT)COLOR_FORMAT_ARGB8888, clock_png_info[xC].w, clock_png_info[xC].h);
             ClrDisplay(hdc_clock_png[clock_png_info[xC].id], NULL, 0);
-//            res = RES_Load_Content(clock_png_info[xC].pic_name, (char**)&pic_buf, &pic_size);
-            res = FS_Load_Content(clock_png_info[xC].pic_name, (char**)&pic_buf, &pic_size);
+            res = RES_Load_Content(clock_png_info[xC].pic_name, (char**)&pic_buf, &pic_size);
+//            res = FS_Load_Content(clock_png_info[xC].pic_name, (char**)&pic_buf, &pic_size);
             if(res)
             {
               png_dec = PNG_Open(pic_buf, pic_size);

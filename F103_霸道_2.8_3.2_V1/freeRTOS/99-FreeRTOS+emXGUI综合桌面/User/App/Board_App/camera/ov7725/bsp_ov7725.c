@@ -311,6 +311,44 @@ void discameraexit(void)
     NVIC_Init(&NVIC_InitStructure);
 }
 
+void DisableCamera(void)
+{
+	  NVIC_InitTypeDef NVIC_InitStructure;
+	  EXTI_InitTypeDef EXTI_InitStructure;
+		GPIO_InitTypeDef GPIO_InitStructure;
+	
+		SCL_H;
+		SDA_H;		
+	    						
+    EXTI_InitStructure.EXTI_Line = macOV7725_VSYNC_EXTI_LINE;
+    EXTI_InitStructure.EXTI_LineCmd = DISABLE;
+    EXTI_Init(&EXTI_InitStructure);
+	
+    NVIC_InitStructure.NVIC_IRQChannel = macOV7725_VSYNC_EXTI_IRQ;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
+    NVIC_Init(&NVIC_InitStructure);
+		
+		FIFO_WRST_L();
+		FIFO_RRST_L();
+		FIFO_RCLK_H();			  				
+    FIFO_WE_H(); 
+		FIFO_CS_H();
+	
+		/*PB8-PB15(FIFO_DATA--FIFO输出数据)*/
+		macOV7725_DATA_SCK_APBxClock_FUN ( macOV7725_DATA_GPIO_CLK, ENABLE );
+		GPIO_InitStructure.GPIO_Pin = macOV7725_DATA_0_GPIO_PIN | macOV7725_DATA_1_GPIO_PIN | macOV7725_DATA_2_GPIO_PIN | macOV7725_DATA_3_GPIO_PIN |
+		                              macOV7725_DATA_4_GPIO_PIN | macOV7725_DATA_5_GPIO_PIN | macOV7725_DATA_6_GPIO_PIN | macOV7725_DATA_7_GPIO_PIN;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;	
+		GPIO_Init(macOV7725_DATA_GPIO_PORT, &GPIO_InitStructure);
+		
+		macOV7725_VSYNC_SCK_APBxClock_FUN ( macOV7725_VSYNC_GPIO_CLK, ENABLE );	  /*PA0---VSYNC*/
+    GPIO_InitStructure.GPIO_Pin =  macOV7725_VSYNC_GPIO_PIN;
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	  GPIO_Init(macOV7725_VSYNC_GPIO_PORT, &GPIO_InitStructure);
+}
+
 /************************************* ov7725 场中断 服务程序 *****************************************************/
 
 extern GUI_SEM *cam_sem;//更新图像同步信号量（二值型）

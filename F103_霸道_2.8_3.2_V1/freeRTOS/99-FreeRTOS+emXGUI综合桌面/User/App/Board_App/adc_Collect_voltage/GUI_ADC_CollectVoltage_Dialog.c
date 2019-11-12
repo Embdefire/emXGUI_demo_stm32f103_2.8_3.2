@@ -29,7 +29,7 @@
 #define Circle_X      169    // 圆形显示区域的位置
 #define Circle_Y      (54)   // 圆形显示区域的位置
 
-#define GUI_ADC_BACKGROUNG_PIC      "0:/adc_desktop.jpg"
+#define GUI_ADC_BACKGROUNG_PIC      "adc_desktop.jpg"
 
 #define TitleHeight    28    // 标题栏的高度
 
