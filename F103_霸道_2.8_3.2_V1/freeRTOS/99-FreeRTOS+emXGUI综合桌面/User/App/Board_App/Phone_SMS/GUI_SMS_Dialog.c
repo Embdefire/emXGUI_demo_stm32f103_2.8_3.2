@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "x_libc.h"
+#include <stdlib.h>
 #include "GUI_AppDef.h"
 #include "emXGUI_JPEG.h"
 #include "emxgui_png.h"
@@ -81,7 +82,7 @@ void Read_Text(HWND hListWnd)
     
 //    GUI_DEBUG("number->(%s)\n",messagename);
     
-    x_mbstowcs_cp936(wbuf, messagename, sizeof(wbuf));	    // 将Ansi字符转换成GUI的unicode字符.
+    x_mbstowcs(wbuf, messagename, sizeof(wbuf));	    // 将Ansi字符转换成GUI的unicode字符.
     
 		//在Listbox中增加一个Item项，记录文件名和文件属性.
 		i = SendMessage(hListWnd, LB_GETCOUNT, 0, 0);
@@ -463,7 +464,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             hexuni2gbk(wNumber, messagename);	
             strcat(messagename, wTime);                             // 拼接上时间
             // GUI_DEBUG("number->(%s)\n",messagename);
-            x_mbstowcs_cp936(wbuf, messagename, sizeof(wbuf));	    // 将Ansi字符转换成GUI的unicode字符.
+            x_mbstowcs(wbuf, messagename, sizeof(wbuf));	    // 将Ansi字符转换成GUI的unicode字符.
             
             //在Listbox中增加一个Item项，记录文件名和文件属性.
             i = SendMessage(hListWnd, LB_GETCOUNT, 0, 0);
@@ -667,8 +668,8 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
               
               GetWindowText(GetDlgItem(hwnd, eID_SMS_NUMBER), wNumber, 99);
               GetWindowText(GetDlgItem(hwnd, eID_SMS_CONTENT), wContent, 2000);
-              x_wcstombs_cp936(cNumber, wNumber, 99);
-              x_wcstombs_cp936(cContent, wContent, 2000);
+              x_wcstombs(cNumber, wNumber, 99);
+              x_wcstombs(cContent, wContent, 2000);
               
               Add = sim900a_save_sms(cNumber, cContent);
               if (Add)
@@ -726,8 +727,8 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 //                GUI_DEBUG("cNumber:(%s)", (char *)&cNumber[100]);
 //                GUI_DEBUG("cContent:(%s)", (char *)&cContent[2000]);
                 
-                x_mbstowcs_cp936(wNumber, (char *)&cNumber[100], 100);	    // 将Ansi字符转换成GUI的unicode字符.
-                x_mbstowcs_cp936(wContent, (char *)&cContent[2000], 2000);	// 将Ansi字符转换成GUI的unicode字符.
+                x_mbstowcs(wNumber, (char *)&cNumber[100], 100);	    // 将Ansi字符转换成GUI的unicode字符.
+                x_mbstowcs(wContent, (char *)&cContent[2000], 2000);	// 将Ansi字符转换成GUI的unicode字符.
 
                 SetWindowText(GetDlgItem(hwnd, eID_SMS_NUMBER), wNumber);       // 设置电话号码
                 SetWindowText(GetDlgItem(hwnd, eID_SMS_CONTENT), wContent);     // 设置短信内容

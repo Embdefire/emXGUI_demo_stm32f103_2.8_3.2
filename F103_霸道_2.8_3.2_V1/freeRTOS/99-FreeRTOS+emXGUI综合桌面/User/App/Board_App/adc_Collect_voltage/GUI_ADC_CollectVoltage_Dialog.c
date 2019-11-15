@@ -173,7 +173,7 @@ void Circle_Paint(HWND hwnd, HDC hdc)
   SetTextColor(hdc, MapARGB(hdc, 255, 0, 0, 0));
   SetFont(hdc, controlFont_32);
   x_sprintf(cbuf, "%d", (int)(ADC_Vol/3.3*100));    // H -> % x_wsprintf(Backlightwbuf, L"%d", i);
-  x_mbstowcs_cp936(wbuf, cbuf, 128);
+  x_mbstowcs(wbuf, cbuf, 128);
   rc.w -= 20;
   DrawText(hdc, wbuf, -1, &rc, DT_VCENTER|DT_RIGHT);    // 绘制文字(居中对齐方式)DT_CENTER
   rc.w += 20;
@@ -187,7 +187,7 @@ void Circle_Paint(HWND hwnd, HDC hdc)
   rc.h = 30;
   rc.y = CircleSize/2 - rc.h/2 + CircleCenter_3 - 8;
   x_sprintf(cbuf, "%.2fV", ADC_Vol);
-  x_mbstowcs_cp936(wbuf, cbuf, 128);
+  x_mbstowcs(wbuf, cbuf, 128);
   DrawText(hdc, wbuf, -1, &rc, DT_VCENTER|DT_CENTER);    // 绘制文字(居中对齐方式)
 }
  

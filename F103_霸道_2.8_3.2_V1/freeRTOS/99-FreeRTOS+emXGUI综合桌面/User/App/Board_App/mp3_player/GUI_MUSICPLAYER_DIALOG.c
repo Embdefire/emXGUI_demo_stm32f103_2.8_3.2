@@ -1,6 +1,7 @@
 #include "emXGUI.h"
 #include "GUI_MUSICPLAYER_DIALOG.h"
 #include "x_libc.h"
+#include <stdlib.h>
 #include "string.h"
 #include "ff.h"
 #include "./mp3_player/Backend_mp3Player.h"
@@ -32,9 +33,6 @@
 /* 外部资源名 */
 #define ROTATE_DISK_NAME "rotate_disk_ARGB8888.bmp"
 
-#define Music_Player_48 "Music_Player_48_48.xft"
-#define Music_Player_64 "Music_Player_64_64.xft"
-#define Music_Player_72 "Music_Player_72_72.xft"
 
 //图标管理数组
 icon_S music_icon[8] = {
@@ -48,7 +46,7 @@ icon_S music_icon[8] = {
    {"xiayishou",        {185, 209, 24, 24},   FALSE},//下一首7
   
 };
-static char path[100]="0:";//文件根目录
+static char path[50]="0:";//文件根目录
 static int power = 220;//音量值
 s32 old_scrollbar_value;//上一个音量值
 TaskHandle_t h_music;//音乐播放进程
@@ -757,11 +755,11 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          /*********************音量值滑动条******************/
          sif_power.cbSize = sizeof(sif_power);
          sif_power.fMask = SIF_ALL;
-         sif_power.nMin = 0;
-         sif_power.nMax = 254;//音量最大值为254
-         sif_power.nValue = 220;//初始音量值
-         sif_power.TrackSize = 20;//滑块值
-         sif_power.ArrowSize = 0;//两端宽度为0（水平滑动条）
+         sif_power.nMin = 80;
+         sif_power.nMax = 254;        //音量最大值为254
+         sif_power.nValue = 220;      //初始音量值
+         sif_power.TrackSize = 20;    //滑块值
+         sif_power.ArrowSize = 0;     //两端宽度为0（水平滑动条）
          
          wnd = CreateWindow(SCROLLBAR, L"SCROLLBAR_R", WS_OWNERDRAW|WS_TRANSPARENT, 
                             40, 220-31/2+5, 60, 20, hwnd, ID_SCROLLBAR_POWER, NULL, NULL);
@@ -895,7 +893,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                   hdc = GetDC(hwnd);
                                 
 //                  color = GetPixel(hdc, 385, 404);  
-                  x_mbstowcs_cp936(wbuf, music_lcdlist[play_index], FILE_NAME_LEN);
+                  x_mbstowcs(wbuf, music_lcdlist[play_index], FILE_NAME_LEN);
                   SetWindowText(GetDlgItem(hwnd, ID_TB5), wbuf);
                                  
                   SendMessage(music_wnd_time, SBM_SETVALUE, TRUE, 0); //设置进度值
@@ -941,6 +939,14 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                      InvalidateRect(hwnd, &music_icon[3].rc, TRUE);                     
                   break;                  
                }  
+               
+               //喇叭icon处理case
+               case ID_SCROLLBAR_TIMER:
+               {
+                  //置位进度条变更位置
+                  chgsch = 1;                    
+                  break;                  
+               } 
             }
          }
          
@@ -971,8 +977,9 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                   } 
                   VS_Set_Vol(power);     // 设置vs1053的音量
                   SendMessage(nr->hwndFrom, SBM_SETVALUE, TRUE, power); //发送SBM_SETVALUE，设置音量值
-               }
+               } 
                break;
+               
             }
          }
          
@@ -988,8 +995,14 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                {
                   i = sb_nr->nTrackValue; //获得滑块当前位置值                
                   SendMessage(nr->hwndFrom, SBM_SETVALUE, TRUE, i); //设置进度值
-                  //置位进度条变更位置
-                  chgsch = 1;
+//                  //置位进度条变更位置
+                  chgsch = 2;     // 正在改变进度条
+               }
+               break;
+               
+               case SBN_CLICKED:
+               {
+                 chgsch = 1;    //调整滑动条结束，更新进度条
                }
                break;
             }

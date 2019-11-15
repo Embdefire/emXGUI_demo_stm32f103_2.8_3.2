@@ -81,6 +81,20 @@ static void btn_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 	DrawText(hdc, wbuf, -1, &rc, DT_VCENTER|DT_CENTER);//绘制文字(居中对齐方式)
 }
 
+static void USB_GPIO_init(void)
+{
+
+ 	GPIO_InitTypeDef GPIO_InitStructure;
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOD, ENABLE);
+
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;	
+  GPIO_Init(GPIOD, &GPIO_InitStructure);
+  
+  GPIO_SetBits(GPIOD, GPIO_Pin_3);
+}	
+
 static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   switch(msg)
@@ -88,6 +102,9 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_CREATE:
     {
       RECT rc;
+      
+      USB_GPIO_init();
+      
       GetClientRect(hwnd, &rc);
                       
       CreateWindow(BUTTON, L"O", WS_TRANSPARENT|BS_FLAT | BS_NOTIFY |WS_OWNERDRAW|WS_VISIBLE,
@@ -164,7 +181,16 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       if (tmr_id == 10)    
       {
-        
+        /*初始化*/
+        Set_System();
+        /*设置USB时钟为48M*/
+        Set_USBClock();
+        /*配置USB中断(包括SDIO中断)*/
+        USB_Interrupts_Config();
+        /*USB初始化*/
+        USB_Init();
+//        while (bDeviceState != CONFIGURED)
+//        {}	 //等待配置完成
       }
       
       break;
@@ -188,7 +214,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     {
       HDC hdc;
       PAINTSTRUCT ps;
-      RECT rc  = {0, 50, GUI_XSIZE, 150};
+      RECT rc  = {0, 45, GUI_XSIZE, 150};
       RECT rc1 = {50, 0, 220, 40};
 
       hdc = BeginPaint(hwnd, &ps);
@@ -196,7 +222,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       SetFont(hdc, defaultFont); 
       SetTextColor(hdc, MapRGB(hdc, 250, 250, 250));
       DrawText(hdc, L"外部FLASH模拟U盘", -1, &rc1, DT_VCENTER|DT_CENTER);//绘制文字(居中对齐方式)
-      SetTextInterval(hdc, -1, 10);
+      SetTextInterval(hdc, -1, 16);
       DrawText(hdc, L"本应用使用外部FLASH的后10M模拟U盘\r\n请在点击连接前使用Micro USB\r\n数据线连接开发板的J24到电脑！", -1, &rc, DT_VCENTER|DT_CENTER);//绘制文字(居中对齐方式)
    
       EndPaint(hwnd, &ps);
@@ -254,16 +280,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 {
                     case BN_CLICKED:
                     {
-                      /*初始化*/
-                      Set_System();
-                      /*设置USB时钟为48M*/
-                      Set_USBClock();
-                      /*配置USB中断(包括SDIO中断)*/
-                      USB_Interrupts_Config();
-                      /*USB初始化*/
-                      USB_Init();
-                      while (bDeviceState != CONFIGURED)
-                      {}	 //等待配置完成
+                      SetTimer(hwnd, 10, 10, TMR_START | TMR_SINGLE, NULL);
 
                       SetWindowText(GetDlgItem(hwnd, eID_SUD_LINK), L"已连接");
                       EnableWindow(GetDlgItem(hwnd, eID_SUD_LINK), FALSE);
@@ -282,6 +299,9 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       DeleteDC(hdc_bk);
       DeleteDC(hdc_btn);
       DeleteDC(hdc_btn_press);
+      
+      USB_Cable_Config(DISABLE);
+      RCC_APB1PeriphClockCmd(RCC_APB1Periph_USB, DISABLE);
 
       return PostQuitMessage(hwnd);	
     } 

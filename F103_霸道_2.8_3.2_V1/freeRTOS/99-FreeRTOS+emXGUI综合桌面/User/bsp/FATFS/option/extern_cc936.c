@@ -74,5 +74,74 @@ WCHAR ff_wtoupper (	/* Upper converted character */
 	return tbl_lower[i] ? tbl_upper[i] : chr;
 }
 
+int	x_mbstowcs(WCHAR *wchar,const char *mbchar,int count)
+{
+	int i;
+	u8 c;
+
+	i=0;
+	count >>= 1;
+	while(i<count)
+	{
+		c = *mbchar++;				
+		
+		if(c=='\0') 
+		{
+			break;
+		}
+
+		if(c > (u8)0x7F)
+		{	
+			WCHAR wc;
+
+			wc =(c<<8);
+
+			c=*mbchar++;
+			wc |= c;
+
+			wchar[i++]	=ff_convert(wc,1);
+		}
+		else
+		{
+			wchar[i++] =(WCHAR)c;
+		}
+	}
+	
+	wchar[i] =L'\0';
+	return	i;
+}
+
+int	x_wcstombs(char *mbchar,const WCHAR *wchar,int count)
+{
+	u16 c;
+	int n;
+		
+	n=0;	
+	while(1)
+	{				
+		c = *wchar++;
+		
+		if((c==L'\0') || (n>=count))
+		{	
+			break;
+		}
+		
+		c =ff_convert(c,0);
+		
+		if(c < 0x80)
+		{
+			mbchar[n++]	=c;
+		}
+		else
+		{			
+			mbchar[n++]	=(c>>8)&0xFF;
+			mbchar[n++]	=(c)&0xFF;
+		}
+							
+	}
+	mbchar[n]	='\0';
+	return	n;
+	
+}
 
 

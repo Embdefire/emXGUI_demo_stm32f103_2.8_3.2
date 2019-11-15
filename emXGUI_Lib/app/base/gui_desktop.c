@@ -26,7 +26,7 @@ BOOL Load_state = FALSE;
 extern void	GUI_Boot_Interface_Dialog(void *param);
 extern void GUI_AppMain(void);
 
-
+void LCD_BkLight(int on);
 void	gui_app_thread(void *p)
 {
     #if(GUI_TOUCHSCREEN_EN & GUI_TOUCHSCREEN_CALIBRATE)
@@ -42,6 +42,7 @@ void	gui_app_thread(void *p)
     		{
     			ShowCursor(FALSE);
           #ifdef  STM32F10X_HD
+            LCD_BkLight(TRUE);
             TouchScreenCalibrate();
           #endif
     			ShowCursor(TRUE);
@@ -129,38 +130,38 @@ static	void	_EraseBackgnd(HDC hdc,const RECT *lprc,HWND hwnd)
 
   /* 恢复默认字体 */
   SetFont(hdc, defaultFont);
-  rc.x += 15;
+  rc.x += 20;
   DrawText(hdc,L"野火@emXGUI",-1,&rc,DT_LEFT|DT_VCENTER);
 
   GetClientRect(hwnd,&rc);
   rc.w = 52;
   rc.x = GUI_XSIZE/2 - rc.w/2;
-  rc.h = 23;
-  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT+5;
+  rc.h = 20;
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT+9;
   
   
   /* 控制图标字体 */
-  SetFont(hdc, controlFont_48);
+  SetFont(hdc, controlFont_32);
 
   /* 向上图标 */
   SetTextColor(hdc,MapRGB(hdc,255,255,255)); 
   DrawText(hdc,L"f",-1,&rc,DT_LEFT|DT_VCENTER);
   
-//  SetPenColor(hdc, MapRGB(hdc, 250, 250, 250));
-//  DrawRoundRect(hdc, &rc, MIN(rc.w, rc.h)>>1);
-//    
-//  
+  SetPenColor(hdc, MapRGB(hdc, 250, 250, 250));
+  EnableAntiAlias(hdc, ENABLE);
+  DrawRoundRect(hdc, &rc, MIN(rc.w, rc.h)>>1);
+  EnableAntiAlias(hdc, DISABLE);
 
  /* 恢复默认字体 */
   SetFont(hdc, defaultFont);
 //  OffsetRect(&rc,0,-3);
-//  DrawText(hdc,L"  广告",-1,&rc,DT_CENTER|DT_VCENTER);
+  DrawText(hdc,L" 说明",-1,&rc,DT_CENTER|DT_VCENTER);
   
 
 //  rc.y -= 20;
 //  DrawText(hdc,L"\r\n\r\n详细",-1,&rc,DT_BOTTOM|DT_CENTER);
   GetClientRect(hwnd,&rc);
-  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT-2;
+  rc.y = GUI_YSIZE - HEAD_INFO_HEIGHT;
   rc.h = HEAD_INFO_HEIGHT;
 
   DrawText(hdc,L"www.embedFire.com",-1,&rc,DT_RIGHT|DT_VCENTER);  
@@ -195,7 +196,7 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
     /* 桌面创建时,会产生该消息,可以在这里做一些初始化工作. */
 		case	WM_CREATE:	
 			   //创建1个20ms定时器，处理循环事件.
-				 SetTimer(hwnd,1,20,TMR_START,NULL);
+				 SetTimer(hwnd,1,25,TMR_START,NULL);
 
 				//创建App线程						
 				{
@@ -266,13 +267,12 @@ static 	 LRESULT  	desktop_proc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       /* 字体资源加载完成后才显示正常界面，刚开始时只显示纯色 */
       if(Load_state == TRUE)
       {
-
         _EraseBackgnd(hdc,NULL,hwnd);
         
       }
       else
       {
-        SetBrushColor(hdc, MapRGB(hdc, 255, 0, 0));
+        SetBrushColor(hdc, MapRGB(hdc, 0, 0, 0));
         FillRect(hdc, &rc);
       }
       

@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "x_libc.h"
+#include <stdlib.h>
 #include "GUI_AppDef.h"
 #include "./network/GUI_network_Dialog.h"
 #include "./network/W5500/w5500_conf.h"
@@ -83,7 +84,7 @@ void receive_win_set(const char *data, uint32_t rec_len)
     if (wbuf_rec != NULL)
     {
       GetWindowText(Receive_Handle, wbuf, WinTexeLen+1);                      // 得到原文本
-      x_mbstowcs_cp936(wbuf_rec, data, rec_len*
+      x_mbstowcs(wbuf_rec, data, rec_len*
       sizeof(WCHAR));
       x_wstrcat(wbuf, wbuf_rec);                                              // 追加新文本
       SetWindowText(Receive_Handle, wbuf);                                    // 设置接收窗口的文本
@@ -716,13 +717,13 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         switch (netmode)
         {
           case 1:     
-            x_wcstombs_cp936(buf, I, 128);                                       // 将宽字符串转为单字符串
+            x_wcstombs(buf, I, 128);                                       // 将宽字符串转为单字符串
             TextToIP((uint8_t *)buf, local_ip);            
             break;
           
           case 0:
           case 2:
-            x_wcstombs_cp936(buf, I, 128);                                       // 将宽字符串转为单字符串
+            x_wcstombs(buf, I, 128);                                       // 将宽字符串转为单字符串
             TextToIP((uint8_t *)buf, remote_ip);
             break;
         }
@@ -758,13 +759,13 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         switch (netmode)
         {
           case 1:     
-            x_wcstombs_cp936(buf, I, 128);                                       // 将宽字符串转为单字符串
+            x_wcstombs(buf, I, 128);                                       // 将宽字符串转为单字符串
             local_port = x_atoi(buf);
             break;
           
           case 0:
           case 2:
-            x_wcstombs_cp936(buf, I, 128);                                       // 将宽字符串转为单字符串
+            x_wcstombs(buf, I, 128);                                       // 将宽字符串转为单字符串
             remote_port = x_atoi(buf);
             break;
         }
@@ -806,7 +807,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         /* 获取发送窗口的字符串 */
         GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_Send), wbuf, 128);
-        x_wcstombs_cp936((char *)comdata, wbuf, 128);
+        x_wcstombs((char *)comdata, wbuf, 128);
         
         switch(netmode)
         {

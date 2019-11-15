@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "x_libc.h"
+#include <stdlib.h>
 #include "GUI_AppDef.h"
 #include "emXGUI_JPEG.h"
 #include "emxgui_png.h"
@@ -501,7 +502,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
           WCHAR buf[128];
 
           /* 拨打电话号码 */
-          x_mbstowcs_cp936(buf, num, 40);
+          x_mbstowcs(buf, num, 40);
           x_wstrcpy(CallInfo.PhoneNum, buf);
 
           CallInfo.Flag = 2;                            // 来电提醒
@@ -612,7 +613,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             
             /* 拨打电话号码 */
             GetWindowText(GetDlgItem(hwnd, eID_Phone_INNUM), phone_num, 12);
-            x_wcstombs_cp936(TextBuf ,phone_num, 12);
+            x_wcstombs(TextBuf ,phone_num, 12);
             
             if (*phone_num == NULL)    // 第一个号码为空，则说明没有号码
             {
@@ -763,7 +764,7 @@ void GUI_PhoneCall_Dialog(char num[])
   WCHAR buf[128];
 
   /* 拨打电话号码 */
-  x_mbstowcs_cp936(buf, num, 40);
+  x_mbstowcs(buf, num, 40);
   x_wstrcpy(CallInfo.PhoneNum, buf);
 
   CallInfo.Flag = 2;                            // 来电提醒

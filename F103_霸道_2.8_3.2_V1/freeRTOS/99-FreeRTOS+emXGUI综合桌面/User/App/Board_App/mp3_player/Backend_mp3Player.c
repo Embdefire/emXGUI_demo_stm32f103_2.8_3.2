@@ -54,7 +54,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
   VS_Set_Vol(vol);              // 设置音量
 	VS_Reset_DecodeTime();				// 复位解码时间 	
   
-	x_mbstowcs_cp936(wbuf, music_lcdlist[play_index], FILE_NAME_LEN);
+	x_mbstowcs(wbuf, music_lcdlist[play_index], FILE_NAME_LEN);
   SetWindowText(GetDlgItem(MusicPlayer_hwnd, ID_TB5), wbuf);
   
 	if(strstr((const char*)filepath,".flac")||strstr((const char*)filepath,".FLAC"))
@@ -88,7 +88,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 			Delay_ms(5);
 			continue;											//暂停的时候跳出本循环
 		}		
-		if(chgsch&&((VS_RD_Reg(SPI_STATUS)&0x8000)==0))//快进、快退
+		if(chgsch==1&&((VS_RD_Reg(SPI_STATUS)&0x8000)==0))//快进、快退
 		{     
 			uint32_t sch=0;
 			uint16_t numb=0;
@@ -201,12 +201,12 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
         if((lrc.oldtime <= lrc.curtime*100)&&(lrc.indexsize>7))//+100
         {
           //显示当前行的歌词
-          x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount]-1], LYRIC_MAX_SIZE);
+          x_mbstowcs(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount]-1], LYRIC_MAX_SIZE);
           SetWindowText(wnd_lrc3,wbuf);
           //显示第i-1行的歌词（前一行）
           if(lyriccount>0)
           {
-             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount-1]-1], LYRIC_MAX_SIZE);
+             x_mbstowcs(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount-1]-1], LYRIC_MAX_SIZE);
              SetWindowText(wnd_lrc2,wbuf);
           }
           else
@@ -214,7 +214,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
           //显示第i-2行的歌词（前两行）
           if(lyriccount>0)
           {
-             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount-2]-1], LYRIC_MAX_SIZE);
+             x_mbstowcs(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount-2]-1], LYRIC_MAX_SIZE);
              SetWindowText(wnd_lrc1,wbuf);
           }
           else
@@ -222,7 +222,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
           //显示第i+1行的歌词（后一行）   
           if(lyriccount < lrc.indexsize-1)
           {
-             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount+1]-1], LYRIC_MAX_SIZE);
+             x_mbstowcs(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount+1]-1], LYRIC_MAX_SIZE);
              SetWindowText(wnd_lrc4,wbuf);                    
           }
           else
@@ -230,7 +230,7 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
           //显示第i+2行的歌词（后二行）   
           if(lyriccount < lrc.indexsize-2)
           {
-             x_mbstowcs_cp936(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount+2]-1], LYRIC_MAX_SIZE);
+             x_mbstowcs(wbuf, (const char *)&ReadBuffer1[lrc.addr_tbl[lyriccount+2]-1], LYRIC_MAX_SIZE);
              SetWindowText(wnd_lrc5,wbuf);                    
           }
           else

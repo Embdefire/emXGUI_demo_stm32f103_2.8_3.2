@@ -90,26 +90,17 @@ static void App_GUI_DEMO_Hello(HWND hwnd)
 void GUI_PicViewer_Dialog(void);
 void	GUI_DEMO_Graphics_Accelerator(void);
 void	GUI_DEMO_ShowWave(void);
+extern int	Calculator_WinMain(void);
 
 static struct __obj_list menu_list_1[] = {
 
-	L"图形加速器",		NULL, 	L"d", 	RGB_WHITE,			GUI_DEMO_Graphics_Accelerator,//GUI_PicViewer_Dialog,//
-		L"波形显示",		NULL,	  L"B", RGB_WHITE,				GUI_DEMO_ShowWave,//dummy,//
-		//  	L"Hello",		NULL,	  L"B", RGB_WHITE,				dummy,
-		//		L"Button",		NULL,	  L"C", RGB_WHITE,				App_GUI_Climate_Cabinet,
+  L"图形加速器",  NULL, 	L"e", RGB_WHITE,	 GUI_DEMO_Graphics_Accelerator,//GUI_PicViewer_Dialog,//
+  L"波形显示",		NULL,	  L"B", RGB_WHITE,   GUI_DEMO_ShowWave,//
+		
+//  L"仪表盘",		  NULL,	  L"H", RGB_WHITE,   dummy,
+  L"计算器",	    NULL, 	L"Z", RGB_WHITE,	 Calculator_WinMain,//dummy,//
 
-				L"仪表盘",		NULL,	  L"H",RGB_WHITE, 				dummy,
-
-				L"计算器",	NULL, 	L"Z", RGB_WHITE,				dummy,
-				L"Radiobox",	NULL,   L"E", RGB_WHITE,				dummy,
-				L"Textbox",	NULL,	  L"F", RGB_WHITE,				dummy,
-
-				//    L"Speed",		NULL,	  L"G",RGB_WHITE, 				dummy,
-				//    L"Hello",		NULL,	  L"H", RGB_WHITE,				dummy,
-				//    L"Button",	  NULL,	  L"I", RGB_WHITE,				dummy,
-				//    L"Checkbox",	NULL,	  L"J", RGB_WHITE,				dummy,
-
-						NULL,	NULL,NULL,	NULL, NULL,//结束标志!
+	NULL,	NULL,NULL,	NULL, NULL,//结束标志!
 
 };
 
@@ -239,10 +230,10 @@ static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
 
 	DrawText(hdc, wbuf, -1, &rc, DT_VCENTER);//绘制文字(居中对齐方式)
    rc.x = 13; 
-   rc.y = rc.y ;
+   rc.y = rc.y - 1;
   /* 恢复默认字体 */
 	SetFont(hdc, defaultFont);
-   DrawText(hdc, L"返回", -1, &rc, DT_TOP);//DT_VCENTER
+  DrawText(hdc, L"返回", -1, &rc, DT_VCENTER);//DT_VCENTER
 }
 
 
@@ -398,7 +389,7 @@ static	LRESULT	WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     SetFont(hdc, defaultFont);
 
     SetTextColor(hdc, MapRGB(hdc, 255, 255, 255));
-//    rc.y += 5;
+    rc.y += 2;
    
     DrawText(hdc, L"emXGUI@Embedfire STM32F103", -1, &rc, DT_CENTER);
 

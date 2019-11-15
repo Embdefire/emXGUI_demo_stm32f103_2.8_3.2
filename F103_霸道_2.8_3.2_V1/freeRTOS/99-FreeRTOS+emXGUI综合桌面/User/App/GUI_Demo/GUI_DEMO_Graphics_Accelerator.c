@@ -22,7 +22,7 @@ extern const char ASCII_32_4BPP[];
 extern const char ASCII_40_4BPP[];
 #else
 extern const char ASCII_16_4BPP[];
-#define ASCII_32_4BPP "ASCII_40_4BPP.xft"
+#define ASCII_32_4BPP "ASCII_32_4BPP.xft"
 #define ASCII_40_4BPP "ASCII_40_4BPP.xft"
 
 #endif

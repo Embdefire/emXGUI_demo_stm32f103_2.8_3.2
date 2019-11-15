@@ -102,7 +102,7 @@ static FRESULT scan_record_files(char* path)
 						memcpy(music_playlist[music_file_num], file_name, strlen(file_name) + 1);
              //     printf("%s\r\n", music_playlist[music_file_num]);
 						//memcpy(music_lcdlist[music_file_num],fn,strlen(fn));
-						x_mbstowcs_cp936(wbuf, fn, sizeof(wbuf));	    // 将Ansi字符转换成GUI的unicode字符.
+						x_mbstowcs(wbuf, fn, sizeof(wbuf));	    // 将Ansi字符转换成GUI的unicode字符.
 						//在Listbox中增加一个Item项，记录文件名和文件属性.
 						i = SendMessage(GetDlgItem(Recorer_hwnd, ID_RECORD_LIST), LB_GETCOUNT, 0, 0);
 						SendMessage(GetDlgItem(Recorer_hwnd, ID_RECORD_LIST), LB_ADDSTRING, i, (LPARAM)wbuf);
@@ -914,7 +914,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
               if (cbuf != NULL)
               { 
               }
-              x_mbstowcs_cp936(wbuf, cbuf + 1, sizeof(wbuf));
+              x_mbstowcs(wbuf, cbuf + 1, sizeof(wbuf));
               //在Listbox中增加一个Item项
               i = SendMessage(GetDlgItem(Recorer_hwnd, ID_RECORD_LIST), LB_GETCOUNT, 0, 0);
               SendMessage(GetDlgItem(Recorer_hwnd, ID_RECORD_LIST), LB_ADDSTRING, i, (LPARAM)wbuf);

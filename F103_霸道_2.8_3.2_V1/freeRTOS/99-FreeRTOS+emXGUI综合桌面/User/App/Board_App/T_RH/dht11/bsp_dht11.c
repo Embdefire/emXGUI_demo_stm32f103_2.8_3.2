@@ -42,7 +42,7 @@ void DHT11_Init ( void )
 {
 	DHT11_GPIO_Config ();
 	
-	DHT11_Dout_1;               // 拉高GPIO
+	DHT11_Dout_1;               // 拉高GPIOB10
 }
 
 
@@ -130,6 +130,8 @@ static uint8_t DHT11_ReadByte ( void )
 {
 	uint8_t i, temp=0;
 	
+  /* 进入临界段，临界段可以嵌套 */
+  taskENTER_CRITICAL();
 
 	for(i=0;i<8;i++)    
 	{	 
@@ -153,9 +155,11 @@ static uint8_t DHT11_ReadByte ( void )
 			temp&=(uint8_t)~(0x01<<(7-i)); //把第7-i位置0，MSB先行
 		}
 	}
+  
+  /* 退出临界段 */
+  taskEXIT_CRITICAL();
 	
 	return temp;
-	
 }
 
 
@@ -165,14 +169,9 @@ static uint8_t DHT11_ReadByte ( void )
  */
 uint8_t DHT11_Read_TempAndHumidity(DHT11_Data_TypeDef *DHT11_Data)
 {  
-//  printf("read data\n");
-  /* 进入临界段，临界段可以嵌套 */
-  taskENTER_CRITICAL();
-  
 	/*输出模式*/
 	DHT11_Mode_Out_PP();
-
-  /*主机拉低*/
+	/*主机拉低*/
 	DHT11_Dout_0;
 	/*延时18ms*/
 	DHT11_DELAY_MS(18);
@@ -210,10 +209,7 @@ uint8_t DHT11_Read_TempAndHumidity(DHT11_Data_TypeDef *DHT11_Data)
 		DHT11_Mode_Out_PP();
 		/*主机拉高*/
 		DHT11_Dout_1;
-    
-    /* 退出临界段 */
-    taskEXIT_CRITICAL();
-
+   
 		/*检查读取的数据是否正确*/
 		if(DHT11_Data->check_sum == DHT11_Data->humi_int + DHT11_Data->humi_deci + DHT11_Data->temp_int+ DHT11_Data->temp_deci)
 			return SUCCESS;

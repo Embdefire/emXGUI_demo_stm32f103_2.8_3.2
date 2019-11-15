@@ -67,40 +67,43 @@ static void App_Load_Res(void )
       GUI_SetDefFont(hFont);  
     }
     
-    BOOL res;
-    u8 *jpeg_buf;
-    u32 jpeg_size;
-    JPG_DEC *dec;
-    /* 加载桌面背景图片 */
-    if (strstr(GUI_HOME_BACKGROUNG_PIC, "0:/") != NULL)
+    if (Load_state != FALSE)
     {
-      res = FS_Load_Content(GUI_HOME_BACKGROUNG_PIC, (char**)&jpeg_buf, &jpeg_size);
-    }
-    else
-    {
-      res = RES_Load_Content(GUI_HOME_BACKGROUNG_PIC, (char**)&jpeg_buf, &jpeg_size);
-    }
-    
-    hdc_home_bk = CreateMemoryDC(SURF_SCREEN, GUI_XSIZE, GUI_YSIZE);
-    ClrDisplay(hdc_home_bk, NULL, 0);
-    if(res)
-    {
-      /* 根据图片数据创建JPG_DEC句柄 */
-      dec = JPG_Open(jpeg_buf, jpeg_size);
+      BOOL res;
+      u8 *jpeg_buf;
+      u32 jpeg_size;
+      JPG_DEC *dec;
+      /* 加载桌面背景图片 */
+      if (strstr(GUI_HOME_BACKGROUNG_PIC, "0:/") != NULL)
+      {
+        res = FS_Load_Content(GUI_HOME_BACKGROUNG_PIC, (char**)&jpeg_buf, &jpeg_size);
+      }
+      else
+      {
+        res = RES_Load_Content(GUI_HOME_BACKGROUNG_PIC, (char**)&jpeg_buf, &jpeg_size);
+      }
+      
+      hdc_home_bk = CreateMemoryDC(SURF_SCREEN, GUI_XSIZE, GUI_YSIZE);
+      ClrDisplay(hdc_home_bk, NULL, 0);
+      if(res)
+      {
+        /* 根据图片数据创建JPG_DEC句柄 */
+        dec = JPG_Open(jpeg_buf, jpeg_size);
 
-      /* 绘制至内存对象 */
-      JPG_Draw(hdc_home_bk, 0, 0, dec);
+        /* 绘制至内存对象 */
+        JPG_Draw(hdc_home_bk, 0, 0, dec);
 
-      /* 关闭JPG_DEC句柄 */
-      JPG_Close(dec);
+        /* 关闭JPG_DEC句柄 */
+        JPG_Close(dec);
+      }
+      else
+      {
+        Load_state = FALSE;
+        GUI_ERROR("Failed to load home page background image.");
+      }
+      /* 释放图片内容空间 */
+      RES_Release_Content((char **)&jpeg_buf);
     }
-    else
-    {
-      Load_state = FALSE;
-      GUI_ERROR("Failed to load home page background image.");
-    }
-    /* 释放图片内容空间 */
-    RES_Release_Content((char **)&jpeg_buf);
     
     //发消息给启动窗口，关闭
     SendMessage(GUI_Boot_hwnd,WM_CLOSE,0,0);
@@ -112,6 +115,8 @@ static void App_Load_Res(void )
   return;
 }
 
+void LCD_BkLight(int on);
+
 /**
   * @brief  启动界面回调函数
   */
@@ -119,7 +124,6 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
   static  BITMAP png_bm;
   static  PNG_DEC *png_dec; 
-  PROGRESSBAR_CFG cfg;
   switch (msg)
   {  
     case WM_CREATE:
@@ -144,7 +148,7 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       OffsetRect(&rc0,0,png_bm.Height);
       rc0.x = 0;
       rc0.y = rc.h/2;
-      rc0.h = 30;      
+      rc0.h = 20;      
       rc0.w = rc.w;
 
       CreateWindow(TEXTBOX, L"emXGUI booting", WS_VISIBLE, 
@@ -155,33 +159,33 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
       OffsetRect(&rc0,0,rc0.h);
 
-      CreateWindow(TEXTBOX, L"Copying FontLIB from SPIFLASH to SDRAM", WS_VISIBLE, 
+      CreateWindow(TEXTBOX, L"Load resource, please wait...", WS_VISIBLE, 
                     rc0.x,rc0.y,rc0.w,rc0.h,
                     hwnd, ID_TEXT2, NULL, NULL);
       SendMessage(GetDlgItem(hwnd, ID_TEXT2),TBM_SET_TEXTFLAG,0,
                     DT_SINGLELINE|DT_CENTER|DT_VCENTER|DT_BKGND); 
 
-      OffsetRect(&rc0,0,rc0.h+10);
+//      OffsetRect(&rc0,0,rc0.h+10);
 
-      rc0.x = 10;
-      rc0.h = 15;
-      rc0.w = rc.w - 2*rc0.x;
+//      rc0.x = 10;
+//      rc0.h = 15;
+//      rc0.w = rc.w - 2*rc0.x;
 
-      //PROGRESSBAR_CFG结构体的大小
-      cfg.cbSize	 = sizeof(PROGRESSBAR_CFG);
-      //开启所有的功能
-      cfg.fMask    = PB_CFG_ALL;
-      //文字格式水平，垂直居中
-      cfg.TextFlag = DT_VCENTER|DT_CENTER;  
+//      //PROGRESSBAR_CFG结构体的大小
+//      cfg.cbSize	 = sizeof(PROGRESSBAR_CFG);
+//      //开启所有的功能
+//      cfg.fMask    = PB_CFG_ALL;
+//      //文字格式水平，垂直居中
+//      cfg.TextFlag = DT_VCENTER|DT_CENTER;  
 
-      Boot_progbar = CreateWindow(PROGRESSBAR,L"Loading",
-                                     PBS_TEXT|PBS_ALIGN_LEFT|WS_VISIBLE,
-                                    rc0.x,rc0.y,rc0.w,rc0.h,hwnd,ID_PROGBAR,NULL,NULL);
+//      Boot_progbar = CreateWindow(PROGRESSBAR,L"Loading",
+//                                     PBS_TEXT|PBS_ALIGN_LEFT|WS_VISIBLE,
+//                                    rc0.x,rc0.y,rc0.w,rc0.h,hwnd,ID_PROGBAR,NULL,NULL);
 
-      SendMessage(Boot_progbar,PBM_GET_CFG,TRUE,(LPARAM)&cfg);
-      SendMessage(Boot_progbar,PBM_SET_CFG,TRUE,(LPARAM)&cfg);
-      SendMessage(Boot_progbar,PBM_SET_RANGLE,TRUE, FONT_NUM);
-      SendMessage(Boot_progbar,PBM_SET_VALUE,TRUE,0); 
+//      SendMessage(Boot_progbar,PBM_GET_CFG,TRUE,(LPARAM)&cfg);
+//      SendMessage(Boot_progbar,PBM_SET_CFG,TRUE,(LPARAM)&cfg);
+//      SendMessage(Boot_progbar,PBM_SET_RANGLE,TRUE, FONT_NUM);
+//      SendMessage(Boot_progbar,PBM_SET_VALUE,TRUE,0); 
       SetTimer(hwnd, 1, 20, TMR_SINGLE|TMR_START, NULL);
       
       break;
@@ -204,13 +208,22 @@ static	LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       FillRect(hdc, &rc);    
       
       rc.x = (rc.w - png_bm.Width)/2;
-      rc.y = rc.h/2 - png_bm.Height - 10;;
+      rc.y = rc.h/2 - png_bm.Height - 20;;
       /* 显示图片 */
       DrawBitmap(hdc, rc.x, rc.y, &png_bm, NULL);  
       return TRUE;
 
     }
 
+    case WM_PAINT:
+    {
+      PAINTSTRUCT ps;
+      BeginPaint(hwnd, &ps);
+
+      EndPaint(hwnd, &ps);
+      LCD_BkLight(TRUE);
+      break;
+    }
 
     case	WM_CTLCOLOR:
     {
@@ -268,6 +281,7 @@ void	GUI_Boot_Interface_Dialog(void *param)
       {
         ShowCursor(FALSE);
         #ifdef STM32F10X_HD
+          LCD_BkLight(TRUE);
           TouchScreenCalibrate();
         #endif
         ShowCursor(TRUE);

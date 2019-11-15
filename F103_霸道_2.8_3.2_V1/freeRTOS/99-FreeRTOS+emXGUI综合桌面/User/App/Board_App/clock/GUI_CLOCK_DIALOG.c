@@ -1,6 +1,7 @@
 #include "emXGUI.h"
 #include "./clock/GUI_CLOCK_DIALOG.h"
 #include "x_libc.h"
+#include <stdlib.h>
 #include "string.h"
 #include "ff.h"
 #include "GUI_AppDef.h"
@@ -536,7 +537,7 @@ static uint16_t GetListCurselVal(HWND hwnd, uint32_t ID)
   wnd = GetDlgItem(hwnd, ID);
   csl = SendMessage(wnd, LB_GETCURSEL, 0, 0);    // 获得选中项
   SendMessage(wnd, LB_GETTEXT, csl, (LPARAM)wbuf);       // 获得选中项的文本
-  x_wcstombs_cp936(cbuf, wbuf, 9);
+  x_wcstombs(cbuf, wbuf, 9);
 
   return x_atoi(cbuf);                           // 返回选中项的值
 }
@@ -556,7 +557,7 @@ static uint16_t GetListCurselVal(HWND hwnd, uint32_t ID)
 
 //  wnd = GetDlgItem(hwnd, ID);
 //  SendMessage(wnd, LB_GETTEXT, csl, (LPARAM)wbuf);       // 获得选中项的文本
-//  x_wcstombs_cp936(cbuf, wbuf, 9);
+//  wcstombs(cbuf, wbuf, 9);
 
 //  return x_atoi(cbuf);                           // 返回选中项的值
 //}

@@ -1112,6 +1112,11 @@
           <GroupName>emxgui/drv</GroupName>
           <Files>
             <File>
+              <FileName>gui_drv_cfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\gui_drv_cfg.h</FilePath>
+            </File>
+            <File>
               <FileName>gui_lcd_port.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_lcd_port.c</FilePath>
@@ -1120,11 +1125,6 @@
               <FileName>gui_startup.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\emXGUI_Lib\drv\gui_startup.c</FilePath>
-            </File>
-            <File>
-              <FileName>gui_drv_cfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\User\gui_drv_cfg.h</FilePath>
             </File>
             <File>
               <FileName>gui_input_port.c</FileName>
@@ -1250,6 +1250,11 @@
               <FileName>GUI_DEMO_Number_Keyboard.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\GUI_Demo\GUI_DEMO_Number_Keyboard.c</FilePath>
+            </File>
+            <File>
+              <FileName>calculator.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\User\App\GUI_Demo\calculator.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -1563,6 +1568,21 @@
               <FileName>usb_pwr.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\App\Board_App\SimulateUDisk\Mass_Storage\src\usb_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_bot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\SimulateUDisk\Mass_Storage\src\usb_bot.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>tutorial/led_key</GroupName>
+          <Files>
+            <File>
+              <FileName>GUI_LED_KEY_Dialog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\App\Board_App\LED_Key\GUI_LED_KEY_Dialog.c</FilePath>
             </File>
           </Files>
         </Group>

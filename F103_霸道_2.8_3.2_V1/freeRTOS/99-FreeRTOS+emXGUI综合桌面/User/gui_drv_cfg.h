@@ -98,7 +98,7 @@
 /* 内存堆的基地址，可以为内部SRAM、外扩的SDRAM等 */  
 #define	VMEM_BASE	        (EXT_SRAM_BASE)
 /* 内存堆的总大小，单位为字节 */ 
-#define	VMEM_SIZE	        ((1000*1024))
+#define	VMEM_SIZE	        ((994*1024))
 /* 最小分配粒度，单位为字节*/  
 #define	VMEM_ALLOC_UNIT   (64)         //64字节   
 
@@ -155,14 +155,11 @@
   #define   GUI_ICON_FONT_50         "APP_ICON_50_4BPP.xft"
   #define   GUI_ICON_FONT_150         "APP_ICON_150_150_4BPP.xft"
   /* 控制ICON使用的字体 */
-  #define   GUI_CONTROL_FONT_12      "CONTROL_ICON_48_48_4BPP.xft"
-  #define   GUI_CONTROL_FONT_32      "CONTROL_ICON_32_32_4BPP.xft"
-
-  #define   GUI_CONTROL_FONT_72      "CONTROL_ICON_72_72_4BPP.xft"
-  #define   GUI_CONTROL_FONT_100     "CONTROL_ICON_100_100_4BPP.xft"
-  #define   GUI_CONTROL_FONT_48      "CONTROL_ICON_48_4BPP.xft"
+  
   #define   GUI_CONTROL_FONT_16      "CONTROL_ICON_16_4BPP.xft"
   #define   GUI_CONTROL_FONT_24      "CONTROL_ICON_24_4BPP.xft"
+  #define   GUI_CONTROL_FONT_32      "CONTROL_ICON_32_32_4BPP.xft"
+  #define   GUI_CONTROL_FONT_48      "CONTROL_ICON_48_4BPP.xft"
 #endif
 
 /*===========日志输出设备配置===gui_log_port.c===============================================*/
@@ -170,7 +167,7 @@
 /* 是否开启调试输出、数组输出、进入函数的输出功能 */
 #define GUI_DEBUG_EN         	      1
 #define GUI_DEBUG_ARRAY_EN          0
-#define GUI_DEBUG_FUNC_EN   	       0
+#define GUI_DEBUG_FUNC_EN   	      0
 
 /*===========资源设备配置===gui_resource_port.c===============================================*/
 /* 是否使用资源设备 */

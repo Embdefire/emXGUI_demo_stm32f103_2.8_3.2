@@ -1,6 +1,7 @@
 #include <emXGUI.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "x_libc.h"
 #include "GUI_AppDef.h"
 #include "./WiFi/GUI_WiFi_Dialog.h"
@@ -71,10 +72,10 @@ void wifi_dispose_task(HWND hwnd)
 				{
           WCHAR wbuf[21];
           GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_SSID), wbuf, 21);
-          x_wcstombs_cp936(ssid, wbuf, 21);
+          x_wcstombs(ssid, wbuf, 21);
           
           GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_CIPHER), wbuf, 21);
-          x_wcstombs_cp936(pwd, wbuf, 21);
+          x_wcstombs(pwd, wbuf, 21);
           
 					if(ESP8266_JoinAP(ssid, pwd))
             break;
@@ -111,16 +112,16 @@ void wifi_dispose_task(HWND hwnd)
           GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_RemoteIP2), wlbuf[1], 6);
           GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_RemoteIP3), wlbuf[2], 6);
           GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_RemoteIP4), wlbuf[3], 6);
-          x_wcstombs_cp936(lbuf[0], wlbuf[0], 6);
-          x_wcstombs_cp936(lbuf[1], wlbuf[1], 6);
-          x_wcstombs_cp936(lbuf[2], wlbuf[2], 6);
-          x_wcstombs_cp936(lbuf[3], wlbuf[3], 6);
+          x_wcstombs(lbuf[0], wlbuf[0], 6);
+          x_wcstombs(lbuf[1], wlbuf[1], 6);
+          x_wcstombs(lbuf[2], wlbuf[2], 6);
+          x_wcstombs(lbuf[3], wlbuf[3], 6);
           
           /* 拼接在一起 */
           x_sprintf(host_ip, "%s.%s.%s.%s", lbuf[0], lbuf[1], lbuf[2], lbuf[3]);
           
           GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_RemotePort), wbuf, 6);
-          x_wcstombs_cp936(host_port, wbuf, 6);
+          x_wcstombs(host_port, wbuf, 6);
           
 					if(ESP8266_Link_Server(enumTCP,(char*)host_ip,(char*)host_port,Single_ID_0))
             break;
@@ -177,7 +178,7 @@ void wifi_dispose_task(HWND hwnd)
             if (wbuf_rec != NULL)
             {
               GetWindowText(Receive_Handle, wbuf, WinTexeLen+1);                      // 得到原文本
-              x_mbstowcs_cp936(wbuf_rec, receive, strEsp8266_Fram_Record.InfBit.FramLength*sizeof(WCHAR));
+              x_mbstowcs(wbuf_rec, receive, strEsp8266_Fram_Record.InfBit.FramLength*sizeof(WCHAR));
               x_wstrcat(wbuf, wbuf_rec);                                              // 追加新文本
               SetWindowText(Receive_Handle, wbuf);                                    // 设置接收窗口的文本
               GUI_VMEM_Free(wbuf_rec);                                                // 释放申请的内存
@@ -688,7 +689,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
         /* 获取发送窗口的字符串 */
         GetWindowText(GetDlgItem(hwnd, ID_TEXTBOX_Send), wbuf, 128);
-        x_wcstombs_cp936(comdata, wbuf, 128);
+        x_wcstombs(comdata, wbuf, 128);
         
         ESP8266_SendString(ENABLE, comdata, 0, Single_ID_0 ); 
       }

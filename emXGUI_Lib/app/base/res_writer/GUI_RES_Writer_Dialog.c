@@ -61,11 +61,78 @@ static void App_FLASH_Writer(void )
     SendMessage(wnd_res_writer_dialog,MSG_MYWRITE_RESULT,result,0);
 
     thread = 0;       
-
-    
 	}
   /* 删除线程自己 */
   GUI_Thread_Delete(GUI_GetCurThreadHandle());
+}
+
+static void exit_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
+{
+  HDC hdc;
+  RECT rc;
+//  HWND hwnd;
+
+	hdc = ds->hDC;   
+	rc = ds->rc; 
+//  hwnd = ds->hwnd;
+
+//  GetClientRect(hwnd, &rc_tmp);//得到控件的位置
+//  WindowToScreen(hwnd, (POINT *)&rc_tmp, 1);//坐标转换
+
+//  BitBlt(hdc, rc.x, rc.y, rc.w, rc.h, hdc_bk, rc_tmp.x, rc_tmp.y, SRCCOPY);
+  SetBrushColor(hdc, MapRGB(hdc, 0, 0, 0));
+  FillRect(hdc, &rc);
+
+  if (ds->State & BST_PUSHED)
+	{ //按钮是按下状态
+		SetPenColor(hdc, MapRGB(hdc, 120, 120, 120));      //设置文字色
+	}
+	else
+	{ //按钮是弹起状态
+
+		SetPenColor(hdc, MapRGB(hdc, 250, 250, 250));
+	}
+  
+  for(int i=0; i<4; i++)
+  {
+    HLine(hdc, rc.x, rc.y, rc.w);
+    rc.y += 5;
+  }
+}
+
+static void button_owner_draw(DRAWITEM_HDR *ds) //绘制一个按钮外观
+{
+  HDC hdc;
+  RECT rc;
+  WCHAR wbuf[128];
+
+	hdc = ds->hDC;   
+	rc = ds->rc; 
+  
+  SetBrushColor(hdc, MapRGB(hdc, 0, 0, 0));
+  FillRect(hdc, &rc);
+
+  if (ds->Style & WS_DISABLED)
+  {
+    SetBrushColor(hdc, MapRGB(hdc, 100, 100, 100));
+		SetTextColor(hdc, MapRGB(hdc, 10, 10, 10));
+  }
+  else if (ds->State & BST_PUSHED)
+	{ //按钮是按下状态
+    InflateRect(&rc, -1, -1);
+    SetBrushColor(hdc, MapRGB(hdc, 150, 150, 120));
+    SetTextColor(hdc, MapRGB(hdc, 10, 10, 10));      //设置文字色
+	}
+	else
+	{ //按钮是弹起状态
+    SetBrushColor(hdc, MapRGB(hdc, 250, 250, 250));
+		SetTextColor(hdc, MapRGB(hdc, 10, 10, 10));
+	}
+  EnableAntiAlias(hdc, ENABLE);
+  FillRoundRect(hdc, &rc, MIN(rc.h/2, rc.w/2));
+  EnableAntiAlias(hdc, DISABLE);
+  GetWindowText(ds->hwnd, wbuf, 128); //获得按钮控件的文字 
+  DrawText(hdc, wbuf,-1,&rc,DT_VCENTER|DT_CENTER);//绘制文字(居中对齐方式)DT_CENTER
 }
 
 /**
@@ -93,7 +160,7 @@ If you really want to reload resou-\r\nrces:\r\n\
 1.Insert an SD card with [srcdata] \r\nresource.\
 3.Power up again the board.\r\n\
 2.Click the button below to load \r\n\
-the resources.";
+  the resources.";
   
   /* 默认显示信息 */
   const WCHAR *pStr = normal_res_info;
@@ -129,11 +196,12 @@ the resources.";
           if(!res_not_found_flag)
           {  
             /* 退出按钮 */
-            rc0.w = 40;
+            rc0.w = 23;
+            rc0.y = 10;
             rc0.x = rc.w - rc0.w - 5*2;
             rc0.h = 25;
 
-            CreateWindow(BUTTON, L"Exit",BS_FLAT | WS_VISIBLE,
+            CreateWindow(BUTTON, L"Exit",BS_FLAT | WS_VISIBLE | WS_OWNERDRAW,
                           rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_EXIT, NULL, NULL); 
           }
           
@@ -141,10 +209,10 @@ the resources.";
           rc0.x = 5;
           rc0.y = 1*rc.h/5;
           rc0.w = rc.w - rc0.x*2;
-          rc0.h = 3*rc.h/5;
+          rc0.h = 3*rc.h/5+5;
       
           CreateWindow(TEXTBOX,pStr ,WS_VISIBLE,
-                        rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_INFO, NULL, NULL); 
+                        rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_INFO, NULL, NULL);
 
           /* 进度条 */
           rc0.x = 5;
@@ -168,21 +236,21 @@ the resources.";
           SendMessage(wnd_res_writer_progbar,PBM_SET_VALUE,TRUE,0);
 
           /* 烧录按钮 */
-          rc0.x = 5;
           rc0.w = 230;
-          rc0.h = 30;
+          rc0.h = 25;
           rc0.y = rc.h - rc0.h - 10;
+          rc0.x = (rc.w - rc0.w)/2;
 
-          CreateWindow(BUTTON, L"Click me to load resources",BS_FLAT | WS_VISIBLE,
+          CreateWindow(BUTTON, L"Click me to load resources",BS_FLAT | WS_VISIBLE | WS_OWNERDRAW,
                         rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_BURN, NULL, NULL); 
 
           /* 复位按钮 */
           rc0.w = 230;
-          rc0.x = GUI_XSIZE - rc0.w;
           rc0.h = 25;
           rc0.y = rc.h - rc0.h - 10;
+          rc0.x = (rc.w - rc0.w)/2;
           
-          CreateWindow(BUTTON, L"Click me to reset system",BS_FLAT ,
+          CreateWindow(BUTTON, L"Click me to reset system",BS_FLAT | WS_OWNERDRAW,
                         rc0.x, rc0.y, rc0.w, rc0.h, hwnd, ID_RESET, NULL, NULL); 
           break;
 	}
@@ -241,6 +309,25 @@ the resources.";
       
 		break;
 	}
+  
+  //重绘制函数消息
+  case WM_DRAWITEM:
+  {
+     DRAWITEM_HDR *ds;
+     ds = (DRAWITEM_HDR*)lParam;        
+     if(ds->ID == ID_EXIT)
+     {
+        exit_owner_draw(ds);
+        return TRUE;
+     }
+     else if(ds->ID == ID_BURN || ds->ID == ID_RESET)
+     {
+        button_owner_draw(ds);
+        return TRUE;
+     }
+     
+   }
+  break;
 
    case	WM_CTLCOLOR:
    {
@@ -300,13 +387,28 @@ the resources.";
    case WM_ERASEBKGND:
    {
       HDC hdc =(HDC)wParam;
-      RECT rc;
+      RECT rc,rc0;
       GetClientRect(hwnd, &rc);
-      
+
       SetBrushColor(hdc, MapRGB(hdc, 0, 0, 0));
       FillRect(hdc, &rc);
-      
-      
+
+      /* 标题 */
+      rc0 = rc;
+
+      rc0.x = 0;
+      rc0.y = 0;
+      rc0.w = rc.w;
+      rc0.h = rc.h/5-1; 
+
+      HLine(hdc, 0, rc0.h, GUI_XSIZE);
+
+      rc0.h = 25;
+      rc0.y = rc.h - rc0.h - 10;
+
+      SetPenColor(hdc, MapRGB(hdc, 200, 200, 200));
+      HLine(hdc, 0, rc0.y+rc0.h/2, GUI_XSIZE);
+
       return TRUE;
       
    }

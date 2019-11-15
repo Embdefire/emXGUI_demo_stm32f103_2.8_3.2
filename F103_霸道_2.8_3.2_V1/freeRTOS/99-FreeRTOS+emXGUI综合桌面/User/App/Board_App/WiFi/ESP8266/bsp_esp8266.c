@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include "./dwt_delay/core_delay.h"   
-//#include "GUI.h"
+#include "GUI_AppDef.h"
 
 #define bsp_DelayUS(_ulDelayTime)    CPU_TS_Tmr_Delay_US(_ulDelayTime)
 
@@ -16,7 +16,7 @@ static void   ESP8266_USART_NVIC_Configuration(void);
 
 extern uint8_t ucTcpClosedFlag;
 
-struct  STRUCT_USARTx_Fram strEsp8266_Fram_Record = { 0 };
+struct  STRUCT_USARTx_Fram strEsp8266_Fram_Record  __EXRAM;
 
 static char *esp8266_itoa( int value, char * string, int radix );
 

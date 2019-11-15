@@ -43,7 +43,7 @@ tmp/
 
 *.axf
 *.S19
-*.bin
+#*.bin
 *.hex
 *.dep
 *.FLM

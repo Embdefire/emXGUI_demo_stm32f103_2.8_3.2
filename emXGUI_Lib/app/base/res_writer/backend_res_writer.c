@@ -442,7 +442,7 @@ FRESULT Burn_Content(void)
   FRESULT result;   
   UINT  bw;            					    /* File R/W count */
   uint32_t write_addr=0;
-  uint8_t tempbuf[256];
+  uint8_t tempbuf[512];
   
   /* 重置进度条 */
   SendMessage(wnd_res_writer_progbar,PBM_SET_VALUE,TRUE,0);
@@ -486,10 +486,10 @@ FRESULT Burn_Content(void)
       write_addr = dir.offset + RESOURCE_BASE_ADDR;
       while(result == FR_OK) 
       {
-        result = f_read( fp, tempbuf, 256, &bw);//读取数据	 
+        result = f_read( fp, tempbuf, 512, &bw);//读取数据	 
         if(result!=FR_OK)			 //执行错误
         {
-          BURN_ERROR("读取文件失败！");
+          BURN_ERROR("读取文件失败！->(%d)", result);
           LED_RED;
           return result;
         }      
@@ -505,7 +505,7 @@ FRESULT Burn_Content(void)
 
         
         write_addr+=bw;				
-        if(bw !=256)break;
+        if(bw !=512)break;
       }
       BURN_INFO("内容写入完毕");          
            
@@ -667,7 +667,7 @@ FRESULT BurnFile(void)
   if(result != FR_OK)
   {
     GUI_ERROR("请插入带‘srcdata’烧录数据的SD卡,并重新复位开发板！ result = %d",result);
-    SetWindowText(wnd_res_writer_info_textbox,L"1.Please insert an SD card with [srcdata] resources.\r\n2.Powerup again the board.");
+    SetWindowText(wnd_res_writer_info_textbox,L"1.Please insert an SD card with \r\n[srcdata] resources.\r\n2.Powerup again the board.");
     GUI_msleep(20);
     
     goto exit;

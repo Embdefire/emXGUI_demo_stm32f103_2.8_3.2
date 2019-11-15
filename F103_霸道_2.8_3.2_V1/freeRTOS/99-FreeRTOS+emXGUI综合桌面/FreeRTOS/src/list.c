@@ -163,7 +163,9 @@ const TickType_t xValueOfInsertion = pxNewListItem->xItemValue;
 	first, and the algorithm slightly modified if necessary. */
 	if( xValueOfInsertion == portMAX_DELAY )
 	{
+    printf("in\r");
 		pxIterator = pxList->xListEnd.pxPrevious;
+    printf("out\r");
 	}
 	else
 	{

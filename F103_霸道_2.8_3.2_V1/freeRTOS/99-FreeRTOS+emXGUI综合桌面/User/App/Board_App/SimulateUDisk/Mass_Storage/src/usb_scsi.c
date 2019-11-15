@@ -418,7 +418,7 @@ void SCSI_Invalid_Cmd(uint8_t lun)
 * Output         : None.
 * Return         : Read\Write status (bool).
 *******************************************************************************/
-bool SCSI_Address_Management(uint8_t lun , uint8_t Cmd , uint32_t LBA , uint32_t BlockNbr)
+BOOL SCSI_Address_Management(uint8_t lun , uint8_t Cmd , uint32_t LBA , uint32_t BlockNbr)
 {
 
   if ((LBA + BlockNbr) > Mass_Block_Count[lun] )

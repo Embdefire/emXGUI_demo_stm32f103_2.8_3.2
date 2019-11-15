@@ -129,7 +129,7 @@ void SCSI_Verify10_Cmd(uint8_t lun);
 
 void SCSI_Invalid_Cmd(uint8_t lun);
 void SCSI_Valid_Cmd(uint8_t lun);
-bool SCSI_Address_Management(uint8_t lun , uint8_t Cmd , uint32_t LBA , uint32_t BlockNbr);
+BOOL SCSI_Address_Management(uint8_t lun , uint8_t Cmd , uint32_t LBA , uint32_t BlockNbr);
 
 void Set_Scsi_Sense_Data(uint8_t lun , uint8_t Sens_Key, uint8_t Asc);
 void SCSI_TestUnitReady_Cmd (uint8_t lun);

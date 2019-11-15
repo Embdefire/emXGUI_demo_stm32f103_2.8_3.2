@@ -5,6 +5,7 @@
 #include "./mp3_player/GUI_MUSICPLAYER_DIALOG.h"
 #include	"CListMenu.h"
 #include "GUI_AppDef.h"
+#include <stdlib.h>
 #include <string.h>
 /******************按键ID值********************/
 #define ID_BUTTON_EXIT 0x2000  
@@ -162,7 +163,7 @@ static LRESULT Win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          GetClientRect(hwnd, &rc);
          /* 需要分配N+1项，最后一项为空 */
          menu_list = (struct __obj_list *)GUI_VMEM_Alloc(sizeof(struct __obj_list)*(music_file_num+1));
-         wbuf = (WCHAR (*)[128])GUI_VMEM_Alloc(sizeof(WCHAR *)*music_file_num);
+         wbuf = (WCHAR (*)[128])GUI_VMEM_Alloc(sizeof(WCHAR) * music_file_num * 128);
          if(menu_list == NULL) 
             return 0;
          for(;i < music_file_num; i++){
@@ -185,7 +186,7 @@ static LRESULT Win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          }            
             
             
-            x_mbstowcs_cp936(wbuf[i], p, FILE_NAME_LEN);
+            x_mbstowcs(wbuf[i], p, FILE_NAME_LEN);
             menu_list[i].pName = wbuf[i];
             menu_list[i].cbStartup = NULL;
             menu_list[i].icon = L"a";

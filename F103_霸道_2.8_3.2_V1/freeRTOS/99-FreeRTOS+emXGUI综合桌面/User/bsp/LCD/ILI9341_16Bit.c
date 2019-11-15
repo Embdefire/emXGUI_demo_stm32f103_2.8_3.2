@@ -354,6 +354,7 @@ void	LCD_Init(void)
 	//PG6 - LCD BackLight: 0:ON; 1:OFF
 	gpio_init.GPIO_Pin = GPIO_Pin_6;
 	GPIO_Init(GPIOG, &gpio_init); //初始化
+  GPIO_SetBits(LCD_BL_PIN);    // 还不开背光
 
 	//PG11 - LCD_nRST:
 	gpio_init.GPIO_Pin = GPIO_Pin_11;
