@@ -158,16 +158,7 @@ static void BSP_Init(void)
   Key_GPIO_Config();
   
   /* 配置RTC秒中断优先级 */
-//	RTC_NVIC_Config();	
-//  int tm_sec;
-//	int tm_min;
-//	int tm_hour;
-//	int tm_mday;
-//	int tm_mon;
-//	int tm_year;
-//	int tm_wday;
   struct rtc_time systmtime ={0, 41, 10, 7, 11, 2019, 0};
-//  RTC_NVIC_Config();
 	RTC_CheckAndConfig(&systmtime);
 }
  

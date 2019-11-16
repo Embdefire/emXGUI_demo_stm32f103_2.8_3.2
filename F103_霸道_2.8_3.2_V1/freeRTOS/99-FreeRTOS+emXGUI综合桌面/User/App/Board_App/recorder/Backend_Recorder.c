@@ -69,7 +69,7 @@ void recorder(const TCHAR *recfile)
  	rechead.data.ChunkSize=0;			//数据大小,还需要计算  
 
 	result=f_open(&file,recfile, FA_CREATE_ALWAYS | FA_WRITE); 
-	if(result)
+	if(result != FR_OK)
 		return;
 	else
 		result=f_write(&file,&rechead,sizeof(__WaveHeader),&bw);//写入头数据
@@ -125,7 +125,7 @@ void recorder(const TCHAR *recfile)
 void record_play(uint8_t *recfile,HWND hWin)
 {
 	uint16_t i=0,time=0,oldtime=0;
-	uint16_t f_kbps=0xffff;
+	uint16_t f_k=0xffff;    // 波形数据传输速率（每秒平均字节数）
   WCHAR wbuf[10];
 	//if(strstr((const char *)recfile,"recorder")==0)return 0xff;
 	i=0;
@@ -148,13 +148,16 @@ void record_play(uint8_t *recfile,HWND hWin)
 			{
 				i=0;	
 				result=f_read(&file,recbuf,BUFSIZE,(UINT*)&bw);	
-				if(f_kbps==0xffff)
+				if(f_k==0xffff)
 				{
-          f_kbps=(uint16_t)((recbuf[25]*256+recbuf[24])*32/1000);
-          time = f_size(&file)/f_kbps/125*2;
+//          f_kbps=(uint16_t)((recbuf[25]*256+recbuf[24])*32/1000);
+//          time = f_size(&file)/f_kbps/125;
+          f_k=((((recbuf[25] << 8) | recbuf[24]) * recbuf[22] * 16)/8);
+          time = (f_size(&file) - sizeof(rechead))/f_k;
           x_wsprintf(wbuf, L"%02d:%02d", time/60, time%60);
           SetWindowText(GetDlgItem(hWin, ID_PLAY_TOTAL_TIME), wbuf);
-          SendMessage(GetDlgItem(hWin, ID_PLAY_PROGRESS), SBM_SETRANGE, TRUE, time);
+          time = time ? time : 1;
+          SendMessage(GetDlgItem(hWin, ID_PLAY_PROGRESS), SBM_SETRANGE, 0, time);
           time = 0;
 				}
 //				OSSchedLock(&err);
@@ -181,7 +184,7 @@ void record_play(uint8_t *recfile,HWND hWin)
         
         if (chgsch == 0)
         {
-          oldtime=f_tell(&file)/f_kbps/125*2;
+          oldtime = (f_tell(&file) - sizeof(rechead))/f_k;
           if((time+1)<=oldtime)
           {
             time=oldtime;
@@ -190,13 +193,13 @@ void record_play(uint8_t *recfile,HWND hWin)
             SendMessage(GetDlgItem(hWin, ID_PLAY_PROGRESS), SBM_SETVALUE, TRUE, time);
           }
         }
-        else
+        else if (chgsch == 1)
         {
            uint8_t temp=0;
            uint32_t pos;
           
            temp=SendMessage(GetDlgItem(hWin, ID_PLAY_PROGRESS), SBM_GETVALUE, NULL, NULL);  
-           pos = temp/2*125*f_kbps;
+           pos = temp*f_k;
 //           pos=file.fsize/255*temp;
            if(pos<sizeof(rechead))
              pos=sizeof(rechead);
@@ -215,11 +218,19 @@ void record_play(uint8_t *recfile,HWND hWin)
          }
 			}
 		}
-//		BUTTON_SetBitmapEx(WM_GetDialogItem(hWin, GUI_ID_BUTTON1),BUTTON_BI_UNPRESSED,&bmanote,5,5);
-//		TEXT_SetText(WM_GetDialogItem(hWin, GUI_ID_TEXT1),"00:00");
-//		WM_EnableWindow(WM_GetDialogItem(hWin, GUI_ID_BUTTON0));
+
     SetWindowText(GetDlgItem(hWin, ID_PLAY_TIME), L"00:00");
+    SendMessage(GetDlgItem(hWin, ID_PLAY_PROGRESS), SBM_SETVALUE, TRUE, 0);
+    GUI_msleep(2);
 		f_close(&file);
 }
+
+//波形数据传输速率（每秒平均字节数） = 采样频率 × 音频通道数 × 每次采样得到的样本位数 / 8
+
+//比特率（kbps） = 波形数据传输速率 × 8 / 1000
+
+//WAV文件所占大小（字节) = 波形数据传输速率 × 音频文件时长
+
+//音频文件时长（秒） = WAV文件所占容量 / 波形数据传输速率
 
 /***************************** (END OF FILE) *********************************/

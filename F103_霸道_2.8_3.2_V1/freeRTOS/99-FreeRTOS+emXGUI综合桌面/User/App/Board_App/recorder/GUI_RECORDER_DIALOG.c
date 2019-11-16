@@ -75,7 +75,11 @@ static FRESULT scan_record_files(char* path)
     for (;;) 
     { 
       res = f_readdir(&dir, &fno); 										//读取目录下的内容
-     if (res != FR_OK || fno.fname[0] == 0) break; 	//为空时表示所有项目读取完毕，跳出
+     if (res != FR_OK || fno.fname[0] == 0)
+     {
+       f_closedir(&dir);
+       break; 	//为空时表示所有项目读取完毕，跳出
+     }
 #if _USE_LFN 
       fn = *fno.lfname ? fno.lfname : fno.fname; 
 #else 
@@ -88,19 +92,22 @@ static FRESULT scan_record_files(char* path)
         sprintf(&path[i], "/%s", fn); 							    // 合成完整目录名
         res = scan_record_files(path);									// 递归遍历 
         if (res != FR_OK) 
+        {
+          f_closedir(&dir);
 					break; 																	     	// 打开失败，跳出循环
+        }
         path[i] = 0; 
       } 
       else 
       { 
-				//printf("%s/%s\r\n", path, fn);								// 输出文件名
+//				printf("%s/%s\r\n", path, fn);								// 输出文件名
 				if(strstr(fn,".wav")||strstr(fn,".WAV"))      // 判断是否wav文件
 				{
 					if ((strlen(path)+strlen(fn)<FILE_NAME_LEN)&&(music_file_num<MUSIC_MAX_NUM))
 					{
 						sprintf(file_name, "%s/%s", path, fn);						
 						memcpy(music_playlist[music_file_num], file_name, strlen(file_name) + 1);
-             //     printf("%s\r\n", music_playlist[music_file_num]);
+                  printf("%s\r\n", music_playlist[music_file_num]);
 						//memcpy(music_lcdlist[music_file_num],fn,strlen(fn));
 						x_mbstowcs(wbuf, fn, sizeof(wbuf));	    // 将Ansi字符转换成GUI的unicode字符.
 						//在Listbox中增加一个Item项，记录文件名和文件属性.
@@ -134,15 +141,16 @@ extern REC_TYPE Recorder;           /* 录音设备 */
 
 static void App_Record(void *p)
 {
+  char *name = p;
 //  vTaskSuspend(h_record);    // 挂起线程
   uint8_t app = 1;
   while(app) //线程已创建了
   {     
-    recorder(p);
+    recorder(name);
 
     app = 0;    // 只运行一次
   }
-  
+  printf("录音结束\n\r");
   GUI_Thread_Delete(GUI_GetCurThreadHandle()); 
 }
 
@@ -188,6 +196,7 @@ static void App_PlayRecord(HWND hwnd)
 	   
    }
    thread = 1;
+   printf("录音播放线程退出\n");
    GUI_Thread_Delete(GUI_GetCurThreadHandle()); 
 }
 
@@ -580,23 +589,28 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
    switch(msg){
       case WM_CREATE:
       {
-          vsset.mvol=140;			//音量大小
-          vsset.bflimit=6;		//低音限制
-          vsset.bass=15;			//低音效果
-          vsset.tflimit =10;	//高音限制
-          vsset.treble =15;		//高音效果
-          vsset.effect =0;		//无耳机效果
-          vsset.speed =1;			//正常速度
+         vsset.mvol=140;			//音量大小
+         vsset.bflimit=6;		//低音限制
+         vsset.bass=15;			//低音效果
+         vsset.tflimit =10;	//高音限制
+         vsset.treble =15;		//高音效果
+         vsset.effect =0;		//无耳机效果
+         vsset.speed =1;			//正常速度
           
-          recset.input =0;			//MIC
-          recset.samplerate =1;	//8K
-          recset.channel =0;		//左声道
-          recset.agc = 2;				//实际增益为1
+         recset.input =0;			//MIC
+         recset.samplerate =1;	//8K
+         recset.channel =0;		//左声道
+         recset.agc = 2;				//实际增益为1
         
-          VS_Init();
-          GUI_msleep(100);
-          VS_HD_Reset();
-          VS_Soft_Reset();
+         VS_Init();
+         GUI_msleep(100);
+        
+         if (VS_HD_Reset())
+         {
+           GUI_DEBUG("vs1053硬件复位失败");
+         }
+        
+         VS_Soft_Reset();
         
          u8 *jpeg_buf;
          u32 jpeg_size;
@@ -676,7 +690,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
          BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
          xReturn = xTaskCreate((TaskFunction_t )(void(*)(void*))App_PlayRecord,  /* 任务入口函数 */
                             (const char*    )"App_PlayMusic",          /* 任务名字 */
-                            (uint16_t       )5*1024/4,                   /* 任务栈大小FreeRTOS的任务栈以字为单位 */
+                            (uint16_t       )3*1024/4,                   /* 任务栈大小FreeRTOS的任务栈以字为单位 */
                             (void*          )hwnd,                     /* 任务入口函数参数 */
                             (UBaseType_t    )5,                        /* 任务的优先级 */
                             (TaskHandle_t  )&h_play_record);           /* 任务控制块指针 */
@@ -717,6 +731,8 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
         HWND wnd = GetDlgItem(hwnd, ID_RECORD_LIST);
                
         SendMessage(wnd, LB_RESETCONTENT, 0, 0);
+        memset(music_playlist, '\0', sizeof(music_playlist));
+        memset(music_lcdlist, '\0', sizeof(music_lcdlist));
         scan_record_files(path);
         SendMessage(GetDlgItem(hwnd, ID_RECORD_LIST), LB_SETCURSEL, 0, 0);    // 默认选中第一项
         InvalidateRect(wnd, NULL, TRUE);
@@ -866,6 +882,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 break;
               }
               /* 开始录音 创建录音任务 */
+              RecordFlag = 0;
               BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
               xReturn = xTaskCreate((TaskFunction_t )(void(*)(void*))App_Record,  /* 任务入口函数 */
                             (const char*    )"Record Task",       /* 任务名字 */
@@ -895,14 +912,13 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
             case ID_RECORD_STOP:
             {
-              vTaskSuspend(h_play_record);            // 挂起录音任务
+              RecordFlag = 2;
+              vTaskResume(h_record);                  // 恢复录音任务
               KillTimer(hwnd, ID_Record_Timer);       // 删除录音计时定时器
               Record_Timer = 0;
               SetWindowText(GetDlgItem(hwnd, ID_RECORD_TIME), L"00:00");
-              /* 对于录音，需要把WAV文件内容填充完整 */
-              
-              RecordFlag = 2;
-              
+              SetWindowText(GetDlgItem(hwnd, ID_RECORD_PADNC), L"U");         // 设置录音机状态
+
               /* 文件记录处理 */		
               char *cbuf = NULL;
               WCHAR wbuf[128];
@@ -926,8 +942,8 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 							SendMessage(GetDlgItem(hwnd, ID_RECORD_LIST), LB_LOCKCURSEL, FALSE, 0);     // 解锁列表可以重新修改选中的项
 							ShowWindow(GetDlgItem(hwnd, ID_RECORD_START), SW_SHOW);                     // 显示开始录音的按钮
 							ShowWindow(GetDlgItem(hwnd, ID_RECORD_PADNC), SW_HIDE);                     // 隐藏继续和暂停的按钮
-              EnableWindow(GetDlgItem(hwnd, ID_RECORD_BACK), ENABLE);                     // 禁用上一首按钮
-              EnableWindow(GetDlgItem(hwnd, ID_RECORD_NEXT), ENABLE);                     // 禁用下一首按钮
+              EnableWindow(GetDlgItem(hwnd, ID_RECORD_BACK), ENABLE);                     // 使能上一首按钮
+              EnableWindow(GetDlgItem(hwnd, ID_RECORD_NEXT), ENABLE);                     // 使能下一首按钮
               EnableWindow(GetDlgItem(hwnd, ID_RECORD_PLAY), ENABLE);                     // 使能播放按钮
 							EnableWindow(GetDlgItem(hwnd, ID_RECORD_STOP), DISABLE);                    // 禁用停止录音按钮
             }
@@ -1046,12 +1062,17 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                          ttt = 0;
                          SetWindowText(GetDlgItem(hwnd, ID_RECORD_bPOWER), L"A");
                       }
-                      
-                      VS_Set_Vol(power_rec);     // 设置vs1053的音量
+                     
                    } 
                    SendMessage(nr->hwndFrom, SBM_SETVALUE, TRUE, power_rec); //发送SBM_SETVALUE，设置音量值
                 }
                 break;
+                
+               case SBN_CLICKED:
+               {
+                 VS_Set_Vol(power_rec);     // 设置vs1053的音量
+               }
+               break;
              }
           }
 
@@ -1067,10 +1088,16 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                 {
                    i = sb_nr->nTrackValue; //获得滑块当前位置值                
                    SendMessage(nr->hwndFrom, SBM_SETVALUE, TRUE, i); //设置进度值
-                   //置位进度条变更位置
-                   chgsch = 1;
+                   chgsch = 2;
                 }
                 break;
+                
+               case SBN_CLICKED:
+               {
+                 //置位进度条变更位置
+                   chgsch = 1;
+               }
+               break;
              }
           }         
       

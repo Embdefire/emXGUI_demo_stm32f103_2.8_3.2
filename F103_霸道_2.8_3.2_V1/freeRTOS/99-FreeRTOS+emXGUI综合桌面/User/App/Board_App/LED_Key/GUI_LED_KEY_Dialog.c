@@ -373,6 +373,8 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     case WM_DESTROY:
     {
       DeleteDC(bk_hdc);
+      DeleteDC(hdc_btn_press);
+      DeleteDC(hdc_btn);
 			LED_RGBOFF;
 			LED1_ON_FLAG=0;
 			LED2_ON_FLAG=0;

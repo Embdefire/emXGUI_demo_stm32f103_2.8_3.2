@@ -14,6 +14,13 @@ _vs1053_obj vsset=
 	0,		//空间效果	
 };
 
+
+/*等待超时时间*/
+#define VSSPIT_FLAG_TIMEOUT         ((uint32_t)0x1000)
+#define VSSPIT_LONG_TIMEOUT         ((uint32_t)(10 * VSSPIT_FLAG_TIMEOUT))
+
+static __IO uint32_t  VSSPITimeout = VSSPIT_LONG_TIMEOUT;
+
 /*******************************************************************************
 * Function Name  : SPI_FLASH_SendByte
 * Description    : Sends a byte through the SPI interface and return the byte
@@ -29,9 +36,18 @@ unsigned char SPI2_ReadWriteByte(unsigned char writedat)
 	
 	/* Send byte through the SPI1 peripheral */
 	SPI_I2S_SendData(VS_SPI, writedat);
-	
+  
+	VSSPITimeout = VSSPIT_LONG_TIMEOUT;
+  
 	/* Wait to receive a byte */
-	while(SPI_I2S_GetFlagStatus(VS_SPI, SPI_I2S_FLAG_RXNE) == RESET);
+	while(SPI_I2S_GetFlagStatus(VS_SPI, SPI_I2S_FLAG_RXNE) == RESET && VSSPITimeout--)
+  {
+    if (VSSPITimeout == 0)    // 超时退出
+    {
+      printf("VS SPI Timeout");
+      return 0;
+    }
+  }
 	
 	/* Return the byte read from the SPI bus */
 	return SPI_I2S_ReceiveData(VS_SPI);
@@ -68,6 +84,7 @@ void VS_Init(void)
 	
 	SPI_InitTypeDef  SPI_InitStructure;
 	GPIO_InitTypeDef GPIO_InitStructure;
+  SPI_Cmd(VS_SPI, DISABLE); 
 	RCC_APB2PeriphClockCmd(VS_SPIGPIO_CLK|VS_GPIO_DREQ_CLK|VS_GPIO_RST_CLK|VS_GPIO_XDCS_CLK|VS_GPIO_HORN_CLK, ENABLE);
 	
  	GPIO_InitStructure.GPIO_Pin = VS_DREQ;				 //DREQ

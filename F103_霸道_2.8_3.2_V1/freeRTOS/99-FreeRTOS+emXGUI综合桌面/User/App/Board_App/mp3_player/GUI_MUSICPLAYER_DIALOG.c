@@ -322,14 +322,14 @@ static void App_PlayMusic(HWND hwnd)
 {
 //	BaseType_t xReturn = pdPASS;/* 定义一个创建信息返回值，默认为pdPASS */
 	int app=0;
-   HDC hdc;
+   HDC hdc = NULL;
 //   SCROLLINFO sif;
 	if(thread==0)
 	{  
    xTaskCreate((TaskFunction_t )(void(*)(void*))App_PlayMusic,  /* 任务入口函数 */
                             (const char*    )"App_PlayMusic",   /* 任务名字 */
-                            (uint16_t       )4*1024/4,          /* 任务栈大小FreeRTOS的任务栈以字为单位 */
-                            (void*          )NULL,              /* 任务入口函数参数 */
+                            (uint16_t       )3*1024/4,          /* 任务栈大小FreeRTOS的任务栈以字为单位 */
+                            (void*          )hwnd,              /* 任务入口函数参数 */
                             (UBaseType_t    )5,                 /* 任务的优先级 */
                             (TaskHandle_t  )&h_music);          /* 任务控制块指针 */
                                                 
@@ -342,7 +342,7 @@ static void App_PlayMusic(HWND hwnd)
 		if(app==0)
 		{
 			app=1;
-         hdc = GetDC(hwnd);   
+//         hdc = GetDC(hwnd);   
          int i = 0;      
 #if 1
          //读取歌词文件
@@ -402,7 +402,7 @@ static void App_PlayMusic(HWND hwnd)
          
         app=0;
         //使用 GETDC之后需要释放掉HDC
-        ReleaseDC(hwnd, hdc);
+//        ReleaseDC(hwnd, hdc);
         //进行任务调度
         GUI_msleep(300);
         
@@ -442,7 +442,11 @@ static FRESULT scan_files (char* path)
     for (;;) 
     { 
       res = f_readdir(&dir, &fno); 										//读取目录下的内容
-     if (res != FR_OK || fno.fname[0] == 0) break; 	//为空时表示所有项目读取完毕，跳出
+     if (res != FR_OK || fno.fname[0] == 0)
+     {
+       f_closedir(&dir);
+       break; 	//为空时表示所有项目读取完毕，跳出
+     }
 #if _USE_LFN 
       fn = *fno.lfname ? fno.lfname : fno.fname; 
 #else 
@@ -455,13 +459,16 @@ static FRESULT scan_files (char* path)
         sprintf(&path[i], "/%s", fn); 							//合成完整目录名
         res = scan_files(path);											//递归遍历 
         if (res != FR_OK) 
-					break; 																		//打开失败，跳出循环
+        {
+          f_closedir(&dir);
+					break; 																	     	// 打开失败，跳出循环
+        }																	     	// 打开失败，跳出循环
         path[i] = 0; 
       } 
       else 
 		{ 
 //				printf("%s%s\r\n", path, fn);								//输出文件名
-				if(strstr(fn,".wav")||strstr(fn,".WAV")||strstr(fn,".mp3")||strstr(fn,".MP3"))//判断是否mp3、wav或flac文件||strstr(fn,".flac")||strstr(fn,".FLAC")
+				if(strstr(fn,".mp3")||strstr(fn,".MP3"))//判断是否mp3、wav或flac文件||strstr(fn,".flac")||strstr(fn,".FLAC")strstr(fn,".wav")||strstr(fn,".WAV")||
 				{
 					if ((strlen(path)+strlen(fn)<FILE_NAME_LEN)&&(music_file_num<MUSIC_MAX_NUM))
 					{
@@ -746,7 +753,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          sif.nMin = 0;
          sif.nMax = 255;
          sif.nValue = 0;//初始值
-         sif.TrackSize = 20;//滑块值
+         sif.TrackSize = 18;//滑块值
          sif.ArrowSize = 0;//两端宽度为0（水平滑动条）          
          music_wnd_time = CreateWindow(SCROLLBAR, L"SCROLLBAR_Time",  WS_OWNERDRAW| WS_VISIBLE, 
                          45, 183, 230, 20, hwnd, ID_SCROLLBAR_TIMER, NULL, NULL);
@@ -758,7 +765,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
          sif_power.nMin = 80;
          sif_power.nMax = 254;        //音量最大值为254
          sif_power.nValue = 220;      //初始音量值
-         sif_power.TrackSize = 20;    //滑块值
+         sif_power.TrackSize = 18;    //滑块值
          sif_power.ArrowSize = 0;     //两端宽度为0（水平滑动条）
          
          wnd = CreateWindow(SCROLLBAR, L"SCROLLBAR_R", WS_OWNERDRAW|WS_TRANSPARENT, 
@@ -782,7 +789,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                                 0, 150, 300, 20, hwnd, ID_TEXTBOX_LRC5, NULL, NULL);  
          SendMessage(wnd_lrc5,TBM_SET_TEXTFLAG,0,DT_VCENTER|DT_CENTER|DT_BKGND);  			
          CreateWindow(BUTTON,L"歌曲文件名",WS_OWNERDRAW|WS_TRANSPARENT|WS_VISIBLE,
-                      30,0,260,20,hwnd,ID_TB5,NULL,NULL);
+                      30,3,260,20,hwnd,ID_TB5,NULL,NULL);
 
 
          CreateWindow(BUTTON,L"00:00",WS_TRANSPARENT|WS_OWNERDRAW|WS_VISIBLE,
@@ -793,6 +800,8 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                       0,200-25,40,30,hwnd,ID_TB2,NULL,NULL);
     
          //获取音乐列表
+         memset(music_playlist, 0, sizeof(music_playlist));
+         memset(music_lcdlist, 0, sizeof(music_lcdlist));
          scan_files(path);
          //创建音乐播放线程
          App_PlayMusic(hwnd);
@@ -975,11 +984,16 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
                         SetWindowText(wnd_power, L"A");
                      }
                   } 
-                  VS_Set_Vol(power);     // 设置vs1053的音量
+                  
                   SendMessage(nr->hwndFrom, SBM_SETVALUE, TRUE, power); //发送SBM_SETVALUE，设置音量值
                } 
                break;
                
+               case SBN_CLICKED:
+               {
+                 VS_Set_Vol(power);     // 设置vs1053的音量
+               }
+               break;
             }
          }
          

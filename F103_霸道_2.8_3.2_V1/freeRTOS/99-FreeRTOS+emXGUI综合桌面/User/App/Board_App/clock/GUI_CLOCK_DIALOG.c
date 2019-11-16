@@ -836,7 +836,7 @@ static LRESULT setting_win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
             {
 //              if (Set_Start.page == 0)
 //              {
-                Set_Start.page = 0;    // 标记为时钟设置界面
+                Set_Start.page = 1;    // 标记为时钟设置界面
                 SetWindowText(GetDlgItem(hwnd, ID_CLOCK_SETTITLE), L"设置日期");
 
 //                ShowWindow(GetDlgItem(hwnd, ID_CLOCK_Background00), SW_HIDE);
@@ -894,7 +894,7 @@ static LRESULT setting_win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
 //              else 
 //                if (Set_Start.page == 1)
 //              {
-                Set_Start.page = 1;    // 标记为设置时间界面
+                Set_Start.page = 0;    // 标记为设置时间界面
                 SetWindowText(GetDlgItem(hwnd, ID_CLOCK_SETTITLE), L"设置时间");
 
 //                ShowWindow(GetDlgItem(hwnd, ID_CLOCK_Background00), SW_SHOW);

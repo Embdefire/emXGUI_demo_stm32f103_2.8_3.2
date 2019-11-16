@@ -52,10 +52,17 @@ void vs1053_player(uint8_t *filepath, uint8_t vol, HDC hdc)
 	VS_Restart_Play();  					// 重启播放 
 	VS_Set_All();        					// 设置音量等信息 
   VS_Set_Vol(vol);              // 设置音量
-	VS_Reset_DecodeTime();				// 复位解码时间 	
-  
-	x_mbstowcs(wbuf, music_lcdlist[play_index], FILE_NAME_LEN);
-  SetWindowText(GetDlgItem(MusicPlayer_hwnd, ID_TB5), wbuf);
+	VS_Reset_DecodeTime();				// 复位解码时间 
+
+  if (music_lcdlist[play_index][0] == '\0')
+  {
+    SetWindowText(GetDlgItem(MusicPlayer_hwnd, ID_TB5), L"音乐播放器");
+  }
+  else
+  {
+    x_mbstowcs(wbuf, music_lcdlist[play_index], FILE_NAME_LEN);
+    SetWindowText(GetDlgItem(MusicPlayer_hwnd, ID_TB5), wbuf);
+  }
   
 	if(strstr((const char*)filepath,".flac")||strstr((const char*)filepath,".FLAC"))
 	{

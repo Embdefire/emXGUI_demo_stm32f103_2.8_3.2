@@ -162,6 +162,7 @@ static LRESULT Win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	   	   RECT rc;
          GetClientRect(hwnd, &rc);
          /* 需要分配N+1项，最后一项为空 */
+        GUI_DEBUG("共有%d", music_file_num);
          menu_list = (struct __obj_list *)GUI_VMEM_Alloc(sizeof(struct __obj_list)*(music_file_num+1));
          wbuf = (WCHAR (*)[128])GUI_VMEM_Alloc(sizeof(WCHAR) * music_file_num * 128);
          if(menu_list == NULL) 
