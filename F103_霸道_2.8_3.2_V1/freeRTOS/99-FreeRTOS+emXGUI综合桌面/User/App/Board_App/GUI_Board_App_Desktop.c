@@ -73,6 +73,7 @@ extern void gui_wifi_dialog(void);
 extern void gui_network_dialog(void);
 extern void GUI_SimulateUDisk_Dialog(void);
 extern void GUI_LED_KEY_Dialog(void);
+extern void GUI_Beeper_Dialog(void);
 
 extern BOOL player_state;
 int thread_ctrl = 1;
@@ -149,6 +150,7 @@ static const struct __obj_list menu_list_1[] = {
       L"以太网",		  NULL,	  L"Q", RGB_WHITE, gui_network_dialog,
       L"模拟U盘",     NULL,	  L"N", RGB_WHITE, GUI_SimulateUDisk_Dialog,
       L"LED&KEY",    NULL,	  L"j", RGB_WHITE, GUI_LED_KEY_Dialog,
+      L"蜂鸣器",     NULL,	  L"i", RGB_WHITE, GUI_Beeper_Dialog,
 
       L"时钟",		    NULL,	  L"H", RGB_WHITE, GUI_CLOCK_DIALOG,
       L"电话",	      NULL, 	L"T", RGB_WHITE, GUI_Phone_Dialog,

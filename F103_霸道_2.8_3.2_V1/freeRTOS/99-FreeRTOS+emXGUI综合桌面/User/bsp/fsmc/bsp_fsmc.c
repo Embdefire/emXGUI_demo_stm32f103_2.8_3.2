@@ -111,9 +111,9 @@ void FSMC_InitLCD(void)
 	GPIO_Init(GPIOE, &GPIO_InitStructure);
 
 
-	wr_t.FSMC_AddressSetupTime      = 0x03;	 //地址建立时间
+	wr_t.FSMC_AddressSetupTime      = 0x04;	 //地址建立时间
 	wr_t.FSMC_AddressHoldTime       = 0x00;	 //地址保持时间
-	wr_t.FSMC_DataSetupTime         = 0x03;	 //数据建立时间
+	wr_t.FSMC_DataSetupTime         = 0x04 ;	 //数据建立时间
 	wr_t.FSMC_BusTurnAroundDuration = 0x00;
 	wr_t.FSMC_CLKDivision           = 0x00;
 	wr_t.FSMC_DataLatency           = 0x00;

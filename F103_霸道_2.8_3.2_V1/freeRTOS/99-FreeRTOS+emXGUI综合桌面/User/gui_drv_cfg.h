@@ -62,7 +62,7 @@
 #define	GUI_TOUCH_CALIBRATEParamAddr       0x0
 
 /* 是否显示光标 */
-#define  GUI_SHOW_CURSOR_EN        1
+#define  GUI_SHOW_CURSOR_EN        0
 
 /*===========存储器配置===gui_mem_port.c===============================================*/
 /* 通常GUI内核使用MEM内存堆，VMEM内存堆给用户使用 */

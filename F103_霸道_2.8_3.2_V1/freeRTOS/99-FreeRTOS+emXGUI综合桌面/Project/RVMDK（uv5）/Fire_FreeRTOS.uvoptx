@@ -125,7 +125,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI</Key>
-          <Name>-X"Any" -UAny -O142 -S9 -C0 -P00 -N00("ARM CoreSight JTAG-DP") -D00(3BA00477) -L00(0) -N01("Unknown JTAG device") -D01(06414041) -L01(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_512.FLM -FS08000000 -FL080000 -FP0($$Device:STM32F103ZE$Flash\STM32F10x_512.FLM)</Name>
+          <Name>-X"Any" -UAny -O142 -S9 -C0 -P00000000 -N00("ARM CoreSight JTAG-DP") -D00(3BA00477) -L00(0) -N01("Unknown JTAG device") -D01(06414041) -L01(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F10x_512.FLM -FS08000000 -FL080000 -FP0($$Device:STM32F103ZE$Flash\STM32F10x_512.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -158,52 +158,12 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>full_file_name</ItemText>
+          <ItemText>hdc_beeper_bk</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>bw,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>2</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>xFreeBytesRemaining,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
           <ItemText>heap_vmem,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>music_file_num</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>music_lcdlist[play_index]</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>music_lcdlist[play_index][0]</ItemText>
-        </Ww>
-        <Ww>
-          <count>7</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>music_lcdlist</ItemText>
-        </Ww>
-        <Ww>
-          <count>8</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>recbuf,0x10</ItemText>
-        </Ww>
-        <Ww>
-          <count>9</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>time</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>
@@ -2577,7 +2537,7 @@
   </Group>
 
   <Group>
-    <GroupName>DOC</GroupName>
+    <GroupName>tutorial/beeper</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -2585,6 +2545,26 @@
     <File>
       <GroupNumber>32</GroupNumber>
       <FileNumber>171</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\User\App\Board_App\beeper_control\GUI_Beeper_Dialog.c</PathWithFileName>
+      <FilenameWithoutPath>GUI_Beeper_Dialog.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>DOC</GroupName>
+    <tvExp>0</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
+    <File>
+      <GroupNumber>33</GroupNumber>
+      <FileNumber>172</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
