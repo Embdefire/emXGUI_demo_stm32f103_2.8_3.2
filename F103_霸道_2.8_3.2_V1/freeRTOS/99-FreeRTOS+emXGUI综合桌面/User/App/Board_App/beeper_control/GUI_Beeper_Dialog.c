@@ -480,6 +480,13 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       
       BEEP_OFF;
       
+      for (uint8_t xC=0; xC<hdc_beeper_end; xC++)
+      {
+        DeleteDC(hdc_beeper_png[beeper_png_info[xC].id]);    // É¾³ý DC
+      }
+      
+      DeleteDC(hdc_beeper_bk);
+      
       return PostQuitMessage(hwnd);	
     } 
 
