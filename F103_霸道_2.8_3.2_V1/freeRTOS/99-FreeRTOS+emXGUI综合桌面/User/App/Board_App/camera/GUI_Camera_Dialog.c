@@ -87,7 +87,7 @@ static LRESULT WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       //创建自动对焦线程
       xTaskCreate((TaskFunction_t )(void(*)(void*))Update_Dialog,  /* 任务入口函数 */
                             (const char*    )"Update_Dialog",/* 任务名字 */
-                            (uint16_t       )1*1024/4,  /* 任务栈大小FreeRTOS的任务栈以字为单位 */
+                            (uint16_t       )2*1024/4,  /* 任务栈大小FreeRTOS的任务栈以字为单位 */
                             (void*          )NULL,/* 任务入口函数参数 */
                             (UBaseType_t    )5, /* 任务的优先级 */
                             (TaskHandle_t  )&h_autofocus);/* 任务控制块指针 */
@@ -109,7 +109,7 @@ static LRESULT WinProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 //        RC.y =(GUI_YSIZE - RC.h) >> 1;
 //        MessageDialogBox(hwnd, RC, L"没有检测到OV7725摄像头，\n请重新检查连接。", L"错误", &ops); 
         OV7725_State = 1;     // 没有检测到摄像头
-        SetTimer(hwnd,1,1,TMR_START,NULL);  
+        SetTimer(hwnd,1,1,TMR_START|TMR_SINGLE,NULL);  
 //        PostCloseMessage(hwnd);
         break;
       }

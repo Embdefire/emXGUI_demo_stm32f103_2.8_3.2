@@ -23,7 +23,7 @@ struct
 uint8_t clock_dial = 0;    // 表盘
 static HWND clock_hwnd;
 
-const WCHAR Week_List[][4] = {{L"星期一"}, {L"星期二"}, {L"星期三"}, {L"星期四"}, {L"星期五"}, {L"星期六"}, {L"星期日"}};
+const WCHAR Week_List[][4] = {{L"星期日"}, {L"星期一"}, {L"星期二"}, {L"星期三"}, {L"星期四"}, {L"星期五"}, {L"星期六"}};
 const uint8_t month_list[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};    // 记录每月的最多天数
 
 //图标管理数组
@@ -803,7 +803,7 @@ static LRESULT setting_win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPara
                x_wsprintf(wbuf, L"%d月", systmtime.tm_mon);
                SetWindowText(GetDlgItem(clock_hwnd, ID_CLOCK_MONTH), wbuf);    // 设置月
                
-               SetWindowText(GetDlgItem(clock_hwnd, ID_CLOCK_WEEK), Week_List[systmtime.tm_wday - 1]);    // 设置星期
+               SetWindowText(GetDlgItem(clock_hwnd, ID_CLOCK_WEEK), Week_List[systmtime.tm_wday]);    // 设置星期
               }
 
               PostCloseMessage(hwnd);    // 发送关闭窗口的消息
@@ -1274,7 +1274,7 @@ static LRESULT win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
           x_wsprintf(wbuf, L"%d月", systmtime.tm_mon);
           SetWindowText(GetDlgItem(hwnd, ID_CLOCK_MONTH), wbuf);    // 设置月
           
-          SetWindowText(GetDlgItem(hwnd, ID_CLOCK_WEEK), Week_List[systmtime.tm_wday - 1]);    // 设置星期
+          SetWindowText(GetDlgItem(hwnd, ID_CLOCK_WEEK), Week_List[systmtime.tm_wday]);    // 设置星期
           /* Unfreeze the RTC DR Register */
 //          (void)RTC->DR;
           

@@ -1259,9 +1259,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>board_app</GroupName>
-        </Group>
-        <Group>
           <GroupName>app_res</GroupName>
           <Files>
             <File>
