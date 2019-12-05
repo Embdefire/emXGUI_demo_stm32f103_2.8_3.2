@@ -1,1 +1,1 @@
-# emXGUI_demo_stm32f103_2.8_3.2
+# emXGUI综合演示例程
