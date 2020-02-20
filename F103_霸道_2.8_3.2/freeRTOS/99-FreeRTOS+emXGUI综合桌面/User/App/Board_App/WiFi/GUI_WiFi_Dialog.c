@@ -29,10 +29,10 @@ static uint8_t IsConnect=0;
 
 uint8_t ucTcpClosedFlag;
 static uint8_t IsChange=1;
-static char ssid[21]={"A304"};
-static char pwd[21]={"wildfire"};
-static char host_ip[16]={"192.168.1.6"};
-static char host_port[6]={"5000"};
+static char ssid[21];
+static char pwd[21];
+static char host_ip[16];
+static char host_port[6];
 static uint8_t wifistat=0;
 
 #define TRYCOUNT					10
@@ -480,7 +480,7 @@ static LRESULT	win_proc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
       SendMessage(Temp_Handle, TBM_SET_TEXTFLAG, 0, DT_VCENTER | DT_CENTER | DT_BKGND);
 
       OffsetRect(&rc, rc.w+3, 0);
-      Temp_Handle = CreateWindow(TEXTBOX, L"003", WS_VISIBLE|WS_OWNERDRAW, rc.x, rc.y, rc.w, rc.h, hwnd, ID_TEXTBOX_RemoteIP4, NULL, NULL);//
+      Temp_Handle = CreateWindow(TEXTBOX, L"004", WS_VISIBLE|WS_OWNERDRAW, rc.x, rc.y, rc.w, rc.h, hwnd, ID_TEXTBOX_RemoteIP4, NULL, NULL);//
       SendMessage(Temp_Handle, TBM_SET_TEXTFLAG, 0, DT_VCENTER | DT_CENTER | DT_BKGND);
 
       rc.w = 55;
