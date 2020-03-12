@@ -344,6 +344,7 @@ bool ESP8266_AT_Test ( void )
 	{
 		if(ESP8266_Cmd("AT","OK",NULL,500)) return 1;
 		ESP8266_Rst();
+    bsp_DelayUS ( 1000*500 );
 		++count;
 	}
 	return 0;
